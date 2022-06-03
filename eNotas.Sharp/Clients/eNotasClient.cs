@@ -54,6 +54,13 @@ namespace eNotas.Sharp.Clients
 
             return await _client.Delete(path);
         }
+
+        public async Task<ApiResponse> CancelaNfe(Inutilizacao inutilizacao, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao";
+
+            return await _client.Post(path, inutilizacao);
+        }
         #endregion
 
         #region NFCe
