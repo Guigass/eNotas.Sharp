@@ -71,7 +71,7 @@ namespace eNotas.Sharp.Clients
         /// <param name="empresaId"></param>
         /// <param name="get">xml ou xmlCancelamento</param>
         /// <returns></returns>
-        private async Task<dynamic> ConsultaNfce(string notaId, string empresaId, string get = "")
+        public async Task<dynamic> ConsultaNfce(string notaId, string empresaId, string get = "")
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}/{get}";
 
