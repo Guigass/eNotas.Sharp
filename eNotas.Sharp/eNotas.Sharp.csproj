@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.1.8</Version>
+    <AssemblyVersion>1.1.6.0</AssemblyVersion>
+    <Authors>Guilherme Gentile</Authors>
+    <Company>ExclusivaSex - DevTech</Company>
+    <Description>Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.</Description>
+    <PackageProjectUrl>https://github.com/Guigass/eNotas.Sharp</PackageProjectUrl>
+    <PackageIcon>enotas.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Guigass/eNotas.Sharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>enotas;notafiscal;nfe;nfce</PackageTags>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\Solution Items\enotas.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>
