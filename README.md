@@ -22,7 +22,7 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 --------------------------------------------------------------------------------------------------
 - Instalação no Nuget PM
     ```
-    Install-Package eNotas.Sharp -Version 1.1.7
+    Install-Package eNotas.Sharp
     ```
 --------------------------------------------------------------------------------------------------
 
@@ -31,28 +31,28 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
     * Emitir NF-e
     * Consultar NF-e
     * Cancelar NF-e
+    * Consultar XML de Cancelamento NF-e (Utilizar o metodo ConsultaNfce)
     * Emitir NFC-e
     * Consultar NFC-e
     * Cancelar NFC-e
-    * Consultar XML de Cancelamento NF-e (Utilizar o metodo ConsultaNfce)
     * Consultar XML de Cancelamento NFC-e
+    * Inutilizar Numeração NF-e
+    * Consultar Inutilização de Número da Nota Fiscal NF-e
+    * Consultar XML de Inutilização NF-e
+    * Inutilizar Numeração NFC-e
+    * Consultar Inutilização de Número da Nota Fiscal NFC-e
+    * Consultar XML de Inutilização NFC-e
     ```
 
 - Métodos em Consutrução:
     ```
     * Emitir Carta de Correção pela Chave da NF-e
     * Consultar Carta de Correção NF-e
-    * Inutilizar Numeração NF-e
-    * Consultar Inutilização de Número da Nota Fiscal NF-e
-    * Inutilizar Numeração NFC-e
-    * Consultar Inutilização de Número da Nota Fiscal NFC-e
     * Manifestação de Destinatário NF-e
     ```
 
 - Métodos Futuros:
     ```
-    * Consultar XML de Inutilização NF-e
-    * Consultar XML de Inutilização NFC-e
     * Incluir/Alterar Empresa
     * Vincular Certificado
     * Vincular Logotipo

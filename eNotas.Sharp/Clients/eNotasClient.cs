@@ -55,11 +55,25 @@ namespace eNotas.Sharp.Clients
             return await _client.Delete(path);
         }
 
-        public async Task<ApiResponse> CancelaNfe(Inutilizacao inutilizacao, string empresaId)
+        public async Task<ApiResponse> InutilizacaoNfe(Inutilizacao inutilizacao, string empresaId)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao";
 
             return await _client.Post(path, inutilizacao);
+        }
+
+        public async Task<ApiResponse<ConsultaInutilizacao>> ConsultaInutilizacaoNfe(string inutilizacaoId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao/{inutilizacaoId}";
+
+            return await _client.Get<ConsultaInutilizacao>(path);
+        }
+
+        public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfe(string inutilizacaoId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao/{inutilizacaoId}";
+
+            return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml");
         }
         #endregion
 
@@ -97,6 +111,27 @@ namespace eNotas.Sharp.Clients
             string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}";
 
             return await _client.Delete(path);
+        }
+
+        public async Task<ApiResponse> InutilizacaoNfce(Inutilizacao inutilizacao, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao";
+
+            return await _client.Post(path, inutilizacao);
+        }
+
+        public async Task<ApiResponse<ConsultaInutilizacao>> ConsultaInutilizacaoNfce(string inutilizacaoId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao/{inutilizacaoId}";
+
+            return await _client.Get<ConsultaInutilizacao>(path);
+        }
+
+        public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfce(string inutilizacaoId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao/{inutilizacaoId}";
+
+            return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml");
         }
         #endregion
 
