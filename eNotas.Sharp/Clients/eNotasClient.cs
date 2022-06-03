@@ -27,25 +27,25 @@ namespace eNotas.Sharp.Clients
             return await _client.Post(path, nota);
         }
 
-        /// <summary>
-        /// Esse metodo traz a nota em json deserializado na classe Consulta, caso queria consultar o xml ou o xmlCancelamento é só passar o parametros GET como xml ou xmlCancelamento
-        /// </summary>
-        /// <param name="notaId"></param>
-        /// <param name="empresaId"></param>
-        /// <param name="get">xml ou xmlCancelamento</param>
-        /// <returns></returns>
-        private async Task<dynamic> ConsultaNfe(string notaId, string empresaId, string get = "")
+        public async Task<ApiResponse<Consulta>> ConsultaNfe(string notaId, string empresaId)
         {
-            string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}/{get}";
-
-            if (get == "xml")
-                return await _client.Get<Models.Xml.NfeProc>(path, "xml");
-
-            else if (get == "xmlCancelamento")
-                return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml");
-
+            string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}";
 
             return await _client.Get<Consulta>(path);
+        }
+
+        public async Task<ApiResponse<Models.Xml.NfeProc>> ConsultaNfeXML(string notaId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}/xml";
+
+            return await _client.Get<Models.Xml.NfeProc>(path, "xml");
+        }
+
+        public async Task<ApiResponse<Models.XmlCancelamento.ProcEventoNFe>> ConsultaNfeXMLCancelamento(string notaId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}/xmlCancelamento";
+
+            return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml");
         }
 
         public async Task<ApiResponse> CancelaNfe(string notaId, string empresaId)
@@ -64,25 +64,25 @@ namespace eNotas.Sharp.Clients
             return await _client.Post(path, nota);
         }
 
-        /// <summary>
-        /// Esse metodo traz a nota em json deserializado na classe Consulta, caso queria consultar o xml ou o xmlCancelamento é só passar o parametros GET como xml ou xmlCancelamento
-        /// </summary>
-        /// <param name="notaId"></param>
-        /// <param name="empresaId"></param>
-        /// <param name="get">xml ou xmlCancelamento</param>
-        /// <returns></returns>
-        public async Task<dynamic> ConsultaNfce(string notaId, string empresaId, string get = "")
+        public async Task<ApiResponse<Consulta>> ConsultaNfce(string notaId, string empresaId)
         {
-            string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}/{get}";
-
-            if (get == "xml")
-                return await _client.Get<Models.Xml.NfeProc>(path, "xml");
-
-            else if (get == "xmlCancelamento")
-                return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml");
-
+            string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}";
 
             return await _client.Get<Consulta>(path);
+        }
+
+        public async Task<ApiResponse<Models.Xml.NfeProc>> ConsultaNfceXML(string notaId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}/xml";
+
+            return await _client.Get<Models.Xml.NfeProc>(path, "xml");
+        }
+
+        public async Task<ApiResponse<Models.XmlCancelamento.ProcEventoNFe>> ConsultaNfceXMLCancelamento(string notaId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}/xmlCancelamento";
+
+            return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml");
         }
 
         public async Task<ApiResponse> CancelaNfce(string notaId, string empresaId)
