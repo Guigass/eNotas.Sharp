@@ -77,8 +77,8 @@ namespace eNotas.Sharp.Models
         [JsonProperty("emitidaEmContingencia", NullValueHandling = NullValueHandling.Ignore)]
         public bool? EmitidaEmContingencia { get; set; }
 
-        //[JsonProperty("itens", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<Iten> Itens { get; set; }
+        [JsonProperty("itens", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Iten> Itens { get; set; }
 
         [JsonProperty("valorTotal", NullValueHandling = NullValueHandling.Ignore)]
         public double? ValorTotal { get; set; }

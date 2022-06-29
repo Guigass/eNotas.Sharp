@@ -12,5 +12,8 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("pagamento", NullValueHandling = NullValueHandling.Ignore)]
         public Pagamento Pagamento { get; set; }
+
+        [JsonProperty("intermediadorTransacao", NullValueHandling = NullValueHandling.Ignore)]
+        public IntermediadorTransacao IntermediadorTransacao { get; set; }
     }
 }
