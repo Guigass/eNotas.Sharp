@@ -42,12 +42,12 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
     * Inutilizar Numeração NFC-e
     * Consultar Inutilização de Número da Nota Fiscal NFC-e
     * Consultar XML de Inutilização NFC-e
+    * Emitir Carta de Correção pela Chave da NF-e
+    * Consultar Carta de Correção NF-e
     ```
 
 - Métodos em Consutrução:
     ```
-    * Emitir Carta de Correção pela Chave da NF-e
-    * Consultar Carta de Correção NF-e
     * Manifestação de Destinatário NF-e
     ```
 
