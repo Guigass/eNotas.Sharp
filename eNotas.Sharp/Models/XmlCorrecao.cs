@@ -3,31 +3,42 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace eNotas.Sharp.Models.XmlInutilizacao
+namespace eNotas.Sharp.Models.XmlCorrecao
 {
-	[XmlRoot(ElementName = "infInut", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-	public partial class InfInut
+	[XmlRoot(ElementName = "detEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+	public partial class DetEvento
 	{
+		[XmlElement(ElementName = "descEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string DescEvento { get; set; }
+		[XmlElement(ElementName = "xCorrecao", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string XCorrecao { get; set; }
+		[XmlElement(ElementName = "xCondUso", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string XCondUso { get; set; }
+		[XmlAttribute(AttributeName = "versao")]
+		public string Versao { get; set; }
+	}
+
+	[XmlRoot(ElementName = "infEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+	public partial class InfEvento
+	{
+		[XmlElement(ElementName = "cOrgao", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string COrgao { get; set; }
 		[XmlElement(ElementName = "tpAmb", Namespace = "http://www.portalfiscal.inf.br/nfe")]
 		public string TpAmb { get; set; }
-		[XmlElement(ElementName = "xServ", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string XServ { get; set; }
-		[XmlElement(ElementName = "cUF", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string CUF { get; set; }
-		[XmlElement(ElementName = "ano", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string Ano { get; set; }
 		[XmlElement(ElementName = "CNPJ", Namespace = "http://www.portalfiscal.inf.br/nfe")]
 		public string CNPJ { get; set; }
-		[XmlElement(ElementName = "mod", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string Mod { get; set; }
-		[XmlElement(ElementName = "serie", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string Serie { get; set; }
-		[XmlElement(ElementName = "nNFIni", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string NNFIni { get; set; }
-		[XmlElement(ElementName = "nNFFin", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string NNFFin { get; set; }
-		[XmlElement(ElementName = "xJust", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string XJust { get; set; }
+		[XmlElement(ElementName = "chNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string ChNFe { get; set; }
+		[XmlElement(ElementName = "dhEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string DhEvento { get; set; }
+		[XmlElement(ElementName = "tpEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string TpEvento { get; set; }
+		[XmlElement(ElementName = "nSeqEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string NSeqEvento { get; set; }
+		[XmlElement(ElementName = "verEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string VerEvento { get; set; }
+		[XmlElement(ElementName = "detEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public DetEvento DetEvento { get; set; }
 		[XmlAttribute(AttributeName = "Id")]
 		public string Id { get; set; }
 		[XmlElement(ElementName = "verAplic", Namespace = "http://www.portalfiscal.inf.br/nfe")]
@@ -36,8 +47,12 @@ namespace eNotas.Sharp.Models.XmlInutilizacao
 		public string CStat { get; set; }
 		[XmlElement(ElementName = "xMotivo", Namespace = "http://www.portalfiscal.inf.br/nfe")]
 		public string XMotivo { get; set; }
-		[XmlElement(ElementName = "dhRecbto", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public string DhRecbto { get; set; }
+		[XmlElement(ElementName = "xEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string XEvento { get; set; }
+		[XmlElement(ElementName = "emailDest", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string EmailDest { get; set; }
+		[XmlElement(ElementName = "dhRegEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public string DhRegEvento { get; set; }
 		[XmlElement(ElementName = "nProt", Namespace = "http://www.portalfiscal.inf.br/nfe")]
 		public string NProt { get; set; }
 	}
@@ -128,11 +143,11 @@ namespace eNotas.Sharp.Models.XmlInutilizacao
 		public string Xmlns { get; set; }
 	}
 
-	[XmlRoot(ElementName = "inutNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-	public partial class InutNFe
+	[XmlRoot(ElementName = "evento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+	public partial class Evento
 	{
-		[XmlElement(ElementName = "infInut", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public InfInut InfInut { get; set; }
+		[XmlElement(ElementName = "infEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public InfEvento InfEvento { get; set; }
 		[XmlElement(ElementName = "Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
 		public Signature Signature { get; set; }
 		[XmlAttribute(AttributeName = "versao")]
@@ -141,24 +156,22 @@ namespace eNotas.Sharp.Models.XmlInutilizacao
 		public string Xmlns { get; set; }
 	}
 
-	[XmlRoot(ElementName = "retInutNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-	public partial class RetInutNFe
+	[XmlRoot(ElementName = "retEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+	public partial class RetEvento
 	{
-		[XmlElement(ElementName = "infInut", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public InfInut InfInut { get; set; }
+		[XmlElement(ElementName = "infEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public InfEvento InfEvento { get; set; }
 		[XmlAttribute(AttributeName = "versao")]
 		public string Versao { get; set; }
-		[XmlAttribute(AttributeName = "xmlns")]
-		public string Xmlns { get; set; }
 	}
 
-	[XmlRoot(ElementName = "ProcInutNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-	public partial class ProcInutNFe
+	[XmlRoot(ElementName = "procEventoNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+	public partial class ProcEventoNFe
 	{
-		[XmlElement(ElementName = "inutNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public InutNFe InutNFe { get; set; }
-		[XmlElement(ElementName = "retInutNFe", Namespace = "http://www.portalfiscal.inf.br/nfe")]
-		public RetInutNFe RetInutNFe { get; set; }
+		[XmlElement(ElementName = "evento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public Evento Evento { get; set; }
+		[XmlElement(ElementName = "retEvento", Namespace = "http://www.portalfiscal.inf.br/nfe")]
+		public RetEvento RetEvento { get; set; }
 		[XmlAttribute(AttributeName = "versao")]
 		public string Versao { get; set; }
 		[XmlAttribute(AttributeName = "xmlns")]

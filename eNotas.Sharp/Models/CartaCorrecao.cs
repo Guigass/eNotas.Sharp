@@ -22,10 +22,4 @@ namespace eNotas.Sharp.Models
         [JsonProperty("nfe", NullValueHandling = NullValueHandling.Ignore)]
         public Nfe Nfe { get; set; }
     }
-
-    public partial class Nfe
-    {
-        [JsonProperty("chaveAcesso", NullValueHandling = NullValueHandling.Ignore)]
-        public string ChaveAcesso { get; set; }
-    }
 }

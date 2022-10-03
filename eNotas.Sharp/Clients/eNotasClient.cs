@@ -84,11 +84,18 @@ namespace eNotas.Sharp.Clients
             return await _client.Post(path, cartaCorrecao);
         }
 
-        public async Task<ApiResponse<CartaCorrecao>> ConsultaCartaDeCorrecao(string cartaCorrecaoId, string empresaId)
+        public async Task<ApiResponse<CorrecaoResponse>> ConsultaCartaDeCorrecao(string cartaCorrecaoId, string empresaId)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao/{cartaCorrecaoId}";
 
-            return await _client.Get<CartaCorrecao>(path);
+            return await _client.Get<CorrecaoResponse>(path);
+        }
+
+        public async Task<ApiResponse<Models.XmlCorrecao.ProcEventoNFe>> ConsultaCartaDeCorrecaoXml(string cartaCorrecaoId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao/{cartaCorrecaoId}/xml";
+
+            return await _client.Get<Models.XmlCorrecao.ProcEventoNFe>(path, "xml");
         }
 
         #endregion
