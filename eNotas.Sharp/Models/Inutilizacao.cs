@@ -14,7 +14,7 @@ namespace eNotas.Sharp.Models
         public string AmbienteEmissao { get; set; }
 
         [JsonProperty("serie", NullValueHandling = NullValueHandling.Ignore)]
-        public int Serie { get; set; }
+        public string Serie { get; set; }
 
         [JsonProperty("numeroInicial", NullValueHandling = NullValueHandling.Ignore)]
         public int NumeroInicial { get; set; }

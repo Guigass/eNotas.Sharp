@@ -21,5 +21,8 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("ipi", NullValueHandling = NullValueHandling.Ignore)]
         public Imposto Ipi { get; set; }
+
+        [JsonProperty("ii", NullValueHandling = NullValueHandling.Ignore)]
+        public Ii Ii { get; set; }
     }
 }

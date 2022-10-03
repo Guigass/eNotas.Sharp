@@ -20,6 +20,7 @@ namespace eNotas.Sharp.Clients
         }
 
         #region NFe
+
         public async Task<ApiResponse> EmitirNfe(Nota nota, string empresaId)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e";
@@ -71,10 +72,25 @@ namespace eNotas.Sharp.Clients
 
         public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfe(string inutilizacaoId, string empresaId)
         {
-            string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao/{inutilizacaoId}";
+            string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao/{inutilizacaoId}/xml";
 
             return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml");
         }
+
+        public async Task<ApiResponse> CartaDeCorrecao(CartaCorrecao cartaCorrecao, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao";
+
+            return await _client.Post(path, cartaCorrecao);
+        }
+
+        public async Task<ApiResponse<CartaCorrecao>> ConsultaCartaDeCorrecao(string cartaCorrecaoId, string empresaId)
+        {
+            string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao/{cartaCorrecaoId}";
+
+            return await _client.Get<CartaCorrecao>(path);
+        }
+
         #endregion
 
         #region NFCe
@@ -129,7 +145,7 @@ namespace eNotas.Sharp.Clients
 
         public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfce(string inutilizacaoId, string empresaId)
         {
-            string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao/{inutilizacaoId}";
+            string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao/{inutilizacaoId}/xml";
 
             return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml");
         }

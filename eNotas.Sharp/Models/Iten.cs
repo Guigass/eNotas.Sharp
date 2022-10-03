@@ -37,6 +37,9 @@ namespace eNotas.Sharp.Models
         [JsonProperty("outrasDespesas", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? OutrasDespesas { get; set; }
 
+        [JsonProperty("declaracaoImportacao", NullValueHandling = NullValueHandling.Ignore)]
+        public DeclaracaoImportacao DeclaracaoImportacao { get; set; }
+
         [JsonProperty("frete", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Frete { get; set; }
 

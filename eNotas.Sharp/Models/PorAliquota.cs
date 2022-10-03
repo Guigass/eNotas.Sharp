@@ -8,6 +8,6 @@ namespace eNotas.Sharp.Models
     public partial class PorAliquota
     {
         [JsonProperty("aliquota", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Aliquota { get; set; }
+        public decimal? Aliquota { get; set; }
     }
 }

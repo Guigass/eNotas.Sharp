@@ -19,6 +19,9 @@ namespace eNotas.Sharp.Models
         [JsonProperty("baseCalculo", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? BaseCalculo { get; set; }
 
+        [JsonProperty("valor", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Valor { get; set; }
+
         [JsonProperty("baseCalculoUFDestinoDifal", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? BaseCalculoUFDestinoDifal { get; set; }
 

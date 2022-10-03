@@ -19,6 +19,9 @@ namespace eNotas.Sharp.Models
         [JsonProperty("tipoOperacao", NullValueHandling = NullValueHandling.Ignore)]
         public string TipoOperacao { get; set; }
 
+        [JsonProperty("valorTotal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ValorTotal { get; set; }
+
         [JsonProperty("finalidade", NullValueHandling = NullValueHandling.Ignore)]
         public string Finalidade { get; set; }
 
