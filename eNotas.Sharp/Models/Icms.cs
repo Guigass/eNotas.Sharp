@@ -54,5 +54,20 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("percentualMargemValorAdicionadoST", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? PercentualMargemValorAdicionadoSt { get; set; }
+
+        [JsonProperty("valorUFOrigemDifal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ValorUfOrigemDifal { get; set; }
+
+        [JsonProperty("percentualPartilhaInterestadualDifal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? PercentualPartilhaInterestadualDifal { get; set; }
+
+        [JsonProperty("baseCalculoFundoCombatePobrezaDifal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? BaseCalculoFundoCombatePobrezaDifal { get; set; }
+
+        [JsonProperty("percentualFCPDifal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? PercentualFcpDifal { get; set; }
+
+        [JsonProperty("valorFCPDifal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ValorFcpDifal { get; set; }
     }
 }
