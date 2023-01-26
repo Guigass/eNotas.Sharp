@@ -8,12 +8,12 @@ namespace eNotas.Sharp.Models
     public partial class Detalhado
     {
         [JsonProperty("percentualFederal", NullValueHandling = NullValueHandling.Ignore)]
-        public long? PercentualFederal { get; set; }
+        public decimal? PercentualFederal { get; set; }
 
         [JsonProperty("percentualEstadual", NullValueHandling = NullValueHandling.Ignore)]
-        public long? PercentualEstadual { get; set; }
+        public decimal? PercentualEstadual { get; set; }
 
         [JsonProperty("percentualMunicipal", NullValueHandling = NullValueHandling.Ignore)]
-        public long? PercentualMunicipal { get; set; }
+        public decimal? PercentualMunicipal { get; set; }
     }
 }
