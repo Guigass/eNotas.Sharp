@@ -12,5 +12,8 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("porAliquota", NullValueHandling = NullValueHandling.Ignore)]
         public PorAliquota PorAliquota { get; set; }
+
+        [JsonProperty("classificacaoTributaria", NullValueHandling = NullValueHandling.Ignore)]
+        public string ClassificacaoTributaria { get; set; }
     }
 }

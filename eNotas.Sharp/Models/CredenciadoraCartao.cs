@@ -13,6 +13,9 @@ namespace eNotas.Sharp.Models
         [JsonProperty("cnpjCredenciadoraCartao", NullValueHandling = NullValueHandling.Ignore)]
         public string CnpjCredenciadoraCartao { get; set; }
 
+        [JsonProperty("codigoCredenciadoraCartao", NullValueHandling = NullValueHandling.Ignore)]
+        public string CodigoCredenciadoraCartao { get; set; }
+
         [JsonProperty("bandeira", NullValueHandling = NullValueHandling.Ignore)]
         public string Bandeira { get; set; }
 

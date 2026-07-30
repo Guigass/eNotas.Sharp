@@ -9,5 +9,7 @@ namespace eNotas.Sharp.Models
     {
         [JsonProperty("chaveAcesso", NullValueHandling = NullValueHandling.Ignore)]
         public string ChaveAcesso { get; set; }
+        [JsonProperty("numeroItem", NullValueHandling = NullValueHandling.Ignore)]
+        public string NumeroItem { get; set; }
     }
 }

@@ -24,5 +24,8 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("ii", NullValueHandling = NullValueHandling.Ignore)]
         public Ii Ii { get; set; }
+
+        [JsonProperty("ibsCbs", NullValueHandling = NullValueHandling.Ignore)]
+        public Imposto IbsCbs { get; set; }
     }
 }
