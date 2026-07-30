@@ -6,6 +6,7 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 | Documento | Conteúdo |
 |-----------|----------|
 | [Visão geral](docs/PROJECT_OVERVIEW.md) | Propósito, stack, pontos de atenção |
+| [Roadmap](docs/ROADMAP.md) | Lacunas e backlog priorizado (P0–P3) |
 | [Arquitetura](docs/ARCHITECTURE.md) | Camadas Client → Service → Models |
 | [Módulos](docs/MODULES.md) | Responsabilidades por área |
 | [Domínio](docs/DOMAIN.md) | Fluxos NF-e/NFC-e e áreas sensíveis |
@@ -51,10 +52,12 @@ Governança Cursor: `.cursor/rules`, `.cursor/skills`, `.cursor/agents` (comece 
     ```
     * Emitir NF-e
     * Consultar NF-e
+    * Consultar XML NF-e
     * Cancelar NF-e
-    * Consultar XML de Cancelamento NF-e (Utilizar o metodo ConsultaNfce)
+    * Consultar XML de Cancelamento NF-e (ConsultaNfeXMLCancelamento)
     * Emitir NFC-e
     * Consultar NFC-e
+    * Consultar XML NFC-e
     * Cancelar NFC-e
     * Consultar XML de Cancelamento NFC-e
     * Inutilizar Numeração NF-e
@@ -65,15 +68,20 @@ Governança Cursor: `.cursor/rules`, `.cursor/skills`, `.cursor/agents` (comece 
     * Consultar XML de Inutilização NFC-e
     * Emitir Carta de Correção pela Chave da NF-e
     * Consultar Carta de Correção NF-e
+    * Consultar XML da Carta de Correção NF-e
     ```
 
-- Métodos em Consutrução:
+Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
+
+- Métodos em Construção (P2 — ver roadmap):
     ```
     * Manifestação de Destinatário NF-e
     ```
 
-- Métodos Futuros:
+- Métodos Futuros (P0–P2 — ver roadmap):
     ```
+    * Completude dos campos opcionais de emissão NF-e / NFC-e (models)
+    * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1
     * Incluir/Alterar Empresa
     * Vincular Certificado
     * Vincular Logotipo

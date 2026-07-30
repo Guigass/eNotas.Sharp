@@ -54,15 +54,17 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - Não há testes automatizados no repositório (**fato observado**).
 - Pasta `Exemplos/` existe, mas está vazia (**fato observado**).
 - README lista NFS-e e gestão de empresas como futuros; Postman V1 cobre NFS-e, mas o client C# atual não implementa esses métodos.
+- Lacunas e priorização do backlog estão em `ROADMAP.md` (completude de models NF-e/NFC-e, NFS-e, empresas/manifestação/SAT, qualidade).
 
 ## Onde começar
 
 1. Ler este overview e `ARCHITECTURE.md`.
-2. Abrir `eNotas.Sharp/Clients/eNotasClient.cs` (ponto de entrada).
-3. Estudar `Models/Nota.cs`, `Models/Iten.cs`, `Models/Impostos.cs`.
-4. Consultar coleções Postman em `docs/` para contrato da API.
-5. Consultar a [KB NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) (agent `notagateway-docs-specialist`).
-6. Para trabalho com agentes: `AGENTIC_WORKFLOW.md` e `.cursor/agents/agent-router.md`.
+2. Para o que falta na lib: `ROADMAP.md`.
+3. Abrir `eNotas.Sharp/Clients/eNotasClient.cs` (ponto de entrada).
+4. Estudar `Models/Nota.cs`, `Models/Iten.cs`, `Models/Impostos.cs`.
+5. Consultar coleções Postman em `docs/` para contrato da API.
+6. Consultar a [KB NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) (agent `notagateway-docs-specialist`).
+7. Para trabalho com agentes: `AGENTIC_WORKFLOW.md` e `.cursor/agents/agent-router.md`.
 
 ## Informações não identificadas
 
@@ -76,5 +78,5 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 
 - Se a publicação NuGet é manual ou automatizada fora do repositório.
 - Quais campos tributários novos (ex.: `ibsCbs`, `classificacaoTributaria`) já estão estáveis na API.
-- Roadmap real de NFS-e e gestão de empresas versus o que está só no Postman/README.
+- Prioridade e escopo de NFS-e / empresas / manifestação — ver lista em `ROADMAP.md`.
 - Se `NotaWebhook` é usado apenas como DTO pelo consumidor ou se haverá suporte futuro no client.
