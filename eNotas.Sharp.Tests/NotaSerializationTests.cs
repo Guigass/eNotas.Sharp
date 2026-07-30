@@ -27,6 +27,11 @@ public class NotaSerializationTests
         Assert.Single(nota.Itens!);
         Assert.Equal("5101", nota.Itens[0].Cfop);
         Assert.Equal("Produto Teste", nota.Itens[0].Descricao);
+        Assert.Equal("00", nota.Itens[0].Extipi);
+        Assert.Equal("SP123456", nota.Itens[0].CodigoBeneficioFiscal);
+        Assert.Equal(1.0m, nota.Itens[0].QuantidadeTributavel);
+        Assert.Equal("un", nota.Itens[0].UnidadeMedidaTributavel);
+        Assert.Equal(1.00m, nota.Itens[0].ValorTotal);
         Assert.NotNull(nota.Itens[0].Impostos?.Icms);
         Assert.Equal("041", nota.Itens[0].Impostos!.Icms!.SituacaoTributaria);
     }
@@ -63,6 +68,41 @@ public class NotaSerializationTests
         Assert.Null(obj["itens"]![0]!["sku"]);
         Assert.Null(obj["forcarEmissaoContingencia"]);
         Assert.Null(obj["emitidaEmContingencia"]);
+        Assert.Null(obj["itens"]![0]!["extipi"]);
+        Assert.Null(obj["itens"]![0]!["codigoBeneficioFiscal"]);
+        Assert.Null(obj["itens"]![0]!["quantidadeTributavel"]);
+        Assert.Null(obj["itens"]![0]!["unidadeMedidaTributavel"]);
+        Assert.Null(obj["itens"]![0]!["valorTotal"]);
+    }
+
+    [Fact]
+    public void Serialize_IncludesItenOptionalFieldsWhenSet()
+    {
+        var nota = new Nota
+        {
+            Id = "abc",
+            Itens = new List<Iten>
+            {
+                new Iten
+                {
+                    Cfop = "5101",
+                    Extipi = "00",
+                    CodigoBeneficioFiscal = "SP123456",
+                    QuantidadeTributavel = 2.5m,
+                    UnidadeMedidaTributavel = "kg",
+                    ValorTotal = 10.0m
+                }
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(nota);
+        var item = JObject.Parse(json)["itens"]![0]!;
+
+        Assert.Equal("00", item["extipi"]?.Value<string>());
+        Assert.Equal("SP123456", item["codigoBeneficioFiscal"]?.Value<string>());
+        Assert.Equal(2.5m, item["quantidadeTributavel"]?.Value<decimal>());
+        Assert.Equal("kg", item["unidadeMedidaTributavel"]?.Value<string>());
+        Assert.Equal(10.0m, item["valorTotal"]?.Value<decimal>());
     }
 
     [Fact]
@@ -96,5 +136,10 @@ public class NotaSerializationTests
         Assert.Equal(nota.ValorTotal, again.ValorTotal);
         Assert.Equal(nota.Cliente!.CpfCnpj, again.Cliente!.CpfCnpj);
         Assert.Equal(nota.Itens![0].Ncm, again.Itens![0].Ncm);
+        Assert.Equal(nota.Itens[0].Extipi, again.Itens[0].Extipi);
+        Assert.Equal(nota.Itens[0].CodigoBeneficioFiscal, again.Itens[0].CodigoBeneficioFiscal);
+        Assert.Equal(nota.Itens[0].QuantidadeTributavel, again.Itens[0].QuantidadeTributavel);
+        Assert.Equal(nota.Itens[0].UnidadeMedidaTributavel, again.Itens[0].UnidadeMedidaTributavel);
+        Assert.Equal(nota.Itens[0].ValorTotal, again.Itens[0].ValorTotal);
     }
 }

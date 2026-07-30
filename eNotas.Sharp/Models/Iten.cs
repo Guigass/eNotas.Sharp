@@ -25,14 +25,29 @@ namespace eNotas.Sharp.Models
         [JsonProperty("cest", NullValueHandling = NullValueHandling.Ignore)]
         public string Cest { get; set; }
 
+        [JsonProperty("extipi", NullValueHandling = NullValueHandling.Ignore)]
+        public string Extipi { get; set; }
+
+        [JsonProperty("codigoBeneficioFiscal", NullValueHandling = NullValueHandling.Ignore)]
+        public string CodigoBeneficioFiscal { get; set; }
+
         [JsonProperty("quantidade", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Quantidade { get; set; }
+
+        [JsonProperty("quantidadeTributavel", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? QuantidadeTributavel { get; set; }
 
         [JsonProperty("unidadeMedida", NullValueHandling = NullValueHandling.Ignore)]
         public string UnidadeMedida { get; set; }
 
+        [JsonProperty("unidadeMedidaTributavel", NullValueHandling = NullValueHandling.Ignore)]
+        public string UnidadeMedidaTributavel { get; set; }
+
         [JsonProperty("valorUnitario", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ValorUnitario { get; set; }
+
+        [JsonProperty("valorTotal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ValorTotal { get; set; }
 
         [JsonProperty("outrasDespesas", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? OutrasDespesas { get; set; }

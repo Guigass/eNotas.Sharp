@@ -45,9 +45,14 @@
       "codigo": "1",
       "descricao": "Produto Teste",
       "ncm": "49019900",
+      "extipi": "00",
+      "codigoBeneficioFiscal": "SP123456",
       "quantidade": 1.0,
+      "quantidadeTributavel": 1.0,
       "unidadeMedida": "un",
+      "unidadeMedidaTributavel": "un",
       "valorUnitario": 1.00,
+      "valorTotal": 1.00,
       "descontos": 0.0,
       "impostos": {
         "icms": {
