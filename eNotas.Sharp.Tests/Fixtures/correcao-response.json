@@ -1,0 +1,12 @@
+{
+  "id": "cce-teste-001",
+  "ambienteEmissao": "Homologacao",
+  "status": "Autorizada",
+  "numero": 1,
+  "correcao": "Correcao de informacoes adicionais",
+  "condicoesUso": "A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970",
+  "nfe": {
+    "chaveAcesso": "00000000000000000000000000000000000000000000"
+  },
+  "protocoloAutorizacao": "000000000000000"
+}

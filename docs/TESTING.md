@@ -2,11 +2,12 @@
 
 ## Estratégia atual de testes
 
-Há um projeto `eNotas.Sharp.Tests` (xUnit, `net8.0`) com suite mínima:
+Há um projeto `eNotas.Sharp.Tests` (xUnit, `net8.0`) cobrindo:
 
-1. Serialização/deserialização JSON dos models (`Nota`, `Consulta`) e `CustomDateTimeConverter`
-2. Deserialização XML mínima (`NfeProc`)
-3. Smoke de paths/auth/`ApiResponse` do `eNotasClient` com `HttpMessageHandler` fake (sem chamar a API)
+1. Serialização/deserialização JSON (`Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Impostos`/`ibsCbs`) e `CustomDateTimeConverter`
+2. Deserialização XML (`NfeProc`, cancelamento, inutilização, CC-e)
+3. Smoke de paths/auth/`ApiResponse` de **todos** os métodos públicos do `eNotasClient` com `HttpMessageHandler` fake
+4. Edge cases do `RestService` (JSON inválido, exceção de rede, `Put`)
 
 Validação complementar: build da library + checklist manual / integração em sistemas consumidores.
 
@@ -26,15 +27,15 @@ dotnet build eNotas.Sharp.sln -c Release
 
 | Tipo | Local | Observação |
 |------|-------|------------|
-| Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` |
-| XML | `NfeProcXmlTests` | Fixture mínima, não documento fiscal completo |
-| HTTP smoke | `eNotasClientPathTests` | Paths NF-e/NFC-e, auth Basic, sucesso e 4xx |
+| Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `InutilizacaoSerializationTests`, `CartaCorrecaoSerializationTests`, `ImpostosSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` |
+| XML | `NfeProcXmlTests`, `XmlDocumentTests` | Fixtures mínimas, não documento fiscal completo |
+| HTTP smoke | `eNotasClientPathTests` | Todos os métodos NF-e/NFC-e; auth Basic; sucesso e 4xx |
+| RestService | `RestServiceTests` | Parse JSON inválido deixa `Object` null; exceção não relança; `Put` |
 
 ## Lacunas de teste
 
-1. Cobertura de todos os métodos do client (inutilização, CC-e, XMLs via HTTP).
-2. Regressão tributária ampla ao adicionar campos.
-3. Testes de integração com API de homologação (secrets fora do Git).
+1. Regressão tributária ampla ao adicionar campos novos além de `ibsCbs`.
+2. Testes de integração com API de homologação (secrets fora do Git).
 
 ## Checklist de validação manual
 

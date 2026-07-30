@@ -1,0 +1,32 @@
+{
+  "icms": {
+    "origem": 0,
+    "situacaoTributaria": "041",
+    "baseCalculo": 1.00
+  },
+  "pis": {
+    "situacaoTributaria": "01",
+    "porAliquota": {
+      "aliquota": 1.65,
+      "baseCalculo": 1.00,
+      "valor": 0.02
+    }
+  },
+  "cofins": {
+    "situacaoTributaria": "01",
+    "porAliquota": {
+      "aliquota": 7.6,
+      "baseCalculo": 1.00,
+      "valor": 0.08
+    }
+  },
+  "ibsCbs": {
+    "situacaoTributaria": "000",
+    "classificacaoTributaria": "000001",
+    "porAliquota": {
+      "aliquota": 0.1,
+      "baseCalculo": 1.00,
+      "valor": 0.00
+    }
+  }
+}

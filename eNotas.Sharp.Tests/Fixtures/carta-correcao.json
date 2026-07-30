@@ -1,0 +1,10 @@
+{
+  "id": "cce-teste-001",
+  "ambienteEmissao": "Homologacao",
+  "numero": 1,
+  "correcao": "Correcao de informacoes adicionais",
+  "nfe": {
+    "id": "nota-teste-001",
+    "chaveAcesso": "00000000000000000000000000000000000000000000"
+  }
+}

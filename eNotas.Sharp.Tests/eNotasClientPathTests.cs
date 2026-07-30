@@ -1,5 +1,4 @@
 using System.Net;
-using eNotas.Sharp.Clients;
 using eNotas.Sharp.Models;
 using eNotas.Sharp.Tests.Helpers;
 
@@ -7,114 +6,340 @@ namespace eNotas.Sharp.Tests;
 
 public class eNotasClientPathTests
 {
-    private const string ApiKey = "test-api-key";
-    private const string EmpresaId = "empresa-teste";
-
     [Fact]
     public async Task EmitirNfe_PostsToExpectedPathWithAuthAndBody()
     {
-        var handler = new FakeHandler
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"nfeId\":\"ok\"}"));
+        using (client)
         {
-            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{\"nfeId\":\"ok\"}")
-            }
-        };
+            var response = await client.EmitirNfe(new Nota { Id = "nota-1", Tipo = "NF-e", ValorTotal = 1m }, ClientTestFactory.EmpresaId);
 
-        using var client = new eNotasClient(ApiKey, handler);
-        var nota = new Nota { Id = "nota-1", Tipo = "NF-e", ValorTotal = 1m };
-
-        var response = await client.EmitirNfe(nota, EmpresaId);
-
-        Assert.True(response.IsSuccess);
-        Assert.Equal("OK", response.Status);
-        Assert.Equal("{\"nfeId\":\"ok\"}", response.Message);
-        Assert.NotNull(handler.LastRequest);
-        Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
-        Assert.EndsWith($"/v2/empresas/{EmpresaId}/nf-e", handler.LastRequest.RequestUri!.AbsolutePath);
-        Assert.Equal($"Basic {ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
-        Assert.Contains("\"id\":\"nota-1\"", handler.LastContent);
-        Assert.Contains("\"tipo\":\"NF-e\"", handler.LastContent);
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"nfeId\":\"ok\"}", response.Message);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Contains("\"id\":\"nota-1\"", handler.LastContent);
+            Assert.Contains("\"tipo\":\"NF-e\"", handler.LastContent);
+        }
     }
 
     [Fact]
     public async Task EmitirNfce_PostsToNfcePath()
     {
-        var handler = new FakeHandler
+        var (client, handler) = ClientTestFactory.Create();
+        using (client)
         {
-            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{}")
-            }
-        };
+            var response = await client.EmitirNfce(new Nota { Id = "nfce-1" }, ClientTestFactory.EmpresaId);
 
-        using var client = new eNotasClient(ApiKey, handler);
-        var response = await client.EmitirNfce(new Nota { Id = "nfce-1" }, EmpresaId);
-
-        Assert.True(response.IsSuccess);
-        Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
-        Assert.EndsWith($"/v2/empresas/{EmpresaId}/nfc-e", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e", handler.LastRequest.RequestUri!.AbsolutePath);
+        }
     }
 
     [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
-        var consultaJson = FixtureLoader.Read("consulta-nfe.json");
-        var handler = new FakeHandler
+        var json = FixtureLoader.Read("consulta-nfe.json");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
         {
-            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(consultaJson)
-            }
-        };
+            var response = await client.ConsultaNfe(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
 
-        using var client = new eNotasClient(ApiKey, handler);
-        var response = await client.ConsultaNfe("nota-123", EmpresaId);
-
-        Assert.True(response.IsSuccess);
-        Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
-        Assert.EndsWith($"/v2/empresas/{EmpresaId}/nf-e/nota-123", handler.LastRequest.RequestUri!.AbsolutePath);
-        Assert.NotNull(response.Object);
-        Assert.Equal("Autorizada", response.Object!.Status);
-        Assert.Equal("teste-unitario-001", response.Object.Id);
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/{ClientTestFactory.NotaId}", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal("Autorizada", response.Object!.Status);
+            Assert.Equal("teste-unitario-001", response.Object.Id);
+        }
     }
 
     [Fact]
     public async Task CancelaNfe_DeletesExpectedPath()
     {
-        var handler = new FakeHandler
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
         {
-            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{\"ok\":true}")
-            }
-        };
+            var response = await client.CancelaNfe(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
 
-        using var client = new eNotasClient(ApiKey, handler);
-        var response = await client.CancelaNfe("nota-123", EmpresaId);
-
-        Assert.True(response.IsSuccess);
-        Assert.Equal(HttpMethod.Delete, handler.LastRequest!.Method);
-        Assert.Contains($"/v2/empresas/{EmpresaId}/nf-e/nota-123", handler.LastRequest.RequestUri!.AbsoluteUri);
-        Assert.Equal($"Basic {ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Delete, handler.LastRequest!.Method);
+            Assert.Contains($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/{ClientTestFactory.NotaId}", handler.LastRequest.RequestUri!.AbsoluteUri);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+        }
     }
 
     [Fact]
     public async Task EmitirNfe_OnBadRequest_SetsIsSuccessFalseAndMessage()
     {
-        var handler = new FakeHandler
-        {
-            Responder = _ => new HttpResponseMessage(HttpStatusCode.BadRequest)
+        var (client, _) = ClientTestFactory.Create(_ =>
+            new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 Content = new StringContent("{\"mensagem\":\"erro de validacao\"}")
-            }
-        };
+            });
+        using (client)
+        {
+            var response = await client.EmitirNfe(new Nota { Id = "x" }, ClientTestFactory.EmpresaId);
 
-        using var client = new eNotasClient(ApiKey, handler);
-        var response = await client.EmitirNfe(new Nota { Id = "x" }, EmpresaId);
+            Assert.False(response.IsSuccess);
+            Assert.Equal("BadRequest", response.Status);
+            Assert.Equal("{\"mensagem\":\"erro de validacao\"}", response.Message);
+        }
+    }
 
-        Assert.False(response.IsSuccess);
-        Assert.Equal("BadRequest", response.Status);
-        Assert.Equal("{\"mensagem\":\"erro de validacao\"}", response.Message);
+    [Fact]
+    public async Task ConsultaNfeXML_GetsNfeProc()
+    {
+        var xml = FixtureLoader.Read("nfe-proc-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaNfeXML(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/{ClientTestFactory.NotaId}/xml", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+            Assert.Equal("4.00", response.Object!.Versao);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaNfeXMLCancelamento_GetsProcEvento()
+    {
+        var xml = FixtureLoader.Read("proc-evento-cancelamento-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaNfeXMLCancelamento(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/{ClientTestFactory.NotaId}/xmlCancelamento", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+            Assert.Equal("110111", response.Object!.Evento!.InfEvento!.TpEvento);
+        }
+    }
+
+    [Fact]
+    public async Task InutilizacaoNfe_PostsBodyToPath()
+    {
+        var (client, handler) = ClientTestFactory.Create();
+        using (client)
+        {
+            var inutilizacao = new Inutilizacao
+            {
+                Id = "inut-1",
+                AmbienteEmissao = "Homologacao",
+                Serie = "1",
+                NumeroInicial = 100,
+                NumeroFinal = 105,
+                Justificativa = "teste"
+            };
+
+            var response = await client.InutilizacaoNfe(inutilizacao, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/inutilizacao", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Contains("\"id\":\"inut-1\"", handler.LastContent);
+            Assert.Contains("\"numeroInicial\":100", handler.LastContent);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaInutilizacaoNfe_GetsTypedResponse()
+    {
+        var json = FixtureLoader.Read("consulta-inutilizacao.json");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ConsultaInutilizacaoNfe(ClientTestFactory.InutilizacaoId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/inutilizacao/{ClientTestFactory.InutilizacaoId}", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.Equal("Autorizada", response.Object!.Status);
+            Assert.Equal(100, response.Object.NumeroInicial);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaInutilizacaoXMLNfe_GetsProcInut()
+    {
+        var xml = FixtureLoader.Read("proc-inut-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaInutilizacaoXMLNfe(ClientTestFactory.InutilizacaoId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/inutilizacao/{ClientTestFactory.InutilizacaoId}/xml", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+            Assert.Equal("4.00", response.Object!.Versao);
+            Assert.Equal("100", response.Object.InutNFe!.InfInut!.NNFIni);
+        }
+    }
+
+    [Fact]
+    public async Task CartaDeCorrecao_PostsBodyToPath()
+    {
+        var (client, handler) = ClientTestFactory.Create();
+        using (client)
+        {
+            var carta = new CartaCorrecao
+            {
+                Id = "cce-1",
+                AmbienteEmissao = "Homologacao",
+                Numero = 1,
+                Correcao = "texto",
+                Nfe = new Nfe { ChaveAcesso = "00000000000000000000000000000000000000000000" }
+            };
+
+            var response = await client.CartaDeCorrecao(carta, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/cartaCorrecao", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Contains("\"correcao\":\"texto\"", handler.LastContent);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaCartaDeCorrecao_GetsTypedResponse()
+    {
+        var json = FixtureLoader.Read("correcao-response.json");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ConsultaCartaDeCorrecao(ClientTestFactory.CartaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/cartaCorrecao/{ClientTestFactory.CartaId}", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.Equal("Autorizada", response.Object!.Status);
+            Assert.Equal(1, response.Object.Numero);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaCartaDeCorrecaoXml_GetsProcEvento()
+    {
+        var xml = FixtureLoader.Read("proc-evento-correcao-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaCartaDeCorrecaoXml(ClientTestFactory.CartaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nf-e/cartaCorrecao/{ClientTestFactory.CartaId}/xml", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+            Assert.Equal("110110", response.Object!.Evento!.InfEvento!.TpEvento);
+            Assert.Equal("Correcao de teste", response.Object.Evento.InfEvento.DetEvento!.XCorrecao);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaNfce_GetsTypedConsulta()
+    {
+        var json = FixtureLoader.Read("consulta-nfe.json");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ConsultaNfce(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/{ClientTestFactory.NotaId}", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaNfceXML_GetsNfeProc()
+    {
+        var xml = FixtureLoader.Read("nfe-proc-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaNfceXML(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/{ClientTestFactory.NotaId}/xml", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaNfceXMLCancelamento_GetsProcEvento()
+    {
+        var xml = FixtureLoader.Read("proc-evento-cancelamento-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaNfceXMLCancelamento(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/{ClientTestFactory.NotaId}/xmlCancelamento", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+        }
+    }
+
+    [Fact]
+    public async Task CancelaNfce_DeletesExpectedPath()
+    {
+        var (client, handler) = ClientTestFactory.Create();
+        using (client)
+        {
+            var response = await client.CancelaNfce(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Delete, handler.LastRequest!.Method);
+            Assert.Contains($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/{ClientTestFactory.NotaId}", handler.LastRequest.RequestUri!.AbsoluteUri);
+        }
+    }
+
+    [Fact]
+    public async Task InutilizacaoNfce_PostsToPath()
+    {
+        var (client, handler) = ClientTestFactory.Create();
+        using (client)
+        {
+            var response = await client.InutilizacaoNfce(
+                new Inutilizacao { Id = "inut-nfce", Serie = "1", NumeroInicial = 1, NumeroFinal = 2, Justificativa = "teste" },
+                ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/inutilizacao", handler.LastRequest.RequestUri!.AbsolutePath);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaInutilizacaoNfce_GetsTypedResponse()
+    {
+        var json = FixtureLoader.Read("consulta-inutilizacao.json");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ConsultaInutilizacaoNfce(ClientTestFactory.InutilizacaoId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/inutilizacao/{ClientTestFactory.InutilizacaoId}", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaInutilizacaoXMLNfce_GetsProcInut()
+    {
+        var xml = FixtureLoader.Read("proc-inut-minimo.xml");
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xml));
+        using (client)
+        {
+            var response = await client.ConsultaInutilizacaoXMLNfce(ClientTestFactory.InutilizacaoId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}/nfc-e/inutilizacao/{ClientTestFactory.InutilizacaoId}/xml", handler.LastRequest!.RequestUri!.AbsolutePath);
+            Assert.NotNull(response.Object);
+        }
     }
 }

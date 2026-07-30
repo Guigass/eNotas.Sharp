@@ -1,0 +1,10 @@
+{
+  "id": "inut-teste-001",
+  "ambienteEmissao": "Homologacao",
+  "status": "Autorizada",
+  "motivoStatus": null,
+  "serie": 1,
+  "numeroInicial": 100,
+  "numeroFinal": 105,
+  "justificativa": "Numeracao nao utilizada em homologacao"
+}

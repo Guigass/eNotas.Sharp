@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProcInutNFe versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+  <inutNFe versao="4.00">
+    <infInut Id="ID31000000000000100100000100000105">
+      <tpAmb>2</tpAmb>
+      <xServ>INUTILIZAR</xServ>
+      <cUF>31</cUF>
+      <ano>24</ano>
+      <CNPJ>00000000000000</CNPJ>
+      <mod>55</mod>
+      <serie>1</serie>
+      <nNFIni>100</nNFIni>
+      <nNFFin>105</nNFFin>
+      <xJust>Numeracao nao utilizada em homologacao</xJust>
+    </infInut>
+  </inutNFe>
+  <retInutNFe versao="4.00">
+    <infInut>
+      <tpAmb>2</tpAmb>
+      <cStat>102</cStat>
+      <xMotivo>Inutilizacao de numero homologado</xMotivo>
+      <nProt>000000000000000</nProt>
+    </infInut>
+  </retInutNFe>
+</ProcInutNFe>
