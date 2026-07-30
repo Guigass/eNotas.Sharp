@@ -10,6 +10,9 @@ namespace eNotas.Sharp.Models
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; }
 
+        [JsonProperty("tipo", NullValueHandling = NullValueHandling.Ignore)]
+        public string Tipo { get; set; }
+
         [JsonProperty("ambienteEmissao", NullValueHandling = NullValueHandling.Ignore)]
         public string AmbienteEmissao { get; set; }
 
