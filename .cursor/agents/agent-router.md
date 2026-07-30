@@ -34,6 +34,14 @@ Escolher o melhor agent (ou combinação) para cada tarefa neste repositório.
 - Risco: baixo na consulta; elevado se virar mudança fiscal no client
 - Escalar: `production-safety-officer` se emissão/cancelamento/inutilização/CC-e
 
+### Implementar item do ROADMAP
+
+- Agents: `notagateway-docs-specialist`, `library-specialist`, `integration-specialist`, `qa-reviewer`, `documentation-maintainer`
+- Skills: `roadmap-implement` (orquestra `task-preflight`, evidência, `impact-analysis`, `feature-development` / `bugfix-safe-workflow`, `documentation-update`)
+- Fonte: `docs/ROADMAP.md`
+- Risco: conforme prioridade do item (P0 campos aditivos = médio; P1/P2/validação humana = elevado)
+- Escalar: `production-safety-officer` se fiscal crítico, auth ou publish; parar se item exigir validação humana sem aprovação
+
 ### Novo campo ou model
 
 - Agents: `notagateway-docs-specialist`, `library-specialist`, `domain-analyst`, `qa-reviewer`
