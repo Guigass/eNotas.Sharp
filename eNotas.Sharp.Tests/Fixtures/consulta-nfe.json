@@ -1,0 +1,12 @@
+{
+  "id": "teste-unitario-001",
+  "tipo": "NF-e",
+  "status": "Autorizada",
+  "ambienteEmissao": "Homologacao",
+  "enviadaPorEmail": false,
+  "numero": 1,
+  "serie": 1,
+  "chaveAcesso": "00000000000000000000000000000000000000000000",
+  "valorTotal": 1.0,
+  "emitidaEmContingencia": false
+}

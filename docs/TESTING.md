@@ -2,15 +2,21 @@
 
 ## Estratégia atual de testes
 
-**Fato observado:** não há projetos de teste, arquivos `*Test*.cs`, nem configuração de framework de testes (xUnit, NUnit, MSTest) no repositório.
+Há um projeto `eNotas.Sharp.Tests` (xUnit, `net8.0`) com suite mínima:
 
-Validação atual aparente: build da library + uso manual / integração em sistemas consumidores.
+1. Serialização/deserialização JSON dos models (`Nota`, `Consulta`) e `CustomDateTimeConverter`
+2. Deserialização XML mínima (`NfeProc`)
+3. Smoke de paths/auth/`ApiResponse` do `eNotasClient` com `HttpMessageHandler` fake (sem chamar a API)
+
+Validação complementar: build da library + checklist manual / integração em sistemas consumidores.
 
 ## Como rodar testes
 
-Não há comando de teste no repositório.
+```powershell
+dotnet test eNotas.Sharp.sln -c Release
+```
 
-Validação mínima disponível:
+Validação de build:
 
 ```powershell
 dotnet build eNotas.Sharp.sln -c Release
@@ -18,19 +24,21 @@ dotnet build eNotas.Sharp.sln -c Release
 
 ## Tipos de teste encontrados
 
-**Não identificado.**
+| Tipo | Local | Observação |
+|------|-------|------------|
+| Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` |
+| XML | `NfeProcXmlTests` | Fixture mínima, não documento fiscal completo |
+| HTTP smoke | `eNotasClientPathTests` | Paths NF-e/NFC-e, auth Basic, sucesso e 4xx |
 
 ## Lacunas de teste
 
-1. Serialização/deserialização JSON dos models (`Nota`, `Impostos`, `Consulta`).
-2. Deserialização XML (`NfeProc`, cancelamento, inutilização, CC-e).
-3. Montagem de paths e métodos HTTP (mocks de `HttpMessageHandler`).
-4. Contrato de `ApiResponse` em sucesso e erro.
-5. Regressão ao adicionar campos tributários.
+1. Cobertura de todos os métodos do client (inutilização, CC-e, XMLs via HTTP).
+2. Regressão tributária ampla ao adicionar campos.
+3. Testes de integração com API de homologação (secrets fora do Git).
 
 ## Checklist de validação manual
 
-- [ ] `dotnet build` Release sem erros
+- [ ] `dotnet build` / `dotnet test` Release sem erros
 - [ ] Instanciar `eNotasClient` com key de homologação
 - [ ] Emitir nota em ambiente de teste (`ambienteEmissao` adequado)
 - [ ] Consultar a mesma nota e verificar `Consulta`
@@ -47,10 +55,6 @@ Antes de publicar pacote que altere emissão/cancelamento/inutilização/CC-e:
 - [ ] Revisar header de autenticação inalterado
 - [ ] Revisão humana do diff
 
-## Recomendações iniciais
+## Fixtures
 
-Prioridade sugerida (não implementada nesta entrega de governança):
-
-1. Projeto `eNotas.Sharp.Tests` com testes de serialização a partir de fixtures JSON/XML (sem chamar a API).
-2. Testes de contrato do `RestService` com `HttpMessageHandler` fake.
-3. Opcional: smoke test manual documentado com dados de homologação (secrets fora do Git).
+Fixtures em `eNotas.Sharp.Tests/Fixtures/` usam dados fictícios de homologação. Não incluir API Keys, cookies ou dados fiscais reais.

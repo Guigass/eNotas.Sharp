@@ -93,7 +93,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 | Lacuna | Classificação | Evidência |
 |--------|---------------|-----------|
-| Sem testes automatizados | Fato | `TESTING.md`; sem projeto de testes no repo |
+| Sem testes automatizados | Fato (parcialmente resolvido) | Suite mínima em `eNotas.Sharp.Tests` (serialização + smoke de paths); lacunas em `TESTING.md` |
 | Pasta `Exemplos/` vazia | Fato | Diretório existe sem samples |
 | Sem `CancellationToken` | Fato | `eNotasClient` / `RestService` |
 | `RestService.Put` sem consumidor | Fato | Método interno não usado pelo client |
@@ -107,7 +107,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 #### Critério de aceite (incremental)
 
-- [ ] Suite mínima (serialização de models + smoke de paths) quando houver decisão de framework
+- [x] Suite mínima (serialização de models + smoke de paths) — xUnit em `eNotas.Sharp.Tests`
 - [ ] Exemplos compiláveis sem secrets
 - [ ] Correções de transporte documentadas e sem breaking silencioso
 - [ ] README alinhado aos métodos reais do client

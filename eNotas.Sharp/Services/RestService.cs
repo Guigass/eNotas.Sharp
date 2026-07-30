@@ -18,11 +18,21 @@ namespace eNotas.Sharp.Services
         private string _apiKey;
 
         public RestService(string apiUrl, string apiKey)
+            : this(apiUrl, apiKey, new HttpClient())
+        {
+        }
+
+        internal RestService(string apiUrl, string apiKey, HttpMessageHandler handler)
+            : this(apiUrl, apiKey, new HttpClient(handler))
+        {
+        }
+
+        private RestService(string apiUrl, string apiKey, HttpClient httpClient)
         {
             _apiKey = apiKey;
             _apiUrl = apiUrl;
 
-            client = new HttpClient();
+            client = httpClient;
             client.BaseAddress = new Uri(apiUrl);
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

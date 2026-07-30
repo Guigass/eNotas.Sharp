@@ -2,6 +2,7 @@
 using eNotas.Sharp.Services;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,12 @@ namespace eNotas.Sharp.Clients
         {
             _apiKey = apiKey;
             _client = new RestService(_url, _apiKey);
+        }
+
+        internal eNotasClient(string apiKey, HttpMessageHandler handler)
+        {
+            _apiKey = apiKey;
+            _client = new RestService(_url, _apiKey, handler);
         }
 
         #region NFe

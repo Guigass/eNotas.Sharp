@@ -1,0 +1,68 @@
+{
+  "id": "teste-unitario-001",
+  "tipo": "NF-e",
+  "ambienteEmissao": "Homologacao",
+  "enviarPorEmail": false,
+  "pedido": {
+    "presencaConsumidor": "NaoSeAplica",
+    "pagamento": {
+      "tipo": "PagamentoAVista",
+      "formas": [
+        {
+          "tipo": "Dinheiro",
+          "valor": 1.00
+        }
+      ]
+    }
+  },
+  "cliente": {
+    "indicadorContribuinteICMS": "NaoContribuinte",
+    "tipoPessoa": "F",
+    "nome": "Cliente Teste",
+    "email": "teste@example.com",
+    "cpfCnpj": "00000000191",
+    "telefone": "3132223333",
+    "endereco": {
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "logradouro": "Rua Teste",
+      "numero": "100",
+      "complemento": "Sala 1",
+      "bairro": "Centro",
+      "cep": "30130174"
+    }
+  },
+  "transporte": {
+    "frete": {
+      "modalidade": "SemFrete",
+      "valor": 0.0
+    }
+  },
+  "itens": [
+    {
+      "cfop": "5101",
+      "codigo": "1",
+      "descricao": "Produto Teste",
+      "ncm": "49019900",
+      "quantidade": 1.0,
+      "unidadeMedida": "un",
+      "valorUnitario": 1.00,
+      "descontos": 0.0,
+      "impostos": {
+        "icms": {
+          "origem": 0,
+          "situacaoTributaria": "041",
+          "modalidadeBaseCalculo": 0,
+          "baseCalculo": 1.00
+        },
+        "pis": {
+          "situacaoTributaria": "01"
+        },
+        "cofins": {
+          "situacaoTributaria": "01"
+        }
+      }
+    }
+  ],
+  "valorTotal": 1.00
+}

@@ -7,7 +7,7 @@ alwaysApply: false
 
 ## Propósito
 
-Garantir validação mínima mesmo sem suite de testes automatizados.
+Garantir validação mínima após mudanças de código e antes de sugerir publicação NuGet.
 
 ## Quando aplicar
 
@@ -15,27 +15,29 @@ Após qualquer alteração de código ou antes de sugerir publicação NuGet.
 
 ## Contexto do projeto
 
-**Não há** projeto de testes no repositório. Validação = build + checagens manuais / contrato.
+Há projeto `eNotas.Sharp.Tests` (xUnit) com suite mínima: serialização JSON/XML e smoke de paths HTTP com handler fake. Detalhes em `docs/TESTING.md`.
 
 ## Regras obrigatórias
 
-1. Rodar `dotnet build eNotas.Sharp.sln -c Release` após mudanças de código.
-2. Não afirmar que “há testes passando” se não existirem.
+1. Rodar `dotnet test eNotas.Sharp.sln -c Release` (ou ao menos `dotnet build eNotas.Sharp.sln -c Release`) após mudanças de código.
+2. Não afirmar que “há testes passando” sem ter executado a suite.
 3. Para mudanças fiscais/integração, listar checklist manual (ver `docs/TESTING.md`).
-4. Preferir fixtures JSON/XML se/quando testes forem criados — sem secrets.
+4. Preferir fixtures JSON/XML sem secrets.
 
 ## O que fazer
 
 - Registrar o que foi validado e o que ficou pendente.
-- Em mudanças de model, validar mentalmente serialização (null omitido, nomes JSON).
+- Em mudanças de model, validar mentalmente serialização (null omitido, nomes JSON) e preferir cobrir com teste de serialização.
+- Em mudanças de path/auth/`RestService`, cobrir ou estender smoke em `eNotasClientPathTests`.
 
 ## O que evitar
 
 - Inventar resultados de teste.
 - Publicar pacote sem build Release.
+- Commitar API Keys ou dados fiscais reais em fixtures.
 
 ## Checklist antes de alterar / concluir
 
-- [ ] Build Release executado (código) ou N/A (só docs)
+- [ ] `dotnet test` (ou build) Release executado (código) ou N/A (só docs)
 - [ ] Checklist manual listado se fluxo crítico
 - [ ] Pendências de validação humana explícitas
