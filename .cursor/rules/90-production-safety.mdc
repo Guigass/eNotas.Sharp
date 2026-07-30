@@ -1,0 +1,45 @@
+---
+description: Segurança de produção, secrets e operações fiscais
+alwaysApply: false
+---
+
+# Segurança de Produção
+
+## Propósito
+
+Proteger credenciais, consumidores NuGet e operações fiscais sensíveis.
+
+## Quando aplicar
+
+Mudanças em auth, base URL, emissão/cancelamento/inutilização/CC-e, versão NuGet, exemplos, ou qualquer dado sensível.
+
+## Contexto do projeto
+
+A library roda dentro de apps consumidores. Erros aqui propagam para emissão fiscal real. Deploy = publicação NuGet (ver `docs/DEPLOYMENT.md`).
+
+## Regras obrigatórias
+
+1. Nunca commitar API Keys, certificados, `.env` com segredos, ou XMLs com dados reais de produção.
+2. Mudanças em fluxos críticos exigem menção explícita de risco e, em geral, validação humana.
+3. Não publicar (nem instruir publish) NuGet sem checklist de `docs/DEPLOYMENT.md`.
+4. Não recomendar `dotnet nuget push` com API key embutida em arquivo versionado.
+5. Tratar breaking changes como risco elevado para consumidores em produção.
+
+## O que fazer
+
+- Redigir dados sensíveis em logs/evidências.
+- Separar homologação de produção na orientação ao consumidor (`ambienteEmissao`, keys distintas).
+- Escalar para revisão humana quando incerto.
+
+## O que evitar
+
+- Exemplos com empresaId/key reais.
+- Alterar auth “só para testar”.
+- Forçar GC/comportamentos destrutivos em documentação como se fossem boas práticas.
+
+## Checklist antes de alterar
+
+- [ ] Secrets ausentes do diff
+- [ ] Risco fiscal classificado
+- [ ] Impacto NuGet considerado
+- [ ] Validação humana se elevado

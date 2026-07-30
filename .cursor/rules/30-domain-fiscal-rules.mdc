@@ -1,0 +1,47 @@
+---
+description: Regras de domínio fiscal NF-e/NFC-e na library
+globs: eNotas.Sharp/Models/**/*.cs,eNotas.Sharp/Clients/**/*.cs
+alwaysApply: false
+---
+
+# Domínio Fiscal e Regras de Negócio
+
+## Propósito
+
+Reduzir risco em mudanças que afetam documentos fiscais.
+
+## Quando aplicar
+
+Alterações em emissão, cancelamento, inutilização, CC-e, impostos, itens, pagamento, transporte ou consulta de notas.
+
+## Contexto do projeto
+
+Fluxos críticos em `eNotasClient` (Emitir/Cancela/Inutilizacao/CartaDeCorrecao). Models compartilhados entre NF-e e NFC-e (`Nota`, `Iten`, `Impostos`).
+
+## Regras obrigatórias
+
+1. Tratar emissão, cancelamento e inutilização como **operações sensíveis**.
+2. Ao mudar `Nota`/`Iten`/`Impostos`, considerar impacto em NF-e **e** NFC-e.
+3. Não remover propriedades públicas publicadas no NuGet sem major version.
+4. Novos campos tributários devem ser opcionais (nullable + Ignore).
+5. Não inventar regras fiscais (CST, CFOP, prazos) — a lib transporta dados; a API valida.
+6. Marcar dúvidas como “Precisa de validação humana”.
+
+## O que fazer
+
+- Conferir Postman V2 e models existentes antes de adicionar campo.
+- Documentar o motivo de campos novos (ex.: IBS/CBS, credenciadora).
+- Pedir revisão humana se a mudança afetar serialização de emissão.
+
+## O que evitar
+
+- Hardcodar comportamento fiscal na library além do contrato da API.
+- Assumir que NFC-e ignora campos só porque “não usa” — a API decide.
+- Alterar `CustomDateTimeConverter` sem testar payloads com data.
+
+## Checklist antes de alterar
+
+- [ ] Fluxo crítico identificado
+- [ ] Models consumidores impactados listados
+- [ ] Mudança aditiva vs breaking classificada
+- [ ] Validação humana se sensível

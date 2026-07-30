@@ -1,6 +1,27 @@
 # eNotas.Sharp
 Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 
+## Documentação
+
+| Documento | Conteúdo |
+|-----------|----------|
+| [Visão geral](docs/PROJECT_OVERVIEW.md) | Propósito, stack, pontos de atenção |
+| [Arquitetura](docs/ARCHITECTURE.md) | Camadas Client → Service → Models |
+| [Módulos](docs/MODULES.md) | Responsabilidades por área |
+| [Domínio](docs/DOMAIN.md) | Fluxos NF-e/NFC-e e áreas sensíveis |
+| [Desenvolvimento](docs/DEVELOPMENT_GUIDE.md) | Build, features, commits |
+| [Ambiente](docs/ENVIRONMENT.md) | API Key, URL, requisitos |
+| [Testes](docs/TESTING.md) | Validação (sem suite automatizada) |
+| [Deploy](docs/DEPLOYMENT.md) | Empacotamento NuGet |
+| [Troubleshooting](docs/TROUBLESHOOTING.md) | Falhas comuns |
+| [Workflow agentico](docs/AGENTIC_WORKFLOW.md) | Rules, skills e agents Cursor |
+
+Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (client atual). A coleção V1 NFS-e é referência futura/não implementada no client C#.
+
+Documentação oficial NotaGateway: [Central de ajuda](https://atendimento.notagateway.com.br/kb/pt-br) — consulta via agent `notagateway-docs-specialist` / skill `notagateway-kb-lookup`.
+
+Governança Cursor: `.cursor/rules`, `.cursor/skills`, `.cursor/agents` (comece por `.cursor/agents/agent-router.md`).
+
 - Exemplo de Uso
     ```
     //Uso da biblioteca é simples basta dar o using passando sua APIKEY, 

@@ -1,0 +1,41 @@
+---
+description: Validação e testes no eNotas.Sharp
+alwaysApply: false
+---
+
+# Testes e Validação
+
+## Propósito
+
+Garantir validação mínima mesmo sem suite de testes automatizados.
+
+## Quando aplicar
+
+Após qualquer alteração de código ou antes de sugerir publicação NuGet.
+
+## Contexto do projeto
+
+**Não há** projeto de testes no repositório. Validação = build + checagens manuais / contrato.
+
+## Regras obrigatórias
+
+1. Rodar `dotnet build eNotas.Sharp.sln -c Release` após mudanças de código.
+2. Não afirmar que “há testes passando” se não existirem.
+3. Para mudanças fiscais/integração, listar checklist manual (ver `docs/TESTING.md`).
+4. Preferir fixtures JSON/XML se/quando testes forem criados — sem secrets.
+
+## O que fazer
+
+- Registrar o que foi validado e o que ficou pendente.
+- Em mudanças de model, validar mentalmente serialização (null omitido, nomes JSON).
+
+## O que evitar
+
+- Inventar resultados de teste.
+- Publicar pacote sem build Release.
+
+## Checklist antes de alterar / concluir
+
+- [ ] Build Release executado (código) ou N/A (só docs)
+- [ ] Checklist manual listado se fluxo crítico
+- [ ] Pendências de validação humana explícitas

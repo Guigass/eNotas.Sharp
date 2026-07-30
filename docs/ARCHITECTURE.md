@@ -1,0 +1,110 @@
+# Arquitetura
+
+## Visão geral
+
+**Fato observado:** arquitetura em camadas simples de uma biblioteca cliente:
+
+```
+Consumidor (app externo)
+        │
+        ▼
+ eNotasClient (público)     ← Clients/
+        │
+        ▼
+ RestService (internal)     ← Services/
+        │
+        ▼
+ API eNotas GW (HTTPS)      ← https://api.enotasgw.com.br
+```
+
+Modelos em `Models/` são serializados/deserializados nas bordas HTTP. Não há camada de domínio rica, persistência ou UI.
+
+## Estrutura de pastas
+
+```
+eNotas.Sharp.sln
+README.md
+.gitignore
+docs/                          # Postman + documentação operacional
+eNotas.Sharp/
+  eNotas.Sharp.csproj
+  Clients/eNotasClient.cs
+  Services/RestService.cs
+  Helpers/CustomDateTimeConverter.cs
+  Models/                      # DTOs JSON + classes XML
+  Exemplos/                    # vazio
+Solution Items/enotas.png      # ícone do pacote NuGet
+.cursor/                       # rules, skills, agents
+```
+
+## Principais camadas
+
+| Camada | Visibilidade | Papel |
+|--------|--------------|--------|
+| Client | `public` | Orquestra paths REST e tipagem de retorno |
+| Service | `internal` | HTTP, headers, serialize/deserialize |
+| Models | `public` | Contratos alinhados ao JSON/XML da API |
+| Helpers | `public` | Converter de data para JSON |
+
+## Fluxo de dados
+
+1. Consumidor instancia `eNotasClient(apiKey)`.
+2. Construtor cria `RestService` com base URL fixa e header `Authorization: Basic {apiKey}`.
+3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...`) e chamam `Post` / `Get` / `Delete`.
+4. Request: objeto → `JsonConvert.SerializeObject` (UTC).
+5. Response: string em `ApiResponse.Message`; se tipado, também `Object` (JSON ou XML conforme parâmetro `deserializer`).
+6. Exceções de rede/processamento vão para `ApiResponse.Exception` sem relançar (**fato observado**).
+
+## Dependências internas
+
+- `eNotasClient` → `RestService` + `Models`
+- `RestService` → Newtonsoft.Json, HttpClient, XmlSerializer, `ApiResponse`
+- Models de emissão → composição (`Nota` → `Cliente`, `Iten`, `Impostos`, `Pedido`, `Transporte`, …)
+- Models XML (`Xml*.cs`) → namespaces próprios aninhados sob `eNotas.Sharp.Models`
+
+## Dependências externas
+
+- API eNotas Gateway (`api.enotasgw.com.br`)
+- Pacote NuGet `Newtonsoft.Json`
+
+## Pontos de entrada
+
+- **Biblioteca:** `eNotas.Sharp.Clients.eNotasClient`
+- **Pacote:** build do `eNotas.Sharp.csproj` gera `.nupkg`
+- **Documentação de API de referência:** `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
+
+## Fronteiras arquiteturais
+
+- Não alterar a API pública (`eNotasClient` e models públicos) sem considerar breaking change no NuGet.
+- `RestService` deve permanecer `internal` (detalhe de implementação).
+- Novos endpoints devem seguir o padrão de regiões `#region NFe` / `#region NFCe` no client.
+- Esta biblioteca **não** deve incorporar UI, banco ou lógica de negócio do consumidor.
+
+## Decisões observadas
+
+- Target único `netstandard2.0` para ampla compatibilidade.
+- Uso de `partial class` nos models (possível origem em geração/código expandido).
+- `NullValueHandling.Ignore` na maioria das propriedades JSON.
+- Datas de emissão/consulta com `CustomDateTimeConverter` (escrita em formato ISO/`o` UTC).
+- Autenticação Basic com a API Key no valor do header (padrão observado no código; confirmar com docs oficiais da eNotas se necessário).
+
+## Inferências arquiteturais
+
+- Classes XML grandes (`Xml.cs`, etc.) parecem mapeamento direto do schema/retorno da SEFAZ via gateway.
+- `NotaWebhook` sugere suporte a payload de webhook no lado do consumidor, sem receber webhooks nesta lib.
+- Coleção Postman V1 (NFS-e) indica escopo futuro ou referência externa, não implementação atual.
+
+## Riscos arquiteturais
+
+- Catch vazio na deserialização do `Get` pode mascarar erros de contrato.
+- `Delete` concatena `_apiUrl` + `action` enquanto outros métodos usam path relativo ao `BaseAddress` — possível inconsistência de URL (**inferência; validar em runtime**).
+- `Dispose` do client chama `GC.Collect()` — padrão atípico e potencialmente custoso.
+- `Version` do pacote e `AssemblyVersion` divergem no `.csproj`.
+- Ausência de testes aumenta risco de regressão em breaking changes silenciosos.
+
+## Recomendações
+
+1. Ao adicionar endpoint: espelhar método no client + model + referência Postman + bump de versão NuGet.
+2. Preferir mudanças aditivas (novas propriedades opcionais) a renomeações.
+3. Documentar breaking changes no README/CHANGELOG quando houver.
+4. Considerar testes de serialização JSON dos models críticos (ver `TESTING.md`).

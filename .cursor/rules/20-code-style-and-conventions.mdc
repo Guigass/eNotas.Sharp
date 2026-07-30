@@ -1,0 +1,46 @@
+---
+description: Convenções de código C# observadas no eNotas.Sharp
+globs: eNotas.Sharp/**/*.cs
+alwaysApply: false
+---
+
+# Estilo e Convenções
+
+## Propósito
+
+Preservar o estilo real do projeto ao editar código.
+
+## Quando aplicar
+
+Ao criar ou alterar arquivos `.cs`.
+
+## Contexto do projeto
+
+Padrões observados: `partial class` nos models; `[JsonProperty("camelCase", NullValueHandling = NullValueHandling.Ignore)]`; métodos async retornando `Task<ApiResponse...>`; namespaces por pasta.
+
+## Regras obrigatórias
+
+1. Manter `JsonProperty` com nome camelCase alinhado à API.
+2. Preferir propriedades nullable para campos opcionais.
+3. Usar `NullValueHandling.Ignore` como no restante dos models.
+4. Preservar nomes públicos irregulares (`Iten`, `Adicoe`, `eNotasClient`).
+5. Datas relevantes: `DateTimeOffset?` + `CustomDateTimeConverter` quando já for o padrão do arquivo.
+6. Arquivo `Cofins.cs` contém `class Imposto` — não “corrigir” o nome do arquivo/classe sem plano de breaking change.
+
+## O que fazer
+
+- Espelhar a estrutura de um model vizinho ao adicionar campos.
+- Métodos novos no client: `public async Task<ApiResponse...>`.
+- Usings mínimos, no estilo dos arquivos existentes.
+
+## O que evitar
+
+- Introduzir System.Text.Json sem decisão explícita (projeto usa Newtonsoft).
+- Renomear classes só por pureza de nomenclatura.
+- Adicionar comentários óbvios ou XML doc em massa sem pedido.
+
+## Checklist antes de alterar
+
+- [ ] Estilo alinhado aos arquivos vizinhos
+- [ ] Sem mudança acidental de tipo (ex.: `long` ↔ `decimal`)
+- [ ] Namespace correto

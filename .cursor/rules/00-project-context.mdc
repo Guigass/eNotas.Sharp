@@ -1,0 +1,51 @@
+---
+description: Contexto geral do projeto eNotas.Sharp — ler antes de qualquer tarefa
+alwaysApply: true
+---
+
+# Contexto do Projeto eNotas.Sharp
+
+## Propósito
+
+Orientar humanos e agentes sobre o que este repositório é e o que não é.
+
+## Quando aplicar
+
+Sempre — em qualquer tarefa neste repositório.
+
+## Contexto do projeto
+
+Biblioteca C# (`netstandard2.0`) cliente da API eNotas Gateway para NF-e e NFC-e. Pacote NuGet. Sem frontend, sem banco, sem workers.
+
+Pontos de entrada: `eNotas.Sharp/Clients/eNotasClient.cs`, models em `eNotas.Sharp/Models/`, HTTP em `eNotas.Sharp/Services/RestService.cs`.
+
+Documentação operacional em `docs/`. Referência de API: Postman em `docs/*V2*`.
+
+## Regras obrigatórias
+
+1. Tratar como **SDK/biblioteca**, não como aplicação.
+2. Não inventar endpoints, campos ou fluxos sem evidência no código ou Postman.
+3. Não assumir NFS-e implementada (Postman V1 ≠ client atual).
+4. Não commitar API Keys, tokens ou dados fiscais reais.
+5. Preferir mudanças aditivas em models públicos.
+6. Antes de editar, executar Task Preflight.
+
+## O que fazer
+
+- Ler `docs/PROJECT_OVERVIEW.md` e `docs/ARCHITECTURE.md` se a tarefa for ambígua.
+- Consultar `eNotasClient` para a superfície pública real.
+- Classificar informações: fato / inferência / não identificado / validação humana.
+
+## O que evitar
+
+- Criar camadas (repository, DI container, UI) sem pedido explícito.
+- Documentação genérica desconectada do código.
+- Alterar código funcional em tarefas só de governança/docs.
+- Assumir CI/CD, Docker ou testes que não existem.
+
+## Checklist antes de alterar
+
+- [ ] Objetivo da tarefa claro
+- [ ] Escopo limitado à library cliente
+- [ ] Riscos fiscais/API Key avaliados
+- [ ] Arquivos certos identificados

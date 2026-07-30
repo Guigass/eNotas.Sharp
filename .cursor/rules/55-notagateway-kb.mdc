@@ -1,0 +1,70 @@
+---
+description: Consultar a Central de Ajuda oficial NotaGateway antes de decidir contratos fiscais/API
+alwaysApply: false
+---
+
+# Consulta à Documentação NotaGateway (KB)
+
+## Propósito
+
+Obrigar consulta à documentação oficial do Nota Gateway antes de inventar campos, fluxos, rejeições ou comportamentos da API.
+
+## Quando aplicar
+
+- Dúvida sobre campo JSON, imposto, status, rejeição ou fluxo fiscal
+- Novo endpoint/campo no `eNotasClient` ou models
+- Interpretação de erro/rejeição da API ou SEFAZ
+- Alinhar Postman/código com comportamento documentado
+- Homologação, contingência, CC-e, inutilização, cancelamento, webhook
+- Qualquer tarefa em que a evidência no repo seja insuficiente
+
+## Contexto do projeto
+
+Fonte oficial: [Central de ajuda NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br)
+
+Este repositório é um cliente C# da API Gateway. A verdade de negócio/contrato fiscal está na KB + API, não só nos models locais. Postman em `docs/` é referência complementar; a KB esclarece regras, rejeições e particularidades.
+
+Categorias relevantes (paths sob `https://atendimento.notagateway.com.br`):
+
+| Tema | Categoria |
+|------|-----------|
+| Endpoints / cadastro / XML / status | `/kb/category/endpoints` |
+| Funcionalidades e campos da API | `/kb/category/gw-funcionalidades-da-api` |
+| Emissão e cancelamento (rejeições) | `/kb/category/gw-emissao-e-cancelamento` |
+| Inutilização e CC-e | `/kb/category/inutilizacao-e-cc-e` |
+| Painel GW | `/kb/category/painel-gw` |
+| SAT/MF-e | `/kb/category/agente-enotas-sat-mf-e-primeiros-passos` |
+| NFS-e municípios | `/kb/category/particularidade-de-municipios-nfs-e` |
+| Consulta de notas | `/kb/category/consulta-primeiros-passos` |
+
+## Regras obrigatórias
+
+1. Antes de afirmar regra fiscal/API sem evidência no código, **consultar a KB**.
+2. Usar a skill `notagateway-kb-lookup` e/ou o agent `notagateway-docs-specialist`.
+3. Citar URL do artigo/categoria usado na resposta.
+4. Separar: **fato na KB** · **fato no código** · **inferência** · **não encontrado na KB**.
+5. Não inventar nomes de campos JSON ou códigos de rejeição.
+6. Se a KB tratar NFS-e/empresas e o client C# não implementar, registrar o gap — não fingir suporte no pacote.
+7. Preferir KB + Postman V2 juntos ao evoluir NF-e/NFC-e.
+
+## O que fazer
+
+- Buscar na home da KB ou na categoria adequada ao tema.
+- Abrir o artigo específico e extrair só o trecho aplicável.
+- Confrontar com `eNotasClient`, models e Postman V2.
+- Se a KB e o código divergirem, marcar **Precisa de validação humana**.
+
+## O que evitar
+
+- Responder de memória sobre rejeições/CSTs/fluxos sem abrir a KB.
+- Copiar artigos inteiros para o repo sem necessidade.
+- Tratar blog/marketing como contrato de API.
+- Assumir que todo artigo da KB já está implementado em `eNotas.Sharp`.
+
+## Checklist antes de alterar
+
+- [ ] Tema mapeado para categoria da KB
+- [ ] Artigo(s) consultado(s) com URL
+- [ ] Código/Postman confrontados
+- [ ] Gaps de implementação explícitos
+- [ ] Sem invenção de contrato

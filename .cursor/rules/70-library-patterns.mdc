@@ -1,0 +1,46 @@
+---
+description: Padrões da library cliente (client, models, response)
+globs: eNotas.Sharp/**/*.cs
+alwaysApply: false
+---
+
+# Padrões da Library
+
+## Propósito
+
+Padronizar evolução da API pública da biblioteca.
+
+## Quando aplicar
+
+Novos métodos, models, helpers ou mudanças na superfície NuGet.
+
+## Contexto do projeto
+
+Superfície pública principal: `eNotasClient` + models + `ApiResponse`. Consumidores dependem de estabilidade binária/comportamental via NuGet.
+
+## Regras obrigatórias
+
+1. Novos métodos: async + `Task<ApiResponse>` ou `Task<ApiResponse<T>>`.
+2. Incluir método na região NFe ou NFCe apropriada.
+3. Atualizar `README.md` (lista de métodos disponíveis).
+4. Avaliar bump de `Version` no `.csproj`.
+5. Preferir composição de models existentes a duplicar hierarquias.
+6. XML: reutilizar namespaces/classes existentes em `Xml*.cs` quando possível.
+
+## O que fazer
+
+- Espelhar assinaturas irmãs (ex.: par NFe/NFCe).
+- Manter `using (var enotas = new eNotasClient(...))` como padrão de uso documentado.
+- Para webhook, lembrar que `NotaWebhook` é DTO — não há listener nesta lib.
+
+## O que evitar
+
+- Breaking changes silenciosos em propriedades existentes.
+- Métodos síncronos novos (`.Result` fica a cargo do consumidor).
+- Exemplos com API Key real.
+
+## Checklist antes de alterar
+
+- [ ] Superfície pública impactada mapeada
+- [ ] README / Version considerados
+- [ ] Paridade NFe/NFCe verificada quando couber

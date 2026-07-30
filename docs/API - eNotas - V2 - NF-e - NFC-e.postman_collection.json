@@ -1,0 +1,1567 @@
+{
+	"info": {
+		"_postman_id": "3d21a299-1ab3-489f-a9ed-4415a348eeb4",
+		"name": "API - eNotas - V2 - NF-e / NFC-e",
+		"description": "Documentação da API eNotas v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45422951",
+		"_collection_link": "https://talithaborja-7956169.postman.co/workspace/Talitha-Borja's-Workspace~5429a030-fca1-406b-8d74-4f3026e95c4a/collection/45422951-3d21a299-1ab3-489f-a9ed-4415a348eeb4?action=share&source=collection_link&creator=45422951"
+	},
+	"item": [
+		{
+			"name": "empresas",
+			"item": [
+				{
+					"name": "Consultar empresa pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Recupera informações de uma Empresa (CNPJ Emissor). O retorno inclui todos os dados da Empresa em questão."
+					},
+					"response": []
+				},
+				{
+					"name": "Setup SAT",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/sat/setup",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"sat",
+								"setup"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Recupera informações de uma Empresa (CNPJ Emissor). O retorno inclui todos os dados da Empresa em questão."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar SAT",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/sat/64865984-8346-4807-95d3-8aae3b840700/all",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"sat",
+								"64865984-8346-4807-95d3-8aae3b840700",
+								"all"
+							]
+						},
+						"description": "Recupera informações de uma Empresa (CNPJ Emissor). O retorno inclui todos os dados da Empresa em questão."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar empresas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas?pageNumber=0&pageSize=5&searchBy=cidade&searchTerm=São Paulo&sortBy=nome_fantasia&sortDirection=asc",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página"
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"description": "Total de itens a serem retornados por página"
+								},
+								{
+									"key": "searchBy",
+									"value": "cidade",
+									"description": "Campo no qual será aplicado o termo de pesquisa. Valores possíveis: nome_fantasia, razao_social"
+								},
+								{
+									"key": "searchTerm",
+									"value": "São Paulo",
+									"description": "Termo de pesquisa"
+								},
+								{
+									"key": "sortBy",
+									"value": "nome_fantasia",
+									"description": "Campo no qual será aplicado a ordenação. Valores possíveis: nome_fantasia, razao_social, cidade, data_criacao, data_ultima_modificacao"
+								},
+								{
+									"key": "sortDirection",
+									"value": "asc",
+									"description": "Direção na qual será feita a ordenação. Valores possíveis: asc, desc"
+								}
+							]
+						},
+						"description": "Retorna uma lista de empresas encontradas pelo critério de pesquisa e paginação definidos."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar relação de serviços municipais da prefeitura",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/estados/:uf/cidades/:nome/servicos?pageNumber=0&pageSize=5&filter=contains(descricao, 'consultoria')",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"estados",
+								":uf",
+								"cidades",
+								":nome",
+								"servicos"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página, sendo 0 o número\nda primeira página."
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"description": "Total de itens a serem retornados por\npágina."
+								},
+								{
+									"key": "filter",
+									"value": "contains(descricao, 'consultoria')",
+									"description": "Filtro para realização da pesquisa. Possíveis campos: descricao. Exemplos de filtro:\ncontains(descricao, 'Consultoria')"
+								}
+							],
+							"variable": [
+								{
+									"key": "uf",
+									"value": "sp",
+									"description": "Sigla do estado, ex: SP."
+								},
+								{
+									"key": "nome",
+									"value": "são paulo",
+									"description": "Nome da cidade, ex: São Paulo."
+								}
+							]
+						},
+						"description": "Consulta a relação de serviços municipais da prefeitura."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar serviços municipais unificados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/servicos/cidades?pageNumber=0&pageSize=5",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"servicos",
+								"cidades"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página, sendo 0 o número da primeira página."
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"description": "Total de itens a serem retornados por página."
+								}
+							]
+						},
+						"description": "Retorna a relação de cidades que já possuem serviço municipal unificado."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar características da prefeitura",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/estados/cidades/:codigoIBGECidade/provedor",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"estados",
+								"cidades",
+								":codigoIBGECidade",
+								"provedor"
+							],
+							"variable": [
+								{
+									"key": "codigoIBGECidade",
+									"value": "",
+									"description": "Código do ibge da cidade cuja a prefeitura será consultada."
+								}
+							]
+						},
+						"description": "Consulta as características da Prefeitura com base no código da cidade (IBGE)."
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular certificado digital a empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "senha",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/certificadoDigital",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"certificadoDigital"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Vincula um certificado digital a empresa. O arquivo deve ser enviado usando codificação multipart/form-data."
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir/Alterar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"endereco\": {\n  \"codigoIbgeUf\": 31,\n  \"codigoIbgeCidade\": 3106200,\n  \"pais\": \"Brasil\",\n  \"uf\": \"MG\",\n  \"cidade\": \"Belo Horizonte\",\n  \"logradouro\": \"Rua Teste\",\n  \"numero\": \"999\",\n  \"complemento\": \"APT 999\",\n  \"bairro\": \"Bairro Teste\",\n  \"cep\": \"85100000\"\n  },\n  \"id\": null,\n  \"cnpj\": \"99999999999999\",\n  \"inscricaoMunicipal\": \"999999\",\n  \"inscricaoEstadual\": null,\n  \"razaoSocial\": \"Cliente Teste\",\n  \"nomeFantasia\": \"Cliente Teste\",\n  \"optanteSimplesNacional\": true,\n  \"email\": \"email@email.com.br\",\n  \"telefoneComercial\": null,\n  \"incentivadorCultural\": false,\n  \"regimeEspecialTributacao\": \"0\",\n  \"codigoServicoMunicipal\": \"4219\",\n  \"itemListaServicoLC116\": null,\n  \"cnae\": null,\n  \"aliquotaIss\": 0.02,\n  \"descricaoServico\": \"Discriminação do serviço prestado.\",\n  \"enviarEmailCliente\": true,\n  \"ConfiguracoesNFSeHomologacao\": {\n    \"sequencialNFe\": 1,\n    \"serieNFe\": \"NF\",\n    \"sequencialLoteNFe\": 1,\n    \"usuarioAcessoProvedor\": null,\n    \"senhaAcessoProvedor\": null,\n    \"tokenAcessoProvedor\": null\n  },\n  \"ConfiguracoesNFSeProducao\": {\n  \"sequencialNFe\": 1,\n  \"serieNFe\": \"NF\",\n  \"sequencialLoteNFe\": 1,\n  \"usuarioAcessoProvedor\": null,\n  \"senhaAcessoProvedor\": null,\n  \"tokenAcessoProvedor\": null\n  }\n}"
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas"
+							]
+						},
+						"description": "Insere ou atualiza uma empresa (CNPJ Emissor)."
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular logotipo a empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "logotipo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/logo",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"logo"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "identificador único da empresa."
+								}
+							]
+						},
+						"description": "Vincula um logotipo a empresa. O arquivo da imagem deve ser enviado usando codificação multipart/form-data. Formatos suportados: JPG, PNG e GIF"
+					},
+					"response": []
+				},
+				{
+					"name": "Desabilitar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaid/desabilitar",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaid",
+								"desabilitar"
+							],
+							"variable": [
+								{
+									"key": "empresaid",
+									"value": "",
+									"description": "Identificador único da empresa"
+								}
+							]
+						},
+						"description": "Desabilita uma empresa específica."
+					},
+					"response": []
+				},
+				{
+					"name": "Habilitar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaid/habilitar",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaid",
+								"habilitar"
+							],
+							"variable": [
+								{
+									"key": "empresaid",
+									"value": "",
+									"description": "Identificador único da empresa"
+								}
+							]
+						},
+						"description": "Habilita uma empresa específica."
+					},
+					"response": []
+				}
+			],
+			"description": "Métodos relacionados à empresa."
+		},
+		{
+			"name": "NF-e",
+			"item": [
+				{
+					"name": "Consultar NF-e pelo idExterno",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{content-type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/:nfeId",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								":nfeId"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "DA973C07-F3BC-4965-AECF-DCF052760800"
+								},
+								{
+									"key": "nfeId",
+									"value": "1511be9e-9b60-419e-9715-41ae1d8e0800"
+								}
+							]
+						},
+						"description": "Recupera informações da Nota Fiscal pelo seu Identificado único (paramêtro {nfeId}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar NF-e pelo idExterno - api11",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api11.enotasgw.com.br/v2/empresas/:empresaId/nf-e/:nfeId",
+							"protocol": "https",
+							"host": [
+								"api11",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								":nfeId"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "3e8b1b2d-21d8-49b5-96b5-1c5bc95a0400",
+									"description": "Identificador único da Empresa."
+								},
+								{
+									"key": "nfeId",
+									"value": "124",
+									"description": "Identificador único da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Recupera informações da Nota Fiscal pelo seu Identificado único (paramêtro {nfeId}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Carta de Correção",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/cartaCorrecao/:id/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								"cartaCorrecao",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "505faf38-db5a-4c30-8c09-dbbee7c40400"
+								},
+								{
+									"key": "id",
+									"value": "P-26687"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Xml da Carta de Correção",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/cartaCorrecao/:id/xml",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								"cartaCorrecao",
+								":id",
+								"xml"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Recupera o XML da carta de Correção da Nota Fiscal pelo seu Identificador"
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar inutilização NF-e pelo id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/inutilizacao/:id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								"inutilizacao",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": "inut-001"
+								}
+							]
+						},
+						"description": "Recupera informações de inutilização da Nota Fiscal de Consumidor pelo seu Identificador (paramêtro {id}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Xml de Inutilização",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e/Inutilizacao/:id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e",
+								"Inutilizacao",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Recupera informações de inutilização da Nota Fiscal de Consumidor pelo seu Identificador (paramêtro {id}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Xml de Cancelamento",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/:id/xmlCancelamento",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								":id",
+								"xmlCancelamento"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Recupera informações de inutilização da Nota Fiscal de Consumidor pelo seu Identificador (paramêtro {id}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Manifestação de Destinatário (NF-e)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api2.enotasgw.com.br/v3/empresas/{empresaid}/nf-e/manifestacao/{chaveacesso}",
+							"protocol": "https",
+							"host": [
+								"api2",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v3",
+								"empresas",
+								"{empresaid}",
+								"nf-e",
+								"manifestacao",
+								"{chaveacesso}"
+							]
+						},
+						"description": "Recupera informações da Nota Fiscal pelo seu Identificado único (paramêtro {nfeId}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Inutilizar uma sequência de numeração de NF-e",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\":  \"inut-001\",\r\n   \"ambienteEmissao\": \"Producao\",\r\n   \"serie\": \"1\",\r\n   \"numeroInicial\": 1,\r\n   \"numeroFinal\": 1,\r\n   \"justificativa\": \"Quebra na sequência da numeração\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/inutilizacao",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								"inutilizacao"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Emitir NF-e",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic LkFzcE5ldENvcmUuQ29va2llcz1jaHVua3MtMjsgLkFzcE5ldENvcmUuQ29va2llc0MxPUNmREo4RUFncWZoeEFVdEJzNnA2QnR4R3dSTGYya05PMXpNcl9lM0hBMVZKUFZMOWY4eGpHclRCNVNYVGVQVzR0V3RhVW5kVkxlMm5aR3JtbWx0TUhVSlFva3NPVVU2Tm9JY1RmRUFURUJWZVdBMFlRRVJZQ2NyTXY4Z3J6RGdDU19vcFNEVTd2UmpER2VRUEZyb3g3c2h6SldTdzJDLWV6NEZ6Sllva3lUeE9XU08tcE5CX0tHV0tGX0N1X0dQUklPRWJ2WUtLbmFzZUxVY0wtdzFNN19lYUdVT3lvczYyX2lXZzNWRWlCZEE4SEN1cEFFa2V5RE5aRkRSQXh6Y0R2VlRvNHMzX0MxajVUUk8yWnNwOHhjMTVDVnRkQl9oY3BCdWplQzJOZi1ybmt0M3o5elBNNDdDMTdhMlpqVVdTYTVtZnhoeDJHNWk2UEFDTWQtb0JZclZ0SFhOOG5rWDZtLTVsSHJSdjdMY1hNSExEU2JGRGhJb0tMb3FOSVpQNzZtT3p1ZFQ0NzZNOHZRRFl0dEVVdGxsamg5SGx6d21kZGNhS1h1b1dYYzFaaFo5LTNqVXhxSDFoSHNhdk9mcUtJbEFxREFmcGJyT3RWaDFyc2dGUVlrbTUyb0dPVEFiZHNJRENDY2FmQ3JzYW1SV0E0MUpGUWJyNl9KQlFETlM2OWdRc2VSRVcwSGRiaXBCSU8za2xqMDdCV2s5aWJwcGNEYXE4WE5tS2luVGZIUVZILUFJeHMxRVBVYjltMm85ZUxnZnFpc0Y0WHdJQzhQT3d3RTZ1VFVWQU1tTVYxeHFqSjJjNENGWUM1UGtCYUxhZDRrMURrTk9YLTk2bFB5T1RkNHEyU2otNGxRWjVoNzVRazNVV1pveXE2VUJDeHFfMloyc1RPSzBoTEMzQXVFQmxkNE9MR2NIaEFoZzloRXNlSWUzcG9RY3hGeDlhcXlDRmJoWXg3UVhhNnpYcDYwQ0dmSU9MQm1UeTZWY1R4Q0F0TURxN0RmT1FVVGsxYnc2TW5SY1hlMkw0a1BLTGg2LUp1d0o1MjJ4Ny1SYVNIWDNpTW90bkRCYzdTcXBUZmNxUkdub3dNYWc2eFBhQm96ZEV0WHVXMHcxS1RrVVJqbFROTlJsMEhQNlFmRkRjaFZDalRDQUlXQmJPc2w1QkV2UUUwRFBiWTBSTzNTNWRMNlNBZy1PeWowT2FLX3lYQUFmS1ZDSGkwNHp2UXpnUV9hZWVsc3BCZ29ZWFNLNlQtRnpNNnBOLUR5dVpMMl92XzFXRU5LaEU4UXppMUVMa2VjQUsySHpCZS1CNlZQTG1tR1kwRlhjb3d4UW1OU2t2UzNXLWxIWUxJQlVONlN5RkNQR2JBQWMtM3dKNmtkcUZZYXpNM3pJV3ZUWVptaDhIc1oxQzZXeUNuZTRBbnhqLVlWMTlBM19uQ0Q5Y192eExvYTMyNEs5aFZEUzNCXzF5SjNFWUdPcEwwaDlQSzFMNlVqRnlkUVVNTXFYMklfMlNXYVhQWnAtUkNTNTdadVlPUUlUd05xMW5KYl9xdVBTVllJU09mUWVhbjNYbG5NX2Z0d1gxZGRCT2dHdnZJVmRRTjJrcF80dzV5bUZDdWdncll0Wi1kd2tpRl9vS1hEeFRkaXlLTG0xc002QzQ0QVVNZDRQaDFRMTJjZF95bFJZRHB2bEpFVzUtT3VDenFIMmVYMVEzRGs2ME9zcjZUVC15MThKSGxZWmVNYzhNQmhRb2FkTExlS182clItaWRwWlJialdPVnBndldfd3J0R21RTXVYZFVwVEhZeE5tUS1vVWRudkhwTjZ5MUdteTdsVDdyaHZfeVpsX2RBRE1jQnc4ckVxMUxDUVhTSG9yNy02V2EtMG0wSnFmQU5ZYmlrdDVmX0s2bUdxczNDQjhSX0VwQVBwNGE2eG9NdVZubm51MF9MeDRvMV9lXzU5elE3V3dzZkRxWEtpZjJtZnJQaXB2V1d5cjVJYlFRR0NPcmZxYWRwZTN0c1AxaV9NdF92Z1B2Y214N1gzNEFJM2hpWkpQSUtXQlZLWlZXYnR1bThFSlFEcjh1RG5WREtMM1o0YmdsRHZvVmdnZWRrZmJ3WjNkWnFjNW9NeWFDanA2UlFMRVN0a1QzTG1kUEdWMFhZVkdRaE5BcGtnUERvUmtJblkzZEoxMEhKRGdvd0N5c3czVXFfNHBVU2xfb1ZqdmxtZEZCTC1CRWpjaGpxbmlEcDV5TzZReDROLWdaNHhlNFRnWklqSG83MWRweUpCcHlvbFpBQ2V3eFlRbHp5QjJkMEJySnAtd1RqWG5NR2JiRERZZWJLSFJZcmVaZ0MwYzdURDVSTmNHaG1PNEZrX3VLUUdDN2VkalFPa1lfNDJaeVFpR2JTVFdOYmxEdk80TGFVQjRVUnNZRHJoUG9oNGQySFJ4UXFEYmZDblNVbHdRZDFGcVp0bEJLMElMVXVXOUZXVmJ4LUpJbmZBQVBMcjUzaVdGQU9mdEgtRnVjOXRqNkhpZVNvZGFKV28zV1N2N3RpRmFhSHlDRTFDSG1pLXdFSjlrV3hsMGZmU0ZWcG84V01ka0RqaC1VSnFVMlhRWE5kV0JheVI5eGVoenVVQjQyUVhJVmVQRGJXQm9Ca09SQk1SeGV3Tm9RbmFzQWFsdmdLbC1rN0lYSWRQa3B3dWp1Z2ZId1U5TDVoU1QydWlOZ1FSQmg4M0g1bWR2R3BTRDBvdDRKYTd0akZ1alVxWGdIbEFQNjJ0UzEzX3FoWEI3anJxUXBIcEdDSU9jR2JwNlJibERJd1ZycHc5dVFWYm1ndUpvaXZxV3p0VTNZZDJ6Z0FvaVFSS2FUb1dzalNtNXhCMGU4TXR4SHV6WThfU1NpV0k1SmNXOVpGQUNiUTFHVm5TY1pHdThuSExtZmxKS2J5U2s3Qjh5cjk4eUMydlJhNnIzNXRFblRuQ2UxeU1LNWNYUXdSLWRpZzd3SzNmYjYzUGFSalRranJlNEVmcUdoaTVoZTAweWt0ek1EcThQaGJjVUlOczJQTDYtUkl1OUdKb3NzdG5DZ3lBcDJSNXVZY0E5NzVqSTQ5RVBfRXp0NUx6eUw1QU1LY18yVVloVXBxcnZTbWFEWkwzTk1mUlE2LWN2dEFEc3pPMnU2M0dqZXVJaDVJbjRBbkF5VFIyRERHQVFIb280UFI3M1VnSXU1em1SUEMxUG01cF9WSVRZdVFIaDJxRWpRMnJhM3Z0OUlOd2lDUGs3a0hFVWZBcUVMR1pDZW83Z0Q3cHdYQkQxX3FuOHQ4T3ZwYWxMUFZpZkNMa21Jd0FJMG02eDJ0UUc1QTMxVXJqT0cyakxoVllHZllhM2E2bDdqNE5MSzlTeUtuTGFRQVBoeWV3YjdjR1o5dTFtUEh1RHNaaW1vMnRaeTgwNHBmeFZkM01PX29QdnBPSTZ6aDRaNjA1c0k1NHRtUU1YYndyZVFYY3h4X0xEMHo4LVhMc2JKLURRX01vZVE3Zk1tRmhkU2tUTXdDUE5KN2JRTlhXaThpWDRGNVNDMGl1eXFZQ3lFSlhaOVZBTkJHSzdCcGFNdXZkbnJ4bTNlRi1zSjZzOGNtT3plNkdVZmNibmZXeEppd2R0NDJ2SW5vMzZ0eXRmanZTdExHWk9qQzV3SkUzUktZZXFOV0tPU0FzQklqNk9TNlJvUEt0OFRrajNzT2ZmeWNaNVUyajd2THN1Q0xxTldycDRuclh4Vl92a0ZZUXVxbThKTjFmaDEtek9vdDJnWGlVY254UnYydzF6T2FQSV96OHhYcUQxaEh1TWRfdnc2eUZZbmpHQUpCNFhDbFJrUWNyWGlSa1hpcEJMUVFYNTBpcWpWTnI3V3d3TmFxaWNCX3piVVdZRUp5Rm9tOHFqZzZZTEZGczVpTGZDdlJxX1ZHN0wtbzBCNEZjN2hMdTBNNEttQlFlb3FqUERrcWJvLUZmcjRTekpYOXFlY3BoeE9KdEluMDRiMmExNF9KeXppV1NoX0VFY0dMYXF2YzJhUUx1d1hHa2FuSDMtNUN1LXR6bjlVSWFyRW9GV3lFRXdsZzllX3d5Y1c0b1pvSXNnT1BZbVpOZkQzc0lXRzhIS2V6T01RNHRsV01WdEdxR2pBd3lucnVlTWRWOTNRZ2ptTld2QW5aa2tRS21iZ2ZNNllFVnMtQ1RVNDBvZS1ULU1DRHNNNmdGZEJJbDN6UUhudmczZkZNQUhrdUMwa19xQXMxTTcwYUpzNDU2VTJYeWtwYU5XQXNaTUktb1BIUVhyUE5Hblc5Ri1QVGdtbUwyamZaUE83YTZfTEJKUkpTLUgwWUF2RTBzbWRodC1Nc3dobUs3NjVqbkFHZm5OWXlWUUw5VzlXa09rcUNGYVBOckY1UXZVLXN3ckZGYTZVbHZFM1kzeHJDUkdpNE9WRE9PTFNQSDIzUjU3a3RhRVBkZjVhV2FLSzJhQjFtVWJEa24zR0VxZE1CTzhwWjFkMml5QVcxb2dXV0JWOWJKN0w3aWE2VnlFQVlEZnBucVNTNDctNFRqLXpBeU40TmFQektjY0JkOHVTUWhVWlpuTWpDNjdmM0dVVGZvUkdvaDlqNVZtNjJKbUJsLURsM25meWdYQWlrMkMtc3ExLUlmaTlrUEwxa1BPOGt3cXV2M0czT3luRkpJTFpOVE5SbXpycFkzOW01SUpCWWxwb24ybC1mVTd2cWE1UEd4dUVJdjZXU2pFeGQwcHNTem5vajgzUEtfaWtmOEZnT1pFa25zSXdvaG5nN2xfWkF5TTc5d3A0dnZFWWRWT1BrYTV3cWZSQmxfSlRaNWwtRWFDUGl3cndhSEE0bXdBelRURjh1ME4xQ1FrYmo2VEx4RHJSTHg2RTY0c2JGVFBhMmxwdDRMaHpOSDFNYV9FczhCRm56eThoQjd5R1ZmTWpvbGljY2RJTGpDT2hOU0h5VDV0d2VJaEhTRW1BTkg4eVlxaS10Ti1qT0V5djRGWGYxZmZGeE03bXFyU0xlZzhZckdVZnNzOVJuendLcXdpLUN5a2pqb2hLaUVPWmhoUDFaVjA4VDlDbXEyeU03bmNxLVAtdjlSNkpwMGFiNFZrdng3bUc1NUpiRlNRdktFOTIyWHEyU0ItelFVeFlMak56U0UwYzAwandaNG5IUUdjcVR2S1AxUHNvUWw0cng4RHdEemU5VXpCTldrQ2w3ZmNvREs3SmstTGVyNV9JenpFS280eGRBdXkzd2ItTkJsVHVHTGtBeGpiRzl3cl9rOENfN2xocTh1YU54ajNULTFwT2lyWWdPWDhUalVjUVdBZWdSUk9jZG05OThIVWJ1WjsgLkFzcE5ldENvcmUuQ29va2llc0MyPUsxYVZmcVBrbEhIcU5UbWtJSU1ZMG44eU9VTzkyVWV5ME9seWo0Z3owVGhUSWxLWnpVV3M3X3pTMnFyR0M1Ynd6Y0JrOUg0RHNDMXFndTBGdW5JZjhPd2RNb09LMy1kNmwwNGUxaVhPRVpSd2dzdWxxNTRPeTZmVjJoYmpKOVdEUjFIeXZORVRqZkg4VlZMYlp4UElyOWVCTGRGRjNkUk5uMFVyMkhZUjJWMWZ0MHdNdlB6emppZ18yUlBpeWtmRmNLSmFuQ1VXcDNjNE9sanAyckI1bVVOZHpKUFdfOyBzZXNzaW9uLWFmZmluaXR5LWNvb2tpZT1iZmRiZDE4ZGE4MTBhYTAyNjVkYTU3YjAyN2UwMTFjMnw4NWYyMzBhOTQ4YzNkYzcyOTUyNjAwMmJmNWYxNWNjYTsjI3wjIzA5NWU3ZWM0LWQ2OTAtNGQ4Ni04ZjQwLWY5ZDFiMGJkMDQwMA=="
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"testeGw30052022A\",\r\n    \"tipo\": \"NF-e\",\r\n    \"ambienteEmissao\": \"Homologacao\",\r\n    \"enviadaPorEmail\": false,\r\n    \"forcarEmissaoContingencia\": false,\r\n    \"pedido\": {\r\n        \"presencaConsumidor\": \"NaoSeAplica\",\r\n        \"pagamento\": {\r\n            \"tipo\": \"PagamentoAVista\",\r\n            \"formas\": [\r\n          {\r\n          \"tipo\": \"Dinheiro\",\r\n          \"valor\": 1.00\r\n        }\r\n            ]\r\n        },\r\n        \"intermediadorTransacao\": null\r\n    },\r\n    \"cliente\": {\r\n        \"indicadorContribuinteICMS\": \"NaoContribuinte\",\r\n        \"tipoPessoa\": \"F\",\r\n        \"nome\": \"Cliente teste\",\r\n        \"email\": \"santiago@enotas.com.br\",\r\n        \"cpfCnpj\": \"38618699772\",\r\n        \"telefone\": \"3132223333\",\r\n        \"endereco\": {\r\n            \"uf\": \"MG\",\r\n            \"cidade\": \"Belo Horizonte\",\r\n            \"logradouro\": \"Rua Sergipe\",\r\n            \"numero\": \"1014\",\r\n            \"complemento\": \"7o Andar\",\r\n            \"bairro\": \"Savassi\",\r\n            \"cep\": \"30130174\"\r\n        }\r\n    },\r\n    \"transporte\": {\r\n        \"frete\": {\r\n            \"modalidade\": \"SemFrete\",\r\n            \"valor\": 0.0\r\n        }\r\n    },\r\n    \"emitidaEmContingencia\": false,\r\n    \"itens\": [\r\n        {\r\n            \"cfop\": \"5101\",\r\n            \"codigo\": \"1\",\r\n            \"descricao\": \"Tortas Especiais da Docis\",\r\n            \"ncm\": \"49019900\",\r\n            \"cest\": null,\r\n            \"extipi\": null,\r\n            \"codigoBeneficioFiscal\": null,\r\n            \"quantidade\": 1.0,\r\n            \"quantidadeTributavel\": 1.0,\r\n            \"sku\": null,\r\n            \"unidadeMedida\": \"un\",\r\n            \"unidadeMedidaTributavel\": null,\r\n            \"valorUnitario\": 1.00,\r\n            \"valorTotal\": 1.00,\r\n            \"descontos\": 0.0,\r\n            \"impostos\": {\r\n                \"icms\": {\r\n                    \"origem\": 0,\r\n                    \"situacaoTributaria\": \"041\",\r\n                    \"modalidadeBaseCalculo\": 0,\r\n                    \"baseCalculo\": 1.00\r\n                },\r\n                \"pis\": {\r\n                    \"situacaoTributaria\": \"01\"\r\n                },\r\n                \"cofins\": {\r\n                    \"situacaoTributaria\": \"01\"\r\n                }\r\n            }\r\n        }\r\n    ],\r\n    \"valorTotal\": 1.00\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "67023eae-7384-4469-bb0a-26f44e670800",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Emitir NF-e - api11",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"WAZ001\",\r\n  \"ambienteEmissao\": \"Homologacao\",\r\n  \"tipoOperacao\": \"Saida\",\r\n  \"naturezaOperacao\": \"DEVOLUCAO DE VENDA DE MERCAD. ADQUIRIDA OU RECEB. TERC.\",\r\n  \"finalidade\": \"DevolucaoMercadoria\",\r\n  \"indicadorPresencaConsumidor\": \"NaoSeAplica\",\r\n  \"nfeReferenciada\": [\r\n    {\r\n      \"chaveAcesso\": \"31190506036939000516550090000012721595679193\"\r\n    }\r\n  ],\r\n  \"cliente\": {\r\n    \"tipoPessoa\": \"J\",\r\n    \"indicadorContribuinteICMS\": \"Contribuinte\",\r\n    \"nome\": \"Waz Hardware Import. e Comercio de Suprimentos de Informatica\",\r\n    \"email\": null,\r\n    \"telefone\": \"3121266666\",\r\n    \"cpfCnpj\": \"06036939000516\",\r\n    \"inscricaoMunicipal\": \"01865260042\",\r\n    \"inscricaoEstadual\": \"0622665390352\",\r\n    \"endereco\": {\r\n      \"uf\": \"MG\",\r\n      \"cidade\": \"Belo Horizonte\",\r\n      \"logradouro\": \"Av. do Contorno\",\r\n      \"numero\": \"2939\",\r\n      \"complemento\": \"Loja 07\",\r\n      \"bairro\": \"Santa Efigênia\",\r\n      \"cep\": \"30110013\"\r\n    }\r\n  },\r\n  \"enviarPorEmail\": false,\r\n  \"itens\": [\r\n    {\r\n      \"cfop\": \"5556\",\r\n      \"codigo\": \"114077\",\r\n      \"descricao\": \"SSD - 2,5pol / SATA3 - 120GB - Kingston A400 - SA400S37/120G\",\r\n      \"ncm\": \"85235190\",\r\n      \"quantidade\": 10,\r\n      \"unidadeMedida\": \"UN\",\r\n      \"valorUnitario\": 158.10,\r\n      \"impostos\": {\r\n        \"percentualAproximadoTributos\": null,\r\n        \"icms\": {\r\n          \"situacaoTributaria\": \"900\",\r\n          \"origem\": \"0\",\r\n          \"aliquota\": 18,\r\n          \"baseCalculo\": 1518.10\r\n        },\r\n        \"pis\": {\r\n          \"situacaoTributaria\": \"01\",\r\n          \"porAliquota\": {\r\n            \"aliquota\": 1.65\r\n          }\r\n        },\r\n        \"cofins\": {\r\n          \"situacaoTributaria\": \"01\",\r\n          \"porAliquota\": {\r\n            \"aliquota\": 7.6\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"informacoesAdicionais\": \"[seriais == Seriais: 683396 a 683405.]\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api11.enotasgw.com.br/v2/empresas/:empresaId/nf-e",
+							"protocol": "https",
+							"host": [
+								"api11",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Emitir Carta de Correção",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": \"correc-01\",\r\n   \"ambienteEmissao\": \"Homologacao\",\r\n   \"numero\": 1,\r\n   \"correcao\": \"Descrição da correção...\",\r\n   \"nfe\": {\r\n     \"chaveAcesso\": \"9999999999999999999999999999999999999999999\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/cartaCorrecao",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								"cartaCorrecao"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								}
+							]
+						},
+						"description": "Emite uma Carta de Correção."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar nf pelo id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/:idExterno",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								":idExterno"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "idExterno",
+									"value": "",
+									"description": "Identificador único da Nota Fiscal que deseja cancelar."
+								}
+							]
+						},
+						"description": "Cancela uma Nota Fiscal identificada pelo seu ID Externo (paramêtro {idExterno})."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NFC-e",
+			"item": [
+				{
+					"name": "Consultar NFC-e pelo id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e/:nfeId/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e",
+								":nfeId",
+								""
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "a79ba039-aeb5-4ae8-8ff8-7e7a86f00600",
+									"description": "Identificador único da Empresa."
+								},
+								{
+									"key": "nfeId",
+									"value": "67756",
+									"description": "Identificador único da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Recupera informações da Nota Fiscal pelo seu Identificado único (paramêtro {nfeId}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar inutilização NFC-e",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e/inutilizacao/:id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e",
+								"inutilizacao",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "7b632133-0b02-4a0b-9d9e-2a0f1bc60700"
+								},
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						},
+						"description": "Recupera informações de inutilização da Nota Fiscal de Consumidor pelo seu Identificador (paramêtro {id}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Xml de Cancelamento NFC-e",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e/:id/xmlCancelamento",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e",
+								":id",
+								"xmlCancelamento"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Recupera informações de inutilização da Nota Fiscal de Consumidor pelo seu Identificador (paramêtro {id}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Xml de Inutilizacao de faixa de NFC-e",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{application/json}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e/Inutilizacao/:id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e",
+								"Inutilizacao",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Recupera informações de inutilização da Nota Fiscal de Consumidor pelo seu Identificador (paramêtro {id}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Emitir NFC-e",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"teste01\",\n    \"ambienteEmissao\": \"Homologacao\",\n    \"cliente\": {\n        \"nome\": \"Silvia Marina Ribeiro da Silva\",\n        \"cpfCnpj\": \"29565837190\",\n        \"endereco\": {\n             \"uf\": \"MG\", \n         \"cidade\": \"Belo Horizonte\",\n         \"logradouro\": \"Rua 01\",\n         \"numero\": \"112\",\n         \"complemento\": \"AP 402\",\n         \"bairro\": \"Savassi\",\n         \"cep\": \"32323111\"        \n        }\n    },\n    \"pedido\": {\n        \"presencaConsumidor\": \"OperacaoPelaInternet\",\n        \"pagamento\": {\n            \"tipo\": \"PagamentoAVista\",\n            \"formas\": [\n                {\n                    \"tipo\": \"Dinheiro\",\n                    \"valor\": 2.00\n                }\n            ]\n        }\n    },\n    \"enviarPorEmail\": false,\n    \"transporte\": { \n        \"frete\": { \n            \"modalidade\": \"PorContaDoDestinatario\", \n            \"valor\": 1\n        },\n        \"enderecoEntrega\": {\n            \"tipoPessoaDestinatario\": \"F\",\n            \"pais\": \"BRA\",\n            \"uf\": \"RS\",\n            \"cidade\": \"Boa Vista do Buricá\",\n            \"logradouro\": \"Rua São João\",\n            \"numero\": \"30\",\n            \"complemento\": \"\",\n            \"bairro\": \"Centro\",\n            \"cep\": \"98918000\"\n        },\n    },\n    \"itens\":[\n        {\n            \"cfop\": \"5101\",\n            \"codigo\": \"01\",\n            \"descricao\": \"Extreme com fritas\",\n            \"ncm\": \"21069090\",\n            \"quantidade\": 2,\n            \"unidadeMedida\": \"UN\",\n            \"valorUnitario\": 1.00,\n            \"descontos\": 0.00,\n            \"impostos\": {\n                \"icms\": {\n                    \"situacaoTributaria\": \"102\",\n                    \"origem\": \"0\",\n                    \"aliquota\": 12.00\n                },\n                 \"pis\": {\n                    \"situacaoTributaria\": \"08\"\n                },\n                 \"cofins\": {\n                    \"situacaoTributaria\": \"08\"\n            }\n        }\n      }\n   ]\n}"
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "FBD5A80A-71D1-4418-8AB7-C7DE0DE40300",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Inutilizar uma sequência de numeração de NFC-e",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"id\":  \"inut-001\",\n   \"ambienteEmissao\": \"Producao\",\n   \"serie\": \"1\",\n   \"numeroInicial\": 1,\n   \"numeroFinal\": 1,\n   \"justificativa\": \"Quebra na sequência da numeração\"\n}"
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nfc-e/inutilizacao",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nfc-e",
+								"inutilizacao"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar NFC-e pelo id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v2/empresas/:empresaId/nf-e/:idExterno",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v2",
+								"empresas",
+								":empresaId",
+								"nf-e",
+								":idExterno"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "idExterno",
+									"value": "",
+									"description": "Identificador único da Nota Fiscal que deseja cancelar."
+								}
+							]
+						},
+						"description": "Cancela uma Nota Fiscal de Consumidor identificada pelo seu ID Externo (paramêtro {idExterno})."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

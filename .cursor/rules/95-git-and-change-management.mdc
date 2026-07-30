@@ -1,0 +1,49 @@
+---
+description: Git, commits e gestão de mudanças no eNotas.Sharp
+alwaysApply: false
+---
+
+# Git e Change Management
+
+## Propósito
+
+Manter commits pequenos, revisáveis e sem segredos.
+
+## Quando aplicar
+
+Ao concluir tarefas, preparar commit, ou revisar `git diff`.
+
+## Contexto do projeto
+
+Git ativo; histórico informal em português. Sem Husky/commitlint. Skill obrigatória de apoio: `.cursor/skills/git-commit/SKILL.md`.
+
+Há mudanças WIP frequentes em Models — não misturar com docs/governança sem intenção.
+
+## Regras obrigatórias
+
+1. Não commitar sem pedido explícito do usuário (agentes apenas preparam/revisam, salvo instrução contrária do usuário).
+2. Revisar `git status` e `git diff` antes de sugerir commit.
+3. Separar commits por intenção (docs/cursor ≠ campos fiscais ≠ bump de versão, quando distintos).
+4. Proibir secrets, tokens, nupkg locais desnecessários, logs.
+5. Preferir Conventional Commits se for padronizar mensagens novas.
+6. Escalar revisão humana para banco/auth/deploy/CI/fiscal crítico — neste repo: auth, fluxos fiscais, publish NuGet.
+
+## O que fazer
+
+- Usar a skill `git-commit` ao final de tarefas com arquivos alterados.
+- Sugerir mensagem clara no imperativo.
+- Listar validações feitas e pendências.
+
+## O que evitar
+
+- Commit gigante multiuso.
+- Amend/force push sem pedido.
+- Incluir `bin/`, `obj/`, `.vs/` (já no `.gitignore`).
+
+## Checklist antes de alterar / commitar
+
+- [ ] Diff revisado
+- [ ] Sem secrets
+- [ ] Escopos separados
+- [ ] Mensagem alinhada ao diff
+- [ ] Build/validação mencionados

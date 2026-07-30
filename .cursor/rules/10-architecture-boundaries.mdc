@@ -1,0 +1,48 @@
+---
+description: Fronteiras arquiteturais da library eNotas.Sharp
+globs: eNotas.Sharp/**/*.cs
+alwaysApply: false
+---
+
+# Fronteiras Arquiteturais
+
+## Propósito
+
+Manter a separação Client (público) → Service (interno) → Models/Helpers.
+
+## Quando aplicar
+
+Ao criar/mover classes, mudar visibilidade, ou redesenhar pastas.
+
+## Contexto do projeto
+
+- `Clients/eNotasClient` — único client público observado
+- `Services/RestService` — `internal`
+- `Models/` — contratos públicos
+- Sem camadas de persistência ou apresentação
+
+## Regras obrigatórias
+
+1. Novos endpoints entram em `eNotasClient`, não em classes paralelas sem motivo.
+2. Manter `RestService` como detalhe interno.
+3. Não expor `HttpClient` cru na API pública.
+4. Models de request/response ficam em `Models/`.
+5. Não acoplar a biblioteca a frameworks de app (ASP.NET controllers, etc.).
+
+## O que fazer
+
+- Seguir regiões `#region NFe` / `#region NFCe`.
+- Reutilizar `ApiResponse` / `ApiResponse<T>`.
+- Alinhar paths a `/v2/empresas/{empresaId}/...`.
+
+## O que evitar
+
+- Duplicar client HTTP fora de `RestService`.
+- Tornar `RestService` público sem decisão explícita de versionamento.
+- Misturar parsing XML de um documento com models de emissão sem necessidade.
+
+## Checklist antes de alterar
+
+- [ ] Visibilidade (public/internal) intencional
+- [ ] Sem nova dependência NuGet sem necessidade
+- [ ] Fronteira client/service preservada

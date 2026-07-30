@@ -1,0 +1,1426 @@
+{
+	"info": {
+		"_postman_id": "b1cd5411-d541-48f2-a306-88cd99aedc3b",
+		"name": "API - eNotas - V1 - NFS-e",
+		"description": "Documentação da API eNotas v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45422951",
+		"_collection_link": "https://talithaborja-7956169.postman.co/workspace/Talitha-Borja's-Workspace~5429a030-fca1-406b-8d74-4f3026e95c4a/collection/45422951-b1cd5411-d541-48f2-a306-88cd99aedc3b?action=share&source=collection_link&creator=45422951"
+	},
+	"item": [
+		{
+			"name": "empresas",
+			"item": [
+				{
+					"name": "Consultar empresa pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic LkFzcE5ldENvcmUuQ29va2llcz1jaHVua3MtMjsgLkFzcE5ldENvcmUuQ29va2llc0MxPUNmREo4RUFncWZoeEFVdEJzNnA2QnR4R3dSS2lXMlhJc29FLXpndXpidkVSSDdOd0thMmxqYVctUHVSaE1QWGFDdjlwRUFFcmxDekMzUFRvNllGRFM1TG1ONWRhdzdnNHN6Y0RsTERrd2ZiMGpkdVdXVERjVkprZ0RaeUZxNWc4Zk5LcFhHdlFCUkd2YmtObndkbGNjSVBReWRFdzBCR0NfVVVjVjY1T0c2QlNxOVdCaTh2Wk9pQ0IzN0hoeUFKaDhSQXhzOXg5WWZqckZLbEtsbWRyNVlFSVNxVVZ3QWVSZ1pnc2FpREhYeGtHbXlVZnZJWXpxWlBLRnBTdDd6b2hJVS1sMlp2YlJIdXBWMXpwNGtPNWszMWdkTVJwaFVaM05acE5pZzQ3TWMwVnV2alFzTTZxdDZpaTNIbldSSWpNcUJ1WkVqTGVETkVJTkVHQ0tnS00yVWZBVkFnM2JCUWp2ZGNNU01jbVNPUnBSVHR6UnRSZzd3VHNIVjVZSGJpbzRkNGc5RWdCRERQbkdxRUVZS0VjZEVqMV9LejVFRFBHa1FWMkJKRmM4Szk2b0ZsdldSWVFDb2ZlMGtheUNRejgwa3p0WGJLRnZJMDkzVW1sX0dWWnFXbEpBdWJ1eDdtUXh2dTBDeWl2QjNFZWdmTlhBcVhLOTgwa05WVV9FbnBmZEJTT0RlZFpiUFZWa1JKSEVPNm1TNGNpQVdodnRIbDRBemtvVEhKSHQ1THo4UEhJUk81a1BJTE9iNjIxYXhOckcwTUgzYlVzYi1STnBEaHBjcEYxV1hlS1RiV0ZUTVV4UUJRUTBucHc3cHZRbzlnVk1JVlR0LVNrRDNoRXpHT2xCMm9sclA0ZnliaDNZUTk4dUw1ZDZZM0pDQXN0NnRqRE9BRzFNSmFZWTNEbGh2cHRDSHZ3WlhhWU5kWXhoUFNmdkIwR1NKWkpqT3A4NjBRVDdhaGtaNjhoWFhKMWZBdURqQ2M1SzV2T3N3Y0s2OUxiMUQyZ3hfRDhCU212MmtRYUgzNWxjR3ZaU21DMURjWXhXWjRkeDRJMVljYmtMTTdhR0xaYngtaVB1S3ZTVG1YNmFZNmVtWEZjVFJkVlhkbTBuRm5ENEdDeVNmSHVZTktTUkdIejlyeXhTNExmY0wtdTc5ZVNyYV9Wa1R3Y1lqUGFYUjVjUzFjWU1IQlVqcVJBSGpOaXhCc2hNNXJxR2xsZzV2dllGUG1HbGx1eDF0b0VaTUpWcnpoYXV2XzZmSXFpZ2Y2R1V4enFLNjByZGtqZXVhLVN0S3ZmX3Z1b1pDMmRFN05XQlVlVENMUnZPVzVLdGhHNENkblZDYlVPNlhfTkttb0dhbWZtdFVJOF9tZDdIU3pTS1FfOUJPeHNVOWNMVmpqOEJEZF9pekhZMl9Mejl5UURWMjQwMThqZTNjZVk4S2ZvSHQ2UDdoQ29KQjZaMU5JZWFuUlp2Q091Q28xN1lPRFlwTDRkMTdGeHhjOHYtcVJ2ZURpZVhXUUtzNzhyWEN6OXdVUzF0NE5QWGZSOGU4c01McHpWZWhqc1VwbUktVmtvYlR5SzQyczVSM0dDdm1KX01SekcxM3FTdG9FZHVhcEltU3hBejJ3UXd1QUh6SEVjV0o3eUhmWnFaOU83ekMyY0hHM280VEF4bkVFd2RvT2h2OWZ1Qnh6bENKQU1SLXlLcnEtbVZHT014SW80WWZuR2ZRZ1BjYkxNcUJyS2VHaW40YjRYaS1takFTOXYtWC0wS184TUEwaDlvSVNHVEpYVW5FMGM2R0s0NEROTVRtVlZRdkJuc0VQMU9ia0gzWHdXNzZJbVI1Rk1GNWJyR1B4QzFFMFRFTVlhQUl2dF9HTThWanJHME03NmtoNWtxZ0ZYZUhvRTZuckNDdUg3THluXzdWb2p3X0RaMDhzeFpieUxqeng1WmdUQlpqYjExV2FkTGtEYXBZTjNCbUM0aTFadVpMa3RmWTRpQU5DMlpyWFVINGVuRzBGRUNBLXpwYkRkTDg0TEYzZ1ZCNEsyOUFTME1uTjJvY1lTZlNhOFZ2YkkwMllleUlQVzZIUDhwS3NSM0VQanZrVUQ2V2hmRmxUcnJPZlFyYlcybS1tbHR4dlg0MllwTmxRMGw4aE1pcUZIV2RLakRaRmRiVXZhcXRFNWg4TlZ1M0xVZ09rd2tBR2dDNW9sdXNMYXZSQ20tZFFpQks2LTJCT3JZRURweTJaMnhuS3ROY2NLWGhrcVhnQ0ZYWEtGNDlDbmxHaEl4SWtxODlISm9zbmNlSm8wUEhlbkVFZUlBWFI0dFQwUmZuQ1d5Tk9FUGc5US01WGpFaTliTUtMZk5zbnZkSmg3STlTTVN1SkZoWWRIZmxjeXhVRkZQNk9ldXlTUHpFbF93UjVXOWNaUFlmUy1QXzJReDBDN0RNSU9OcURac1NvSzEydnpOV09sSDRpSzMyM1VrMFkyNWJuVGpwNG5IR28tam44RWUtQ3Nfbnh6V1hzUlZiV1ZiNVVzdTZrU3R0OWozX3NnWC15N3ROMFgxbjloZ2JzNmxPSTRNc0E4REc0QnA1WWxublNrdUw3WWpSTEFLc3MyUUxkdEdCUnFiZGtpa2ZrUlpNY3NBVTlfbWZxaHNKWXZGaFFSOEN4eER5dnFleUtjOUI3cTc5OVNyT1FGRGNlNFI0d01pMExfWEZ3ZEZtQmFuZjVUdlMwR055Vko4N0NuTHFqWDByd1ZLSGVHdGxNb2FTS1RyWlBFRVRCMkRESjBiVU9FU19fbm1UVkx6Y2NpdmRsUmJNV2x6dm51RjRlWmE1OFllbk03YkVRSjl6NUNSc09nNHc5Y05JVEJpZXhzS01LMXVfTTVDWjhlc3BzSjI2V3NXVENucm5CVmtLTlBQSlUzYnRvMVE5ZXdKcC0ycEViVUxRekgtdWlkMUJMQmZIandxMlUxeFgzUDVKazRpSkc4Y2U2OEoyR1AzVkZDbGs3M01yV1V6SDhtdTBMZG5GUjBENFM5OUZMTjE3bDVKcTNkUEFLYzF1TEVFdV8yR0FPMU5nTkZrMzdETWhUWmRvb0l1TUFHTFhoQkQ1dU9CQ1ZVNTA2R2U4WWdVdTBvVzNhdjY3LUlPUTRrRHctTHc4V2NuOHowWXAwb2cySHlHQmFPRTdyWmwyZEwyNFNUQmhBT0lXaFFUci04M1h4MlNiWWZBTnU4VG43d1ZQWVRETjM3QWVOdVE2d2VGbDhzT054WnBiRkkwWnk3bHE5NDdZUU1TT0JiTDNEYl9PLUVyd05RcndyWEpGRGFjR2pnS3JOLXVmV1JhNldZZjFnVm5mODRlM2hBV2loVmczQVhwREFWR2RjeXQzekluYUlPQllRSE1SRzlNNEEyMFVIcG90QnZmMUhCakdBbFk3azd1MlM1dVIzdjFzdHAycEFQMS1oMzl2eDcyMjEzTEF0ZkF6UGNfMERXNjZ4WDNCRlR4U0dxWi1nZDdTdmhPd2xsa052UmZTT1JaWkFHTVhrY3ZHNG9FSlFjbjY0R3F4RmoxamlGNl9mY0RtUFFjbzFNZ2N0SVlRZkNnTzJ6NjF5QTRWNkJGcDYwRE4xOEdKOWJDNjB3T2FCNmNza2t2VnQzMmYwZjNxakJ4aGpmd0VkYzFGdzAwemZDQUYyRkk0V0F3cTVQQTQyRGFhX2NrdzhxSkVYWFhzbFlNWUlKY3c0SkR3Y2tCSDdsMFFIaXI0VDJ2SEs3cnMzaXY4WV94R09YQmNfWVVzU2dhT2lsdnVsbEkzc1NTamdLbG9yQmJHLWlXQXpCNkVXMkdlcHkzNExxd21iRXFHVVYtSzdiZ241aGwtWUlISWdWYkl5NEhVMkNjTFRKTlYtSUs3U09NX3JhN3V6T1dra25YUXBUNlJTa2FRMENHWGU5VkR6RElpcXhNcG5YNnlpN2JRcThGSS1wWTlFTVJvcUdDRm1pOG1xRmloLXFuRF9xcHZVa1BONEhFSFlzbXJPZGRFMk8yNmJZM3BnZVBKRW5MOTZVN2djbTlnRGlDNXhvVVFWcHVla2Y4VkNFSENDazZNdk9kVHZiZXQ4UXIxZEVCYmd5dXpGS1hlMnBtcVVJRGROWHQ0TmR2bHV4bElCcllTWUIxWldrbzd2RkozRXlNT010d1dlcWFLTFlkNnM0c1ZCUGE2ckR1OXNWbmVfSk1XLTROSG1pWk1UTUZ0dHAxUklsTWlqSUZOTWNhS0Q1V29lUm45dHo5VFZZWWtUaWN3MzBHTGpyT2EzMjhJTGFCZzJVcFRHRTY5VW4ycFAwemFhN3NvYTNwdWluUThVX2dQVjRXdk1UYkNsNzRxVzlqOTJoOTg2Y0N3YXlKd0wwSzJwT1VjTTZqMFZkY0VEbE1CeE91RmIydVN6cTVibmRIblpZT3ZNUUd4VFFoczJncmlGcHBnU2ozOUlxYk9yR21TQ3NkNWNlT2dkQk1oRTRHeVNLdmw0MlVySkt3VU92TUh1REJDLWh0S2Q4THZ0Q1BDdjhWZE1vUVkxRU9SLUl3cDBHYjZqM01pU0dfc1ZlWS1zZFpaUGFTaXJqMExudWJxd1M5OXJNOWRrQ0VTVzhuSF82SUpwM19xejdVR2QxOEQ5dUFQTzlnLTVDU0NacVBvaVBXeGlpZFdRV3M1Vnpka1czTzVQMGRMckV6YmJUSmY0SWZZU1ZXaXc2X1BVcjF0OGdqckdpQVR5N295NVZQcGZaelFZTFo1ZFZHNENuTGo2czBvd0ttVGVTX2FMVFI2NVRVTm44T0FlekxmTllQUC1hdURhRzFWVWQ5SG1RT3NpZFZIQ2JKd1dGSkRfYVBxbjBhcWJFcG1Da2RjemZrYWllNDJjZ3BWZ09jSnZnMmhNNzlOMUFCVWtNVkNKajc3bURGdkdrYVpjVUljel81T0NTZmRUb2dMQ1FkZkVpUjZKX21kUW5peHF1dmNYeXFoX2dObEU5UE1ubzVQVFExaG1qZHFQSWNJSktfTzA3VHJlSkNRTGNkN2NVY0U4YWJmYnhBQlZXYjJLbFNNaU51NE1FSmRmeERfX2ROV3pieWFwRl9ZNTFYeDRGR2x4bWYwTEUyM1RONGFZU2sxeTlvSERsckFqU0tralgwaFktMlZ1ZDRhUXZqRy14NGROdEhKYUs2VUFWdHppSjB6WEhWNnowN1JqNUNLQmVGeEZJODJiTnpvTVBFdnowRlNiT192eHZMOVpmSTU3d1JkVDgtN1NFdENFMnJkVFBtMjBMT2UyYjNMNjFkcG9NYmMxNEZUeU8xZU1hOHFPS2pvejJxdkwxX2VmdVRQaWJTaEh4Rm1fRDY4SzsgLkFzcE5ldENvcmUuQ29va2llc0MyPVNrUGw1UWpzZXRPM3o0X1F0ODlMS0kyZnB2blF0WDVab1UyTlN6ZmlqNzhKeG1sZXVKQUxiOFc3MTAwbzZXSTlOUy16TzBBSldhSkdXaVZvYlR4Qm5pMEJoR3F2Vk5GeUVJeGRkZGNRUENCYVJYdVN5d002V3otb1FDbFBvcEd3UkswMnBKX0RBaEdQQW1uX3RnQTl4ZVJGRUprNTNBRW1tUHJleE9KMWMtOXVfUjdRRHZWQXZVTUVNbUNsOFZ6bDNmTUN5a0YxRkpWOThUQnhLRkxyZkI4MXZfdjc2NmEybGV2TG5yWndxQm1MQXR0S3Rtd3N4QTdxUmFYendOb0RLU2ZveU10MDsgc2Vzc2lvbi1hZmZpbml0eS1jb29raWU9MjRiZWIzMTQxNThmYmQ1OTM1NTQzYWM4ZWFiNDJjODV8MmM0YjRkOGFjZmRjMTMwYzRjMDE1Yjk2NjU2YjUwZjQ7IyN8IyM2YmM0Y2I3MC03MTVkLTQ1ZjUtODE4Yi05NWY5NjBmZTAzMDA=",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId?Authorization=Basic QXBwU2VydmljZUF1dGhTZXNzaW9uPWlVVWxzUXBhdTBEYTFaVTR6Q3RjZm1ZMnlrcjZST2d3WWtsVUlnT283c29EeUQ4SEptRGFqUklLTTB0algzd1VPU1IxMitqMHE3MnF3UG4zd3dUUk1jdTk4SGxzUElNazNxZmdSckp3NmxzeFJPb3Y0dHF3UG16azhxYU1XR25va0ErR1Z1WldkZlV6Ym9vZkZIdUY0WXRJWFBROVIremVUQ1JkNUgxRFZpMjZwV0JQQUo3dXpTNVhOV1NhRWV4b0tUK3FXNWhJMXZuUUdYa2s1RHRqenpCaHVUS3g5emozTWl0T2tVd01tcVlsTG1CTVROY2YySVFWUnFZTGlLaDZBbXo2Z2Z6ZVQ1VEdKTFMzQTJ3RTFWUUZBM3Brd3ZGbkQ4SnV4cSttelBXTjc1TngvQXd3a1ZXNG02MzlDMFFpS09EZ0RmZkgydGhjandLd1NNeEcxWWtWNDR3WWVMMW02bFN6OWNvWlBPVjQwd2RVcnVySzRvY1VsZXhPcTRiN3lvaGFDUmRjWHlKSElLc3F4UUxTVXpNekNCck42VE5iek91UXZFQjFxMXE0eTg0anEwNlNnTHQrVFBWTkhkeEh3WFg3cm9xMjlxQ3hTa2lGWjJDMUVMbnZYclVTRDFDdmdYZ0I5T1BXaGdVeVhjNFJRYVdPT0I5T0gwNmJoVTQ0L2RGaE9DV213RVJYb29WUThoODJhMmlUQ1pCS1pGbXN1dE16cjhPbEtLTWVQd3lTOUorMkk0MHFSSnorWXB1RlYvRGh5UitZaEVyZ3ZXdUxBQjlFc3l2dThtcW9jUm1aOUwvR3hBR3pGNUhlRjFIcWdGcHFyUDhQcVYyYTlGVmFvYUNlVTNiQlFsc0RhdFJjQ1Z3TzAvdm1xc1lobEN1QWdVV28wbmhVZVdUeVFabkp1bHFWUFdGQW55WUs1MitMZ01yOTVacHAzVUF5eG5VNjV5aXQvbitqY3k4eGlJMkU0MVlYMjlqNDFQQUpzUFQyY3NOSHhFRys2dE12cTQwRXlER2d3bEVsNVE3OEx2NVZrNXFVN1E9PSMjfCMjNTA4NWRmNTAtZWQ1Mi00N2IzLTgzNzQtMmFhZmEwOTgwMjAw&Content-Type=application/json",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "Basic QXBwU2VydmljZUF1dGhTZXNzaW9uPWlVVWxzUXBhdTBEYTFaVTR6Q3RjZm1ZMnlrcjZST2d3WWtsVUlnT283c29EeUQ4SEptRGFqUklLTTB0algzd1VPU1IxMitqMHE3MnF3UG4zd3dUUk1jdTk4SGxzUElNazNxZmdSckp3NmxzeFJPb3Y0dHF3UG16azhxYU1XR25va0ErR1Z1WldkZlV6Ym9vZkZIdUY0WXRJWFBROVIremVUQ1JkNUgxRFZpMjZwV0JQQUo3dXpTNVhOV1NhRWV4b0tUK3FXNWhJMXZuUUdYa2s1RHRqenpCaHVUS3g5emozTWl0T2tVd01tcVlsTG1CTVROY2YySVFWUnFZTGlLaDZBbXo2Z2Z6ZVQ1VEdKTFMzQTJ3RTFWUUZBM3Brd3ZGbkQ4SnV4cSttelBXTjc1TngvQXd3a1ZXNG02MzlDMFFpS09EZ0RmZkgydGhjandLd1NNeEcxWWtWNDR3WWVMMW02bFN6OWNvWlBPVjQwd2RVcnVySzRvY1VsZXhPcTRiN3lvaGFDUmRjWHlKSElLc3F4UUxTVXpNekNCck42VE5iek91UXZFQjFxMXE0eTg0anEwNlNnTHQrVFBWTkhkeEh3WFg3cm9xMjlxQ3hTa2lGWjJDMUVMbnZYclVTRDFDdmdYZ0I5T1BXaGdVeVhjNFJRYVdPT0I5T0gwNmJoVTQ0L2RGaE9DV213RVJYb29WUThoODJhMmlUQ1pCS1pGbXN1dE16cjhPbEtLTWVQd3lTOUorMkk0MHFSSnorWXB1RlYvRGh5UitZaEVyZ3ZXdUxBQjlFc3l2dThtcW9jUm1aOUwvR3hBR3pGNUhlRjFIcWdGcHFyUDhQcVYyYTlGVmFvYUNlVTNiQlFsc0RhdFJjQ1Z3TzAvdm1xc1lobEN1QWdVV28wbmhVZVdUeVFabkp1bHFWUFdGQW55WUs1MitMZ01yOTVacHAzVUF5eG5VNjV5aXQvbitqY3k4eGlJMkU0MVlYMjlqNDFQQUpzUFQyY3NOSHhFRys2dE12cTQwRXlER2d3bEVsNVE3OEx2NVZrNXFVN1E9PSMjfCMjNTA4NWRmNTAtZWQ1Mi00N2IzLTgzNzQtMmFhZmEwOTgwMjAw"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "6b949b48-1800-4a82-96a0-cb017e900b00"
+								}
+							]
+						},
+						"description": "Recupera informações de uma Empresa (CNPJ Emissor). O retorno inclui todos os dados da Empresa em questão."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar empresas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas?pageNumber=0&pageSize=150&searchBy=cidade&searchTerm=&sortBy=cidade&sortDirection=asc",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página"
+								},
+								{
+									"key": "pageSize",
+									"value": "150",
+									"description": "Total de itens a serem retornados por página"
+								},
+								{
+									"key": "searchBy",
+									"value": "cidade",
+									"description": "Campo no qual será aplicado o termo de pesquisa. Valores possíveis: nome_fantasia, razao_social"
+								},
+								{
+									"key": "searchTerm",
+									"value": "",
+									"description": "Termo de pesquisa"
+								},
+								{
+									"key": "sortBy",
+									"value": "cidade",
+									"description": "Campo no qual será aplicado a ordenação. Valores possíveis: nome_fantasia, razao_social, cidade, data_criacao, data_ultima_modificacao"
+								},
+								{
+									"key": "sortDirection",
+									"value": "asc",
+									"description": "Direção na qual será feita a ordenação. Valores possíveis: asc, desc"
+								}
+							]
+						},
+						"description": "Retorna uma lista de empresas encontradas pelo critério de pesquisa e paginação definidos."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar empresas Cidades",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas?pageNumber=0&pageSize=150&searchBy=cidade&searchTerm=&sortBy=cidade&sortDirection=asc",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página"
+								},
+								{
+									"key": "pageSize",
+									"value": "150",
+									"description": "Total de itens a serem retornados por página"
+								},
+								{
+									"key": "searchBy",
+									"value": "cidade",
+									"description": "Campo no qual será aplicado o termo de pesquisa. Valores possíveis: nome_fantasia, razao_social"
+								},
+								{
+									"key": "searchTerm",
+									"value": "",
+									"description": "Termo de pesquisa"
+								},
+								{
+									"key": "sortBy",
+									"value": "cidade",
+									"description": "Campo no qual será aplicado a ordenação. Valores possíveis: nome_fantasia, razao_social, cidade, data_criacao, data_ultima_modificacao"
+								},
+								{
+									"key": "sortDirection",
+									"value": "asc",
+									"description": "Direção na qual será feita a ordenação. Valores possíveis: asc, desc"
+								}
+							]
+						},
+						"description": "Retorna uma lista de empresas encontradas pelo critério de pesquisa e paginação definidos."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar empresas CNPJ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas?pageNumber=0&pageSize=150&searchBy=CNPJ&searchTerm=&sortBy=cidade&sortDirection=asc",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página"
+								},
+								{
+									"key": "pageSize",
+									"value": "150",
+									"description": "Total de itens a serem retornados por página"
+								},
+								{
+									"key": "searchBy",
+									"value": "CNPJ",
+									"description": "Campo no qual será aplicado o termo de pesquisa. Valores possíveis: nome_fantasia, razao_social"
+								},
+								{
+									"key": "searchTerm",
+									"value": "",
+									"description": "Termo de pesquisa"
+								},
+								{
+									"key": "sortBy",
+									"value": "cidade",
+									"description": "Campo no qual será aplicado a ordenação. Valores possíveis: nome_fantasia, razao_social, cidade, data_criacao, data_ultima_modificacao"
+								},
+								{
+									"key": "sortDirection",
+									"value": "asc",
+									"description": "Direção na qual será feita a ordenação. Valores possíveis: asc, desc"
+								}
+							]
+						},
+						"description": "Retorna uma lista de empresas encontradas pelo critério de pesquisa e paginação definidos."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Dados Obrigatórios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/criticardadosobrigatorios",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"criticardadosobrigatorios"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "3eac17fb-11c7-44ef-9c2f-a79249620600",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Recupera informações de uma Empresa (CNPJ Emissor). O retorno inclui todos os dados da Empresa em questão."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar relação de serviços municipais da prefeitura",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/estados/:uf/cidades/:nome/servicos?pageNumber=0&pageSize=150&filter=",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"estados",
+								":uf",
+								"cidades",
+								":nome",
+								"servicos"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página, sendo 0 o número\nda primeira página."
+								},
+								{
+									"key": "pageSize",
+									"value": "150",
+									"description": "Total de itens a serem retornados por\npágina."
+								},
+								{
+									"key": "filter",
+									"value": "",
+									"description": "Filtro para realização da pesquisa. Possíveis campos: descricao. Exemplos de filtro: contains(descricao, 'Consultoria')"
+								}
+							],
+							"variable": [
+								{
+									"key": "uf",
+									"value": "rs",
+									"description": "Sigla do estado, ex: SP."
+								},
+								{
+									"key": "nome",
+									"value": "Viamão",
+									"description": "Nome da cidade, ex: São Paulo."
+								}
+							]
+						},
+						"description": "Consulta a relação de serviços municipais da prefeitura."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar serviços municipais unificados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/servicos/cidades?pageNumber=0&pageSize=5",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"servicos",
+								"cidades"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página, sendo 0 o número da primeira página."
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"description": "Total de itens a serem retornados por página."
+								}
+							]
+						},
+						"description": "Retorna a relação de cidades que já possuem serviço municipal unificado."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar características da prefeitura",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/estados/cidades/:codigoIBGECidade/provedor",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"estados",
+								"cidades",
+								":codigoIBGECidade",
+								"provedor"
+							],
+							"variable": [
+								{
+									"key": "codigoIBGECidade",
+									"value": "",
+									"description": "Código do ibge da cidade cuja a prefeitura será consultada."
+								}
+							]
+						},
+						"description": "Consulta as características da Prefeitura com base no código da cidade (IBGE)."
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir/Alterar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas"
+							]
+						},
+						"description": "Insere ou atualiza uma empresa (CNPJ Emissor)."
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular logotipo a empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "logotipo",
+									"value": "",
+									"type": "file"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/logo",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"logo"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "identificador único da empresa."
+								}
+							]
+						},
+						"description": "Vincula um logotipo a empresa. O arquivo da imagem deve ser enviado usando codificação multipart/form-data. Formatos suportados: JPG, PNG e GIF"
+					},
+					"response": []
+				},
+				{
+					"name": "Vincular certificado digital a empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "senha",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/certificadoDigital",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"certificadoDigital"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "5bef698f-0fd5-4100-8323-dccb8ee30300",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Vincula um certificado digital a empresa. O arquivo deve ser enviado usando codificação multipart/form-data."
+					},
+					"response": []
+				},
+				{
+					"name": "Desabilitar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaid/desabilitar",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaid",
+								"desabilitar"
+							],
+							"variable": [
+								{
+									"key": "empresaid",
+									"value": "",
+									"description": "Identificador único da empresa"
+								}
+							]
+						},
+						"description": "Desabilita uma empresa específica."
+					},
+					"response": []
+				},
+				{
+					"name": "Habilitar empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaid/habilitar",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaid",
+								"habilitar"
+							],
+							"variable": [
+								{
+									"key": "empresaid",
+									"value": "",
+									"description": "Identificador único da empresa"
+								}
+							]
+						},
+						"description": "Habilita uma empresa específica."
+					},
+					"response": []
+				}
+			],
+			"description": "Métodos relacionados à empresa."
+		},
+		{
+			"name": "NFS-e",
+			"item": [
+				{
+					"name": "Consultar NFS-e por empresa",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic "
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes?pageNumber=0&pageSize=100&sortBy=datacriacao&sortDirection=asc&filter=status eq 'negada'",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0",
+									"description": "Número da página, sendo 0 o número da primeira página"
+								},
+								{
+									"key": "pageSize",
+									"value": "100",
+									"description": "Total de itens a serem retornados por página"
+								},
+								{
+									"key": "sortBy",
+									"value": "datacriacao",
+									"description": "Campo no qual será aplicado a ordenação. Valores possíveis: data_criacao"
+								},
+								{
+									"key": "sortDirection",
+									"value": "asc",
+									"description": "Direção na qual será feita a ordenação. Valores possíveis: asc, desc"
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'autorizada'",
+									"description": "Filtro para realização da pesquisa. Possíveis campos: Status. Exemplos de filtro: status eq 'autorizada'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'negada'"
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'cancelada'",
+									"disabled": true
+								},
+								{
+									"key": "Filter",
+									"value": "status eq 'AguardandoAutorizacao'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'SolicitandoAutorizacao'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'AutorizacaoSolicitada'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'SolicitandoCancelamento'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'CancelamentoSolicitado'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'EmProcessoDeCancelamento'",
+									"disabled": true
+								},
+								{
+									"key": "Filter",
+									"value": "status eq 'CancelamentoNegado'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'EmProcessoDeAutorizacao'",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "status eq 'AutorizadaAguardandoGeracaoPDF'",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "A52843A2-E087-435F-A5F3-D9F3306E0B00",
+									"description": "Identificador único da Empresa."
+								}
+							]
+						},
+						"description": "Retorna uma lista de Notas Fiscais encontradas pelo critério de pesquisa e paginação definidos."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar NFS-e pelo id do GW",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic X2dhPUdBMS4xLjEwODc0NDE4MzcuMTcxNTY4NDA0MjsgX2hqU2Vzc2lvblVzZXJfMTAzODk2OD1leUpwWkNJNkltVTVZMk5sWmpJMUxUYzFZVEl0TlRKbE5TMDVaalEyTFRJNVlqZGlPR0V6WTJZeE15SXNJbU55WldGMFpXUWlPakUzTVRVMk9EUXdORGMyTURjc0ltVjRhWE4wYVc1bklqcDBjblZsZlE9PTsgLkFzcE5ldENvcmUuQ29va2llcz1jaHVua3MtMjsgX2dhX0tYUE5IQlFHNFE9R1MxLjEuMTcxNTk1NTkyMy4xNC4xLjE3MTU5NTc1MjEuNjAuMC4wOyBfaGpTZXNzaW9uXzEwMzg5Njg9ZXlKcFpDSTZJak5qWTJZeFlUQXdMVFEzTmpFdE5EVTFOaTA0TXpVeUxUTTBOV0ptT1RWbFpHRTJNaUlzSW1NaU9qRTNNVFU1TmpZNU5ETTRORGdzSW5NaU9qQXNJbklpT2pBc0luTmlJam93TENKemNpSTZNQ3dpYzJVaU9qQXNJbVp6SWpvd0xDSnpjQ0k2TUgwPTsgbXBfYTIxNTgwYjE4Zjg4MmQ0YTVlZWVlZGI4OTE0MmJlY2JfbWl4cGFuZWw9JTdCJTIyZGlzdGluY3RfaWQlMjIlM0ElMjAlMjIlMjRkZXZpY2UlM0ExOGY3NmJjZjk2YjQzOC0wNDMxNDYzOGNhMDU1OS0yNjAwMWQ1MS0xZmE0MDAtMThmNzZiY2Y5NmI0MzglMjIlMkMlMjIlMjRkZXZpY2VfaWQlMjIlM0ElMjAlMjIxOGY3NmJjZjk2YjQzOC0wNDMxNDYzOGNhMDU1OS0yNjAwMWQ1MS0xZmE0MDAtMThmNzZiY2Y5NmI0MzglMjIlMkMlMjIlMjRpbml0aWFsX3JlZmVycmVyJTIyJTNBJTIwJTIyaHR0cHMlM0ElMkYlMkZhdGVuZGltZW50by5lbm90YXMuY29tLmJyJTJGQWNjb3VudCUyRkxvZ2luJTNGUmV0dXJuVXJsJTNEJTI1MmZIb21lJTIyJTJDJTIyJTI0aW5pdGlhbF9yZWZlcnJpbmdfZG9tYWluJTIyJTNBJTIwJTIyYXRlbmRpbWVudG8uZW5vdGFzLmNvbS5iciUyMiUyQyUyMl9fbXBzJTIyJTNBJTIwJTdCJTdEJTJDJTIyX19tcHNvJTIyJTNBJTIwJTdCJTIyJTI0aW5pdGlhbF9yZWZlcnJlciUyMiUzQSUyMCUyMmh0dHBzJTNBJTJGJTJGYXRlbmRpbWVudG8uZW5vdGFzLmNvbS5iciUyRkFjY291bnQlMkZMb2dpbiUzRlJldHVyblVybCUzRCUyNTJmSG9tZSUyMiUyQyUyMiUyNGluaXRpYWxfcmVmZXJyaW5nX2RvbWFpbiUyMiUzQSUyMCUyMmF0ZW5kaW1lbnRvLmVub3Rhcy5jb20uYnIlMjIlN0QlMkMlMjJfX21wdXMlMjIlM0ElMjAlN0IlN0QlMkMlMjJfX21wYSUyMiUzQSUyMCU3QiU3RCUyQyUyMl9fbXB1JTIyJTNBJTIwJTdCJTdEJTJDJTIyX19tcHIlMjIlM0ElMjAlNUIlNUQlMkMlMjJfX21wYXAlMjIlM0ElMjAlNUIlNUQlN0Q7IF9nYV9KQkxKVFZNRE1HPUdTMS4xLjE3MTU5NjY4OTQuMTEuMS4xNzE1OTY3Mzc1LjAuMC4wOyBzZXNzaW9uLWFmZmluaXR5LWNvb2tpZT0xNzE1OTY3ODU1LjQzMi4xOTE2MjcuMzg2NDUyfDg1ZjIzMGE5NDhjM2RjNzI5NTI2MDAyYmY1ZjE1Y2NhOyAuQXNwTmV0Q29yZS5Db29raWVzQzE9Q2ZESjhKYUJYdVpOdmlwTmp1a2g3UlRibW1HZE1Pb05tWUVtNjR2QWsxTHEyZU1keGc3Y0o1a3BuSmxNUGRuQVJkcld5bWt2cUFELXM5TTNNUkRvamdZVGwwV2tMWEgtXzI1MFZVSi05NGhUWTRtbnR5d19YeXdmVmNlcEk2QS1QZlIwUDk2RGtLdnc4YU1YSzNCb2ZqTjQzeDZyTDNtM0k5TXlTTllCa28wcUZzRUw0X1Ffa0wtQnpKbUZiTzZKSlhVd1QzS01HcVdZRWtrbE9KWlFfczI0WDc2WGRHQWRoQXdwZjdpT051UHI2ejhncHo0LTB3ZHBRQWlzTGxpbVU1R2Vab2VNVERGZUdkQURKRE1FQWpTcDN1QVBOay1WWFFObmpGV3RwT1R0ZGZaSTl5Smh4SWt5dExSbGxPTlFHQkFWRzM2S3dyaEVwVTRVeVFEc3VfWXF1YXlUYVJlNlJXbExrMmZMcVJMeHJlelAxcENvTUwxMHhTMWV4Z0M5Ym5nMkZ4bHRkeUFnUTF3MjFsVUk3eHJiTm42ME5raUlxMGpGRXl5MGdzX3B0dldvR3R1NmFJQ015N2RvYmpWV19jbmltVDlzVXJOS2VWUllxOTNZUzhLRE9Sd0YzYk5UenBGcE5rRXEteGFoaE5Zc201dHdDX2ZxcTdIYUJCVG96ZkNRVFo4TjVfVzNYeFF1akdadEFsTzJIX1NJQkZIRzJmQ2pKQWVWb1BWSjZINlFNSXhQU3lZQ0RGd3lqQTNXWmpydzN6ZXZpTm80OHc4eDctT3NPUkpKOF9iQ0ozMjdkQWo2RWFlVlFQb2NISWZfZHU3R0FYMFhDUmxEanhRMGhPbW5EUXFiZjZPR2hrSlNaZHNPYjgwUjJpMUJkWVJwWXRjV2F6ejBMMldpbFFydGNiVWF2R21FQ3lLVFU1VnBGZ3NSU0o1Z3Z5MTRTLXBfMktDaWotcXNKOWQ3QWFucVZUc0dWQnA4VEdFVjlDOXpXT2FaUmJ1SFBBUHgwNEhkbUpGcFBRRmpVZlRfYW9EX183dlhNQTFhMHlWdk14bUFYY1pjbDc5emY1OUw4YUlaNlZIR0hYY0FEMkdZTTgzNnlKR1d4REh1bGJCOW1qSFgxNDdGVlFxWDZzeExBbkd2QVR1bkM2VEpzWEtQVVp6SDl0S1RneTl4MWJPUFlpcjNjOV8yTUdwSEZzcVBrWG1NU0VXY2x0cVRwcmc0d1JRSXlKXzlCWjZ6NnFrZm5NR3Y1Zk1tcXZ0Q2R4d2ZzYXh0SDlpTTdIU05LOUVINmpFYlhCZVJubnl5ak5TSk52c3lwSVM2bkZPdTdGMkNpMmdxZjFEdkQ4aWxKRllGS0NVckx2WE1NSWhWZlFIMVVsMGJMSVU5ZU11QWZJTkZUUlB4TG51MmYyMms0bzl2STNuazEzQjNVVVBPR0JibTZGYmk3QnFlcDE1ZkV1UG10Q21uVjVzSkxaOUoyS0JHVmlzVlpzSnNBaUpGdHAzRTdWaW1mTzNzNDVaU3Bpb0tQZVpYRENpWHFka2xIRmhUMHY3dkVmZ3ZpWVZFSEwtNnRmSVhHbGUteHgwdnpBbnFrX1VjeGdiREZRS2tadnZ4WXpMYW1DalR5SFUycHFkVktISjhxZGJTdVo4Y2E3ZUlrLUZUN0cyREhWNXhvVHRkT3pzcHlTTHkzZ1JTc2Jkc0MzTUZYYy1BWWROa1VTYzc1UGNWV0dBVDJuUHRmbk5XcmVWemVQTFBZdTlzbERlRnNSNHlfdk4wMXN0V0l2SEl6UkNzdWVKZGF1blZmRThiRGNsWm1DVHdlLUgwSmJiRjJWalFDcWVOdHNjM29ldTNGWDMxUnF3ZzhzNlc2MDlpeWc0UnMtNzVpcHlQazVqRnZyRWt0dXptRkM3SFFLYnZZbmo0SXJpb3U2OEpJRDRsUWxiMGVNaXp6cE9VcUhPSlQtOVppSHc1eEw3VWpyQXdkVEktTXY4Z01UUkZKdmdLajBUQy15THlwSXliSW5jd2VQenR4YlZNcHNwNGlxUTJyQUhOb3NSU1VNUUNmcVZQV2dDek9MdXYwSVJsUV92LXRLeFlRRUcwd0kxTVBaUXpLZE14andFclBjdUhqX1c1emdZRnZscjhSSVc3T2VzYTd0NnJOS1Y5YzMxdV94NzllMnA1ckpMYUNoMWpwbmJpOVlDTnhSanB0VlpSb3lDZUxkNDRrR05vYVhNb2UwejhXNjJnanlkRG1JOEZzS0NmTDdDOWpnelc4VjdNMkhjbGxzMVBVcTh2YmlUTThkZUhWdU9zc2psbFEzOUV5ckE2aVJKcUs5eXltR3JmNVFicFlpMDdyYUZNMGNBcEF1N2dHYnpRQkdnMkhqdjNIVWxFVksyVUs0WGp2UldSZ2kyWWthaUtzY3dkZktsWU5QTmEzN2F0TVlrLUtncXpKZFI1WlljUjF1cmZNNWFIT2hGODFYU2ZSQ1BJVkpoeEZlX3VGUG5MRmJiRkVYbEs1VlJOeEFFaXpSa19hdnFTYkRHbTQ0cFRPOGdaUFB0Qjdyekx0cnE4cW5zV0dFNUJISXB1eHBEakEyZXJIVFR6YWxCMVFRQXl6TXJkY3ExVGFUY096bEozTE1tcmVhQjlpNkcwTXVNekVtMFBPTkRQcEI5djJQbHhObXZ3TnZsSkJHRXhzdmdEQnFXVndlYXpUZFVkaDBNUHlwNDZ0MU5TUlVTZlZ2REhnbUdadnhiSmFZZGQtZk5NejY5MGJiMDlBbnVBMmE1cHpVN1BxWllHSkN5M1pMNVB0cFdZb2Q0ZlVKeEJpdUFUZ0RMNEIzdmFHWG9NYlF5V25VVGlGSzRRWG9NVjc2b0NPb0hyZG1yV3dvcWZfNk1YZkRSS1BzY2tKN29vMlJ0UlI1YU51TW1JdmIwakxmUGZ2ekF3Z1JudVpzNFBkRUlZa0VtLVJxZG9GNW5UU0s4QjJFbWFoYVdCMjlOaHEyenNEcl9Rb1hNdm4xYjZTalJobTNhVkMzRGVWN1VMMGx0TUJVb2MtbDNXeEdpSHc0cHhWVEVEdi1hY3hqMEMwVEhJRFQ5TDBSVktJVVJZOEg1U19qbWN3ZWN5anN0dWRIOFlQaVdsT1JVamItazZfcTdWcFpBdzNVb2RTdm5KX2ZJNzJyVFVCa3RzMm5MYzdRVWdMcmU1TFlwVW5FOHl0SXFoaUpxMGg2NTFWTjlzNU9ydXRIVG1BU2Z5ZTZkZjE3YlhLX2J6RUpic3hlVmxJcXpQNC00cHNTb0xzOUVBQk1XUVZ1Q1J0TEJkM3dJaDJ1YVRzcVlFNjExY3JTcGthekk0MWlRUXhtV1NYSmU2ckxjUGM2SXJuOFdPejYzOE1rVW5sWUNic1lCdm5Fck5MTTVfOHhULVpZdzN0T0Q1SUF3NWthdVpkX1ZPSDlPd1VRekNGaGtLbWk2RkxYeW10dXdvaGtrZkhtOEFQRTYzN213djQ4b093VFR3UjE5S3hDTDVfNmlCQmFFSDJxSFhLejlxc1psRnowOHRnZTFTOTdIZ19NRXlKN2dDaUJOZXRDdDd3UWx2OWZVTVFzUm9fcTg0MFlTeXNPZWlwSUJGZ0E1X2JVQUhRM3pTcFpDRV9OQTZxa3NvN0Y0elkyZTNUdWJQZF8waVBoaFN5ZG1weUxiTklqLTdiVzktV1NkTjNMa05kZVZIYzJxWDRpRGQxSEY2U0tSNWlEQllUMDBpc3pGRXFZYzQyUUhTZzJHUlE3UnA1aVdfX3ZVZHAwZWg1Y25DYjlIWWVQTC1FVXJ6S3pDQkRSMUMtVU52azFoX0o1SHpac19hY2pyaW1xZ25PbFpGMmJhbUJFYTNNRzRwSnhpUVdWNFBrNTRaVURyUS10cXdIVDdjanRyT3p2Q01aTjJrMktMUDVwalgyUHpvRy03YXVBdEpRdnFpaUZyaVI5ajVxZVJ1Y0E1d2ZsRl9SNDJYWnJaTGtNU1l0Z0tiUFVQN292V3NRS21SUWprY3lfY3RsRHEtYnRlQ2Rnbk5fY3dEczVYTUF4RmY1S2pha3JfejdWbXVBWFJ0LVhndTlSN1FaZGdLRUI4TndMY0tWalE1RTJEUlRiLXhCM2tJc0l4aUhXdlhyNG5mVG1sZVlkRTByQ25NVHRTSVZ1X1hfdmsxaWl3N1piZW5yLTR3a2tESVFvNmN0azVoc0xFQXBadjZQREliUnZSR09iMm56bDRYamx6c3ZFaHBpcFNvZjBzV0l2MUs2UFZMRWpPdHFtWExYOTVSTzZkRGRqMnNKbThJSnF5ZnFuYVc3UHdOMTJTTVJTMmRPY29hb1MtQURSTFVnYXpCaE5ac25jSEFKZHlRTmFfc3NrU3M5a2NzX1RtNndZX3piOXhuSGttY2tValdGdFdRX21uQXdvbGZkX3IwOVhmTnlqbDU4SzBMMzYwNzNaU3Q0RjFxeW5XNkh6cWM2YWV3cUhPYWFQUnh4SkdwdXNQTHg2WFJHTF9XVmIzSnlwazBvanl4VE1rcDdrclRKWVRzRDJpbUZoQ2YwemZ3YUo4d0pGWDBnUElqc1phemtYLVM5TkNFb1dTUVRONVlnbV84LXFvcDloVkhOR05uSW9kNy0yWWhBR1lSRVAxYm1sQThBdEt3bVVUZGxNN0IxOF92RnhFS2F1SEFhUmZ1c1c3RDJHYWJnTHlIR0VoNTlTRE51SVoxNWFCWXpQOS1aamUwRkFPUnZGZlZPQ2p0b3BPSjlsZ05ZdDNCRFhHaUFDamxhbGVtN2x5NHJ5b0VubnBEVmNjWVA2RTR1Z2FHV0J2LUJmOEJ4eUpNQVU0NVBpTTQxVzRBc21KcGZld0owNWxwbFhxWFFsNkllaHl3WkxsbmZpQUg4bUFVd1kzMkZQWTY2MHh3UHZwWll1LVBnTXkyaXhVNmRRckthQllpa3g2UW5UbGJDUXJ0b29UenY2TW1SRjdUN3IxdlU3Vkhad3RqWXgwX0xOZ002eTJnaGxRaWdFTF9nQWliajFKa29nMk9WbG10YnFGdmpKUkU2Q3BORjR0YlJjcFVHNm9hT3FObmVXVUtKSmpxSGVLYU5KZ1U5bS1IWmFTclBTQjJrZzZYSkxHS1BzMUQ1M2x2cDRVVldzWVdBbGZMSFhzRUt2am01YnpfR1R3TjZNTWlLN2ZwZzVoYVNZWTFKTnR0N1lnYWpDTHV4czU1VXVrQW15T0RJVEQ5LTNWUFRSX213TE03YVZzS2VBWkIzbDBSOFNpM2RIV3BlajVVLTN1RUhfc0k1SDVRVXpKX0Y1bUdEZks4V0g4QWQzbjhLS1k2b0JsNm8zTm93dVI7IC5Bc3BOZXRDb3JlLkNvb2tpZXNDMj1VLUREenpJcWdISERzN1Vfelh6TFpEcEVzTnBxcUMyVGR3WklGcHVmU2xfc3cxV0VrNzZ4ck42eldIMjJmRVF0cjh4VzEwblBZVVpSdk9EREFiWmNCdVhmWjdnUUp3T20wRFk5RzZucG5LaG5pSFphMnZGaGpXY3ZjcmROVmdrT0hLbzhkWVdUczVfSDRKaGN3LUlEZHVxZnRHS2pIemI3OTZFM245WThYQVd4VUlfbXBYS2duR3BHYUJoamZXcE9xckVNNl9QWFNnLUg0WmxSYWRjbmcwNGdLZEMyNDN6d2pJQWFuZXZGcXRkeEc2ZG45b2JNM2ZDYjRUUy1DSW52U1BWWldfVDFydkVUUG5TYkp3cGd2WGhZenE5eDZscjJlTlotZU5iRmpoT3BtcDlzSWlTTS14MGpEQzM1ZE40X01PXzFCNklhOC12Rkk0VElYYmJfSHdIcTlBcDBSU09LNzlsM1NLT0lpYWxZNk9mOEdtWlhLOTJHSmFLZmJVRzl5NTFmMUNyQW11aHROZFlQOVZZYUpCUTljV3QwOFJhaVgyZklOSjZ5RlRNeFZpOGp4Y3VTT1Q3VWZJc0xYT2hPYnlaQTFoczhnMjc1LWl3dTJZVi1KR1J0ZW1oTk9sYk9VX2JraHVCRlFrMktJa0tzNUFaYnVOWk5DS2ZuNVlibkVYMW1uUVdQZ3JBOXctUDliS0pkY0FHNWc5aHZ6Tm13cXR4dUc5dzFFTjZ6QkJEdGpCcE93VExoYmlDMDVNNnZ2RFJaT3pPOGFmRDhveUhJYTZjR3dCTUdsX0MyaUE3MmRoWmlWc3NtbGg2MUdJME52TkYxdnJLamx0VGgwaFQ0VFRnOHN1dnRzU2JNdElOTVBzZThaUnoyQ2M0aE1xaXZmeWlkbWFvbmxDenNLeXZlRDV2TUVBd1MtcXcxOFRnczFnNTZpYkIxZloyM2t3aHhSRFlpVDFlVjRZbzNmZWNZNExwWi04aGJ3bHRVS2xSdVpKZnVjaEpXb3o3Z3RyN0hCSEJvZTFhMXh1d2Y3djcwZmlRbEc4MlNKTGhDS1NUSGVlNzgyZVJlcVp3TWo1MUZZcmhLS1JqcmRsUnRXWHpvUDZUUTA0eGJaNUNNdjZZbUlQaDh6VWVsZGd6aU5sY2xseXBpV3hVZ29VT1ZmSVdDV0Jfc0F3VzdGa0d5UDFEdTVkTWlTdlVkSkFZcG0xejkzS29aTTM4ZGw4VExxcWh5aTA4V1BBM2hmdjZOZFQxSDg1bGh5NkpLX1Y0OC1pSEZzUjhQc3BXSHJQa1FvbkFvdGctd1NzcmhoQmt4cGlpVXRBWmxaMm5yQlJ4Um50NjhyS0NJWU5tdEk4cTE3cWw3RVFLWGpFUGRkYjkwSndITC1NMVQ0eUNoREh1RWJlNmxCQmk4X1UtWHpiMElBalROVWc5MWJhOFpHUUtTMnBkVFZmYXRaMDNZWXhNUkhGRW9pcjZ3QVVKaTJTZE5BX3dNSHJjbXprc3M1NEcxYjJUTUpPOFZIbmoxYUt3R0RTbDhqZHMycy1laDhvUE1DczRNX0lac2NnQUtHSF91elNrdW8wby1sOWI1QXZuMU1vTGNNRVdBM1BzcUtCOElQU0JwanpZblZUUnRkZjl0YzlzYmlsVjNLWXpjc3Ztc2J0NlVrYy1FeFUxbjRfTTAyVl9Yc1c1YS1ld1dBRkFreU9oN1U2Qml5ekdnTFl4bE5yQ250SHlSemtlM1Z0dENUYmtuSUcwRG9xU3lRd29tbmhvSDhzc2drTEFWV2JCZXBGSnhqT0RCTUFpSFFYam10cml1WG9aTzZMU0NWZW1pM0RtTTVMQ3lOMk1YVV9EU1lxRm5ScWZkcHdULVVUQ2dfejZfSk9NVC1VOG42MVFhcVg2T2g1YWJUOVk5ZElNU3FKUlgtM0ExZUJzSF9TSXlKLXNscC1aVEFRckd5TGhNeWk2ZlRuRTZTSG9NLTNDUV93YWlvRjJOaWFKVFVnMmxnWTRRRnJVMFVZajFBcDkxYTI1RElYQmRvMXRJQ1NVcXRnNXpkZ25VcVE5S2lDRmh1ek9IZmlaaUZsY1I3SW0tc25QLUtlWUlubUJ0cHFyM1k2MjY3d2V2WXJ2aENpb0tjLWlyUFI5Y2dtNUVGOTVnRHdZb0w3RDlzX1FkNXE3ZjZUTHFFcHozLUF6TkdrM01XQWN1ellmMzNSZ0xqZ0t6a2RZQTMzR29BR3BnNXF3eGhwZld0VDRwaUlzc3FOUlBoTWIwd3RHTlZvWm5PblE5eFl2dnNyRzhBNzQydW9rUnUxQldDcUNWWEc1RE1VWkFSM2V6akFKVVdMYlJmb3FwZnNpNWZ1b0VsM1FzOHFzSUFCUERtam1oYmVxSmRZMlZMb1RQRVVoLWlHQlN3UHJpZWZMNmp4VHlHUzZJX0dGZ3hERkdraTVuVHVubllXRHpodmc1SVpZV1FsVVEwMFd0dFNMQTBUbTJtNzU0bDVuYWpFLVR5WFVRdlJZbmItQnlwOHRCa2taRjB5TV9rVS1oRXRFbS1aYU0zeXlReTRDZWZ1OV92Yk9QaHpvSmZCQWhrOVFCVWNYR3ZpX09lUlVFS2NFekhIanhkdlp1VTVrRTJrWkZtZ1VYUDBHN1B3LVE3V1MwIyN8IyM1MDg1ZGY1MC1lZDUyLTQ3YjMtODM3NC0yYWFmYTA5ODAyMDA="
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/:nfeId",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								":nfeId"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "67803be4-b343-4f6e-b9e6-954566780b00",
+									"description": "Identificador único da Empresa."
+								},
+								{
+									"key": "nfeId",
+									"value": "0e7e21ce-8852-4dc8-aedc-161f34830a00",
+									"description": "Identificador único da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Recupera informações da Nota Fiscal pelo seu Identificado único (paramêtro {nfeId}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar NFS-e pelo id externo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/porIdExterno/:idExterno",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								"porIdExterno",
+								":idExterno"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "cb42a149-da7f-4ccf-9ed6-10d3d9f00700",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "idExterno",
+									"value": "teste",
+									"description": "Identificador único usado para representar uma Nota Fiscal pelo consumidor da API ao cadastrar a Nota Fiscal."
+								}
+							]
+						},
+						"description": "Recupera informações da Nota Fiscal pelo seu Identificador externo (paramêtro {idExterno}). O retorno inclui os dados da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Download do xml pelo id do GW",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/:nfeId/xml",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								":nfeId",
+								"xml"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "nfeId",
+									"value": "",
+									"description": "Identificador único da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Download do XML da Nota Fiscal. O retorno inclui uma string com o conteúdo XML da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Download do xml pelo id externo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/porIdExterno/:idExterno/xml",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								"porIdExterno",
+								":idExterno",
+								"xml"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "idExterno",
+									"value": "",
+									"description": "Identificador único externo da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Download do XML da Nota Fiscal. O retorno inclui uma string com o conteúdo XML da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Download do pdf pelo id do GW",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/:nfeId/pdf",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								":nfeId",
+								"pdf"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "nfeId",
+									"value": "",
+									"description": "Identificador único da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Download do PDF de impressão da Nota Fiscal identificada pelo seu Identificador único (paramêtro {nfeId}). O retorno inclui os bytes do PDF da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Download do pdf pelo id externo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/porIdExterno/:idExterno/pdf",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								"porIdExterno",
+								":idExterno",
+								"pdf"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "idExterno",
+									"value": "",
+									"description": "Identificador único externo da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Download do PDF de impressão da Nota Fiscal identificada pelo seu identificador externo (paramêtro {idExterno}). O retorno inclui os bytes do PDF da Nota Fiscal requisitada."
+					},
+					"response": []
+				},
+				{
+					"name": "Emitir NFS-e",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic LkFzcE5ldENvcmUuQ29va2llcz1jaHVua3MtMjsgLkFzcE5ldENvcmUuQ29va2llc0MxPUNmREo4RUFncWZoeEFVdEJzNnA2QnR4R3dSTEMyR2FqZkxrWHYtVmx2aWRJdXZscjYxbl8yRWdUVDhXUXhGUDZaZ3lKbDgza3E2cVFSRGcwbkdiQlR5SE9FQVNadUoyRjR4Y0FGc2VIMjZjZjAtcUFHbktfb2NJYm9TdkhZdVV5YU03MUtPM0QxRnFBUGhuT0hOcmVJZTc4dVFwQ2FEQ0hKX2phSEpNQVVoREdFZU9wRjMyZVlVb2xXR3M3eDZ3UDh0NXFhQ0xvamllWmhuNG1Oa1hvNEY3QjJwVlctOVFRaHdYSUxDTWZUaFNEeUJ0UXBoZFJSa1FLY243R0MzenJxRU9BLU5sbU1VdXFmc0x3NTdZU05zRWJPWUkxOUpoWlBOQUFIbDdkcU1xRHpHdHQ5eVBMMk55TURjNTZCX1RhdkpMZjJGcXJWa2VxU0JaSUIwZUo5M3RieGhLY1M2SDVLWTFvc0IxcWgwU3BFQnQzRFhpc1BCRWRQZWtIdXhjTWhMbzRuOWdlR0pEd1g3WEcxWVhhSDZjSnhSNFVyOUNnODBUX1UxVUdkbk1EX0U4NUdDTnRqWHM0UzJFRzBUUExBbU1wNy1HUjlscVRld3lCcF8yRHlLOEppSjFKcmxsWHVzZGFXMFZsUFVlb2phbWpvclBsYllPRDk0X19jSDBrVHVZVngxMGFXYmYtQkx6cnVCbVB2SzJMTFBxSWpzS1RDTUV3czRrV1BYeTY2eldaTzFGSEtIWkl3RW9PSmdaenFqMHhfLUpNd19qeWhpeE9UVGRzVkJMOXlrUEk0Nkp3U1VwVEt1bjdOOEo2X09vcVl0Tk5nTFZuOGNVWE92YnRzYVdXY1RiMlJNRkpKOVJ2ZFozZnhkRTNjbmVPZHlJM0pRQWVMc1EtX3RuMFNpSnktamxUaWFhbTlPQnVnYk4tN0JxWEpEWVFhdHlkUTVLZ09FVVR5a2g5RGVWcmZVN0pjN0llajU0VmFrYzF6VFVQVTNUeUI0Ti10YUpBQmVqWGZVVXdEMlQwU0Q4WUJ1eXkzckdUT255N1FBanBnbmNmdDAxc1VJeVp4N1FJYU5fUkN0X3p1aUdtc25STkNTNkJ3N2VsVThLS3Yxc2RzWEk4RnYzX1VCZFhOV2w5Y2pwMUt0SzR5d0JINGxTbHhfbVhadklUS0VQcE9MTFlDQ0VTZW1Mek1OelJZUHN4UC14VW9rOERibnJ5dDczeDcybkRyZVlYQ1E5MXRJZXdDWG5MM01Sa0NQUlRHUmRtLUUyX0lwZzEyaDY2Tlk1LUhTWGhuc20wVmJldEpudWJTOXc1Sk5LdUxpSlVZa0hDWU9UWDJnV2Z5WW9FLV9qbHg4eTEtMHRPdW5TQXlNWENManBfT0JyaVlKUFhJRGFpTms3bUlKWkd6dkVwOHY3NlBzZ3pXSi1YZ3JHemoySGlzOVNodEJwc2RBR1h5NV9tUms1UWQ4Uks4enRPNmNHY3hhSDJXRnhFMzZkNUY5c2UyUHVUbkx0X2Z5TFlSZFdRTWZPdWo5ZEtJeFZWQnNCdkhSdXVIWTVuZkFfUTRfUjFGSFpLenZyNTRjdHpDVW1ucHQ3SGdBYi1lc0JaZzZZRHh0SHVQQWNYU0RtRGdSLWRvR1FyX05jdzQ5MFQ1SzFfalVTR0hJbW45VG1aVW5GSkN2QndObW1CLXpNcnAwWlVkMmdhWDZOYlk2WThsRFpkX1hBTzM1bmhpdV9XVDdQbVotZ1dFLXRzUnBLWVZ6cHR6Vm42em5NVjN4REt0Nm01UzZuelB2TWllZFBkWHhQbDRZZjdOQ24xc2hDMTRfRlhqS3NkVjhzcDZ5ZVpIZ2tqYWhUTTJhRVNkYklWUEtjOFBXNFRtMUxlUk1NbjhjRFhwTnliX1lSWkMxYko1cE40Vm54TVpVSHRWczZhcDNjYjJrWmVpWEhEZTZSOFZyUUdXRzBQN2FENm9lUHpGV0Q0c2RlemNqRl9qaHR4U1hROUZZZ1JBR1VYM0pwUkptU0w0MDVWQ00yLWtoY1NUSkNiZzRPZnZUcm9vUmR1NXdfSjRmWU5hZ19TY2xQWjQ2MlNKak8temUxRUVna0Zlbm1BOVdIZ2FvQTAyazhyWEs3MS03eGk4MzA2ekVCcEhPZkhxYzd6Sjc5RTlmUG10TmF6d2IwNG1SRzVuOUFXdXFsM04zdWRsU3NHbXMyRE8xaFRDWFZWYzJ1aDZ0VmZfLUdITXFxd1RVR0paR3J6a2tTZmo2R2lzZjljakxCeXdxZUY3dEh0Y0NjNld0aC10NTNjOEk0ejhBU200d1lpNHhaYmpTSXZSZkR0YWRoVzhId29nTE90bzI2Y2V6bi1HUkZUS3Q2el9WcW1wYUhfdjNtaGNxVjU2N09SM18xUy1mV1FTRlJWU1Rod2NLSWtuNmtSTEtnUjBJNGZUaEt1WlJGb0NzWkt3SEMwUVpFbGJmZkpxNFdzUU5BakNIV0Q0Y2lVdl83WE9aZ0EtTVZrZ3ZtS2FUQ2h5a0NqSXRXOXNRcFh1WURGYnVSU05ZVzBCd1VKVTdaU1hwMURyVTl3VnFqNlU2YWJjOHZvSDcwYWEzLXlsMWp6cXdJbEdmN0tQamhhM3dNOG4wRzIyUWVWRl85MXhvNmI5a1FMWnJvMDZUa1BPZm1GY1hsWVoyTUxnUk9ZUk9tRkt5SlQ0dENnd0YzR2g2bC1oVXRMOHlPV2tWSm1kZ2c0ZzVTdnU3SUVQczF1NzN5QU04a1l2WGlTMV9yMEdaUHZ0OVgxWnhrZ29EalZoOUhxalRBcmVVdnNsUGpmaHFtT2w1LVNabGh1UFNjTllMYzlNWmsyUTR1X3B5LUlhUU5NUzB2ZFpoazJXUy1fdmNIT1VnRzFlOWMyR3Y2bUdudFBWRkh3WUdmLTlKY2ZrUmNIVzFoWWxQZ0NXUGgtRkxlX0xfZWVRYlVfT05HLWFfRHBncGZfV1J1M184Q1l3UUhZZ3RQY1N0VWRzQnBhTWpIckI1d3RUN2FEc3ZmdE42X1lER2NvejJBYjVRb1ZOZVE3R2FhWHozZnZvcllxT1FGVDBxZ2YyN3o4amEwMFBlU0tHc3JRRHZjUTIzX1lzQ3VUU1NXbTNpMGZya1NnQnV3ZGFOdWNzU2JCRml0VXdtNE1SLVlsdHExLTVydVBLVnFxQXVUeU9sTWZTb3luejBvTjZWbXJNUFJCYnA3RUtIa1BIT2ZXT21jLXpsQ0U0eTVyMkhYdjF0TC15dDJCUjNsem5SOVhnWmVRd190YVdES3I1Wm9NZFdfMGowRUJOc3NEQ2VsUS1wV1RON0wzdnFSOGpDOUxLdFZxQm1PREU0N1Fwc2pxWTFTR0xqc2l0RUpaaXNIYVJ0ZU1MaFNIcTVkYzk2N2s3QWxON3kzQkxMclVaS05sMTBlcHlxUkdWZFpwcGdzM1o0WU82aVVGcVhqVDdHNmh0SjJ3WXBQdjdhOFZOcEM0TVlrZlF1N3FIYzc3NDl3RDhjbHhpdGhlVF9hMnhHUU9pdnl1U0NQam9aQmJfN1RPbi1WRXp0TF9NbzlQOGtyTjdic1ZuR3NYR1l3X1pDYjduR2lPLTYyNFY4RkNEejQzdGFzOG53RkI2SDI5YWU2SEkzM0JnMGdxWTNCS0xpS1pkZ0czYXNtUFp5ZkJlc1llM0VVZXNZbjBUVlRIOG9xRVVBNzFycVNqRW80d1NTUTFaYTZyY2p1akdxSFNLaE4tNGpPSDVZNjQxdzJjbTNhTnk4WlB6WEdLcDJSVTVnSFlrVnFGa0pveEVDVFM5MVVPVGJwaUVXcTVSVWgyclAySHRNZkJmQ1RsZkJXeFh2emdQZzFhV0psYzdCOWpEQVhudFV3WHFPN3F3N2dPcFhCYmhkT0tEd210V2t0S055dERGZUh3UWNYYXh4UDFRMmN6Y0ZQbmk0ZW9xVjQ4RHdEcV96Sk03d2xhakM5aVV6ZkljNHJGRG1RMjhlVlZtU3BCeHFwX3AzT01PdjFnQTZqNS1ZMFpNVk5faUlNWlk1TGVldnBWbmhUWG5hNXhzc2JaOFNMOEhhVjFGN0V4Qi1RMzJ5OWpVb3VNNTM5YXh0Rk9NcmtnQWhQWGsyVGVtWm5WQkZRQ0JwOERxZGVOQUtYWTdVZnlXZnMxSW9ia3BHQ1lmTmZ4NElGd3p3cnNCVm4zSFI0eGJtYTYtcEpzOU5ndWFCQmFTYTVwR1FWd2JhaVhqY0RGYkxvV2lJYmVhZzNBNDAzSW1wdHAtXzlEdUo2STJjaDlYTThidmRPdkxqbkVjZmtxTnNjeHVtcWFjeGd6V1RQdV9wdjdZR1dkS3RuNjlkMF9VZUxtcU9zUHoxTkpvX2hLdUd2MVByQ2x0YU5ZR04ySFliM2x6d29zNGt4czdyYXVHODhidmJIVE16WHBjcUdRenpQUTZuNHlPM0U5dG9KOFJaRnhTdmlTQkVoVHpPa2ZGbUlISmttMkdtV0p6Y1dJYVNEOVZ5aUJFcmN2T2pKdk40c3djZFpIWU1uX1Y3cElmUFpKbnh4ZGJMbTlIVDBtZnBZak1RaE9vbTlUams3VlFJcWpqdFNnWFpZcGY4RDVlY2k0MGpwaTkyYVEtVWJNVzJVM3BlZllQeDZoNFpVS0xycUpWQTQtdVR3a2M4LVJraGR6bzZ3amZ6M1dFdDRmcE5DLW1uUDZuWkF3dHAwQnpRQmk3bTBzd1NWakItcEsyWEV2SHpoVmFfR2h5bFB5bkViT3lmMDZxVHJUUndhaDU3NzNGQVkxaElMb1REREFhLXNpb09qQjlwWlpnSFRlR1lLY194V1NRRFRrRE1Ya1BCSzZYblZMRXlsaS1nQTVWSXpyZ1BVd2JsMWlNRFJNVDI3bWVvY1dXandHSllkc2RiamptNmZUWFpNUkVSQV9HUHFlcE1GV0h0U1dkbUc4NEoyam1IQTYyZzRzVkRrbVpJMUppTzdGM284MllKZHhmX0FDbVFybjFJWE90ZnpMNXRnaGdpYS1YRVNRckFyWndMM2dGX1liLThZenpsa0NSNVUyVGFTZER1amdjbk9Nb3ZMUjN3T1V5NW5sMjVXZEo5b19td2hBSUdXUEFuZFBBS2dGcGVUSGZBR0VTekdDZUptSHdGVkFGVUhKaUp4a1lfdUg1eGxkMHFIZjlaZFJsejNtMmtkV1hmVXlaUndGbDJZMW1vY1VnWEIySUhfUjhMYXNVOEtGVkdXZnVZLVhTem9abTlTNGZrdDZFazhBcDVkWnNwZkY2MTczcEF4S2o2LXpMbkdoOG04bDA4U05fNmlFdHhGa2oyLTsgLkFzcE5ldENvcmUuQ29va2llc0MyPWV1eUt2VkwyaE9RVFFoZHBXNzJqaUdIZnRhZ3dsMkRTdjB6dDJzVlA5a1NnQ1Q1TWJxWkk5NmhjUWFQUFVDcERsaGs5QXdoU3RBU0RZNGpUc3hiUVMxNE5rZWFYZUd3Y0NYNkJEc3RKY3RKRFNTSzFGdWlWcjlURmVHT25fRU5ERUgxLXZQNzlKYms5Y2owWENhdEtGUThUVGhoelpCRzUta1Y2c3NYZ0ZGZnRUWXBpdDdhcW9mMEVKZ1BwajBKRWVHaWRmMEpOMGhFcXhYT1RxdUVjMkxpbDZrT1RVRXMteEx2ZEJhak4yaHVZRG9NRGRHSWwwV0dXQUttV1BCVFhSa3pBdWFEWGkyUnJKZVhoMmN1ejZxTVlFTHJjS3BobWRUZEJMakgzT0pfLXhjNE51RnJCVGVrdVdpMURBWTNoeGZEM0hKT0U7IHNlc3Npb24tYWZmaW5pdHktY29va2llPTlmOWM5YjU2OTA3ZjIyNmZhYTY0ZjQzMDAzOWFmMmU0fDg1ZjIzMGE5NDhjM2RjNzI5NTI2MDAyYmY1ZjE1Y2NhOyMjfCMjZjZmZDhhODctYWEzZi00MzQ2LWFhYzQtMTcwOTAwMDUwNzAw"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"NFS-e\",\n    \"idExterno\": \"TESTE231024\",\n    \"ambienteEmissao\": \"Producao\",\n    \"enviadaPorEmail\": false,\n    \"cliente\": {\n        \"tipoPessoa\": \"F\",\n        \"nome\": \"Cliente teste\",\n        \"email\": \"teste@teste.com.br\",\n        \"cpfCnpj\": \"38618699772\",\n        \"inscricaoMunicipal\": null,\n        \"inscricaoEstadual\": null,\n        \"telefone\": \"3132223333\",\n        \"endereco\": {\n            \"pais\": \"Brasil\",\n            \"uf\": \"MG\",\n            \"cidade\": \"Belo Horizonte\",\n            \"logradouro\": \"Rua Sergipe\",\n            \"numero\": \"1014\",\n            \"complemento\": \"7o Andar\",\n            \"bairro\": \"Savassi\",\n            \"cep\": \"30130174\"\n        }\n    },\n    \"servico\": {\n                \"descricao\": \"Teste webservice\",\n                \"aliquotaIss\": 3.0,\n                \"issRetidoFonte\": false,\n                \"codigoServicoMunicipio\": \"4.12\",\n                \"itemListaServicoLC116\": \"4.12\",\n                \"cnae\": \"8630504\",\n                \"municipioPrestacaoServico\": \"3300704\"\n            },\n    \"valorTotal\": 1\n}\n\n\n\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "ba845766-d843-49f7-8aa0-8f86d6060a00",
+									"description": "Identificador único da empresa."
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Emitir NFS-e SANDBOX",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic LkFzcE5ldENvcmUuQ29va2llcz1jaHVua3MtMjsgLkFzcE5ldENvcmUuQ29va2llc0MxPUNmREo4RUFncWZoeEFVdEJzNnA2QnR4R3dSTEMyR2FqZkxrWHYtVmx2aWRJdXZscjYxbl8yRWdUVDhXUXhGUDZaZ3lKbDgza3E2cVFSRGcwbkdiQlR5SE9FQVNadUoyRjR4Y0FGc2VIMjZjZjAtcUFHbktfb2NJYm9TdkhZdVV5YU03MUtPM0QxRnFBUGhuT0hOcmVJZTc4dVFwQ2FEQ0hKX2phSEpNQVVoREdFZU9wRjMyZVlVb2xXR3M3eDZ3UDh0NXFhQ0xvamllWmhuNG1Oa1hvNEY3QjJwVlctOVFRaHdYSUxDTWZUaFNEeUJ0UXBoZFJSa1FLY243R0MzenJxRU9BLU5sbU1VdXFmc0x3NTdZU05zRWJPWUkxOUpoWlBOQUFIbDdkcU1xRHpHdHQ5eVBMMk55TURjNTZCX1RhdkpMZjJGcXJWa2VxU0JaSUIwZUo5M3RieGhLY1M2SDVLWTFvc0IxcWgwU3BFQnQzRFhpc1BCRWRQZWtIdXhjTWhMbzRuOWdlR0pEd1g3WEcxWVhhSDZjSnhSNFVyOUNnODBUX1UxVUdkbk1EX0U4NUdDTnRqWHM0UzJFRzBUUExBbU1wNy1HUjlscVRld3lCcF8yRHlLOEppSjFKcmxsWHVzZGFXMFZsUFVlb2phbWpvclBsYllPRDk0X19jSDBrVHVZVngxMGFXYmYtQkx6cnVCbVB2SzJMTFBxSWpzS1RDTUV3czRrV1BYeTY2eldaTzFGSEtIWkl3RW9PSmdaenFqMHhfLUpNd19qeWhpeE9UVGRzVkJMOXlrUEk0Nkp3U1VwVEt1bjdOOEo2X09vcVl0Tk5nTFZuOGNVWE92YnRzYVdXY1RiMlJNRkpKOVJ2ZFozZnhkRTNjbmVPZHlJM0pRQWVMc1EtX3RuMFNpSnktamxUaWFhbTlPQnVnYk4tN0JxWEpEWVFhdHlkUTVLZ09FVVR5a2g5RGVWcmZVN0pjN0llajU0VmFrYzF6VFVQVTNUeUI0Ti10YUpBQmVqWGZVVXdEMlQwU0Q4WUJ1eXkzckdUT255N1FBanBnbmNmdDAxc1VJeVp4N1FJYU5fUkN0X3p1aUdtc25STkNTNkJ3N2VsVThLS3Yxc2RzWEk4RnYzX1VCZFhOV2w5Y2pwMUt0SzR5d0JINGxTbHhfbVhadklUS0VQcE9MTFlDQ0VTZW1Mek1OelJZUHN4UC14VW9rOERibnJ5dDczeDcybkRyZVlYQ1E5MXRJZXdDWG5MM01Sa0NQUlRHUmRtLUUyX0lwZzEyaDY2Tlk1LUhTWGhuc20wVmJldEpudWJTOXc1Sk5LdUxpSlVZa0hDWU9UWDJnV2Z5WW9FLV9qbHg4eTEtMHRPdW5TQXlNWENManBfT0JyaVlKUFhJRGFpTms3bUlKWkd6dkVwOHY3NlBzZ3pXSi1YZ3JHemoySGlzOVNodEJwc2RBR1h5NV9tUms1UWQ4Uks4enRPNmNHY3hhSDJXRnhFMzZkNUY5c2UyUHVUbkx0X2Z5TFlSZFdRTWZPdWo5ZEtJeFZWQnNCdkhSdXVIWTVuZkFfUTRfUjFGSFpLenZyNTRjdHpDVW1ucHQ3SGdBYi1lc0JaZzZZRHh0SHVQQWNYU0RtRGdSLWRvR1FyX05jdzQ5MFQ1SzFfalVTR0hJbW45VG1aVW5GSkN2QndObW1CLXpNcnAwWlVkMmdhWDZOYlk2WThsRFpkX1hBTzM1bmhpdV9XVDdQbVotZ1dFLXRzUnBLWVZ6cHR6Vm42em5NVjN4REt0Nm01UzZuelB2TWllZFBkWHhQbDRZZjdOQ24xc2hDMTRfRlhqS3NkVjhzcDZ5ZVpIZ2tqYWhUTTJhRVNkYklWUEtjOFBXNFRtMUxlUk1NbjhjRFhwTnliX1lSWkMxYko1cE40Vm54TVpVSHRWczZhcDNjYjJrWmVpWEhEZTZSOFZyUUdXRzBQN2FENm9lUHpGV0Q0c2RlemNqRl9qaHR4U1hROUZZZ1JBR1VYM0pwUkptU0w0MDVWQ00yLWtoY1NUSkNiZzRPZnZUcm9vUmR1NXdfSjRmWU5hZ19TY2xQWjQ2MlNKak8temUxRUVna0Zlbm1BOVdIZ2FvQTAyazhyWEs3MS03eGk4MzA2ekVCcEhPZkhxYzd6Sjc5RTlmUG10TmF6d2IwNG1SRzVuOUFXdXFsM04zdWRsU3NHbXMyRE8xaFRDWFZWYzJ1aDZ0VmZfLUdITXFxd1RVR0paR3J6a2tTZmo2R2lzZjljakxCeXdxZUY3dEh0Y0NjNld0aC10NTNjOEk0ejhBU200d1lpNHhaYmpTSXZSZkR0YWRoVzhId29nTE90bzI2Y2V6bi1HUkZUS3Q2el9WcW1wYUhfdjNtaGNxVjU2N09SM18xUy1mV1FTRlJWU1Rod2NLSWtuNmtSTEtnUjBJNGZUaEt1WlJGb0NzWkt3SEMwUVpFbGJmZkpxNFdzUU5BakNIV0Q0Y2lVdl83WE9aZ0EtTVZrZ3ZtS2FUQ2h5a0NqSXRXOXNRcFh1WURGYnVSU05ZVzBCd1VKVTdaU1hwMURyVTl3VnFqNlU2YWJjOHZvSDcwYWEzLXlsMWp6cXdJbEdmN0tQamhhM3dNOG4wRzIyUWVWRl85MXhvNmI5a1FMWnJvMDZUa1BPZm1GY1hsWVoyTUxnUk9ZUk9tRkt5SlQ0dENnd0YzR2g2bC1oVXRMOHlPV2tWSm1kZ2c0ZzVTdnU3SUVQczF1NzN5QU04a1l2WGlTMV9yMEdaUHZ0OVgxWnhrZ29EalZoOUhxalRBcmVVdnNsUGpmaHFtT2w1LVNabGh1UFNjTllMYzlNWmsyUTR1X3B5LUlhUU5NUzB2ZFpoazJXUy1fdmNIT1VnRzFlOWMyR3Y2bUdudFBWRkh3WUdmLTlKY2ZrUmNIVzFoWWxQZ0NXUGgtRkxlX0xfZWVRYlVfT05HLWFfRHBncGZfV1J1M184Q1l3UUhZZ3RQY1N0VWRzQnBhTWpIckI1d3RUN2FEc3ZmdE42X1lER2NvejJBYjVRb1ZOZVE3R2FhWHozZnZvcllxT1FGVDBxZ2YyN3o4amEwMFBlU0tHc3JRRHZjUTIzX1lzQ3VUU1NXbTNpMGZya1NnQnV3ZGFOdWNzU2JCRml0VXdtNE1SLVlsdHExLTVydVBLVnFxQXVUeU9sTWZTb3luejBvTjZWbXJNUFJCYnA3RUtIa1BIT2ZXT21jLXpsQ0U0eTVyMkhYdjF0TC15dDJCUjNsem5SOVhnWmVRd190YVdES3I1Wm9NZFdfMGowRUJOc3NEQ2VsUS1wV1RON0wzdnFSOGpDOUxLdFZxQm1PREU0N1Fwc2pxWTFTR0xqc2l0RUpaaXNIYVJ0ZU1MaFNIcTVkYzk2N2s3QWxON3kzQkxMclVaS05sMTBlcHlxUkdWZFpwcGdzM1o0WU82aVVGcVhqVDdHNmh0SjJ3WXBQdjdhOFZOcEM0TVlrZlF1N3FIYzc3NDl3RDhjbHhpdGhlVF9hMnhHUU9pdnl1U0NQam9aQmJfN1RPbi1WRXp0TF9NbzlQOGtyTjdic1ZuR3NYR1l3X1pDYjduR2lPLTYyNFY4RkNEejQzdGFzOG53RkI2SDI5YWU2SEkzM0JnMGdxWTNCS0xpS1pkZ0czYXNtUFp5ZkJlc1llM0VVZXNZbjBUVlRIOG9xRVVBNzFycVNqRW80d1NTUTFaYTZyY2p1akdxSFNLaE4tNGpPSDVZNjQxdzJjbTNhTnk4WlB6WEdLcDJSVTVnSFlrVnFGa0pveEVDVFM5MVVPVGJwaUVXcTVSVWgyclAySHRNZkJmQ1RsZkJXeFh2emdQZzFhV0psYzdCOWpEQVhudFV3WHFPN3F3N2dPcFhCYmhkT0tEd210V2t0S055dERGZUh3UWNYYXh4UDFRMmN6Y0ZQbmk0ZW9xVjQ4RHdEcV96Sk03d2xhakM5aVV6ZkljNHJGRG1RMjhlVlZtU3BCeHFwX3AzT01PdjFnQTZqNS1ZMFpNVk5faUlNWlk1TGVldnBWbmhUWG5hNXhzc2JaOFNMOEhhVjFGN0V4Qi1RMzJ5OWpVb3VNNTM5YXh0Rk9NcmtnQWhQWGsyVGVtWm5WQkZRQ0JwOERxZGVOQUtYWTdVZnlXZnMxSW9ia3BHQ1lmTmZ4NElGd3p3cnNCVm4zSFI0eGJtYTYtcEpzOU5ndWFCQmFTYTVwR1FWd2JhaVhqY0RGYkxvV2lJYmVhZzNBNDAzSW1wdHAtXzlEdUo2STJjaDlYTThidmRPdkxqbkVjZmtxTnNjeHVtcWFjeGd6V1RQdV9wdjdZR1dkS3RuNjlkMF9VZUxtcU9zUHoxTkpvX2hLdUd2MVByQ2x0YU5ZR04ySFliM2x6d29zNGt4czdyYXVHODhidmJIVE16WHBjcUdRenpQUTZuNHlPM0U5dG9KOFJaRnhTdmlTQkVoVHpPa2ZGbUlISmttMkdtV0p6Y1dJYVNEOVZ5aUJFcmN2T2pKdk40c3djZFpIWU1uX1Y3cElmUFpKbnh4ZGJMbTlIVDBtZnBZak1RaE9vbTlUams3VlFJcWpqdFNnWFpZcGY4RDVlY2k0MGpwaTkyYVEtVWJNVzJVM3BlZllQeDZoNFpVS0xycUpWQTQtdVR3a2M4LVJraGR6bzZ3amZ6M1dFdDRmcE5DLW1uUDZuWkF3dHAwQnpRQmk3bTBzd1NWakItcEsyWEV2SHpoVmFfR2h5bFB5bkViT3lmMDZxVHJUUndhaDU3NzNGQVkxaElMb1REREFhLXNpb09qQjlwWlpnSFRlR1lLY194V1NRRFRrRE1Ya1BCSzZYblZMRXlsaS1nQTVWSXpyZ1BVd2JsMWlNRFJNVDI3bWVvY1dXandHSllkc2RiamptNmZUWFpNUkVSQV9HUHFlcE1GV0h0U1dkbUc4NEoyam1IQTYyZzRzVkRrbVpJMUppTzdGM284MllKZHhmX0FDbVFybjFJWE90ZnpMNXRnaGdpYS1YRVNRckFyWndMM2dGX1liLThZenpsa0NSNVUyVGFTZER1amdjbk9Nb3ZMUjN3T1V5NW5sMjVXZEo5b19td2hBSUdXUEFuZFBBS2dGcGVUSGZBR0VTekdDZUptSHdGVkFGVUhKaUp4a1lfdUg1eGxkMHFIZjlaZFJsejNtMmtkV1hmVXlaUndGbDJZMW1vY1VnWEIySUhfUjhMYXNVOEtGVkdXZnVZLVhTem9abTlTNGZrdDZFazhBcDVkWnNwZkY2MTczcEF4S2o2LXpMbkdoOG04bDA4U05fNmlFdHhGa2oyLTsgLkFzcE5ldENvcmUuQ29va2llc0MyPWV1eUt2VkwyaE9RVFFoZHBXNzJqaUdIZnRhZ3dsMkRTdjB6dDJzVlA5a1NnQ1Q1TWJxWkk5NmhjUWFQUFVDcERsaGs5QXdoU3RBU0RZNGpUc3hiUVMxNE5rZWFYZUd3Y0NYNkJEc3RKY3RKRFNTSzFGdWlWcjlURmVHT25fRU5ERUgxLXZQNzlKYms5Y2owWENhdEtGUThUVGhoelpCRzUta1Y2c3NYZ0ZGZnRUWXBpdDdhcW9mMEVKZ1BwajBKRWVHaWRmMEpOMGhFcXhYT1RxdUVjMkxpbDZrT1RVRXMteEx2ZEJhak4yaHVZRG9NRGRHSWwwV0dXQUttV1BCVFhSa3pBdWFEWGkyUnJKZVhoMmN1ejZxTVlFTHJjS3BobWRUZEJMakgzT0pfLXhjNE51RnJCVGVrdVdpMURBWTNoeGZEM0hKT0U7IHNlc3Npb24tYWZmaW5pdHktY29va2llPTlmOWM5YjU2OTA3ZjIyNmZhYTY0ZjQzMDAzOWFmMmU0fDg1ZjIzMGE5NDhjM2RjNzI5NTI2MDAyYmY1ZjE1Y2NhOyMjfCMjZjZmZDhhODctYWEzZi00MzQ2LWFhYzQtMTcwOTAwMDUwNzAw"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"NFS-e\",\n    \"idExterno\": \"TESTE231024\",\n    \"ambienteEmissao\": \"Producao\",\n    \"enviadaPorEmail\": false,\n    \"cliente\": {\n        \"tipoPessoa\": \"F\",\n        \"nome\": \"Cliente teste\",\n        \"email\": \"teste@teste.com.br\",\n        \"cpfCnpj\": \"38618699772\",\n        \"inscricaoMunicipal\": null,\n        \"inscricaoEstadual\": null,\n        \"telefone\": \"3132223333\",\n        \"endereco\": {\n            \"pais\": \"Brasil\",\n            \"uf\": \"MG\",\n            \"cidade\": \"Belo Horizonte\",\n            \"logradouro\": \"Rua Sergipe\",\n            \"numero\": \"1014\",\n            \"complemento\": \"7o Andar\",\n            \"bairro\": \"Savassi\",\n            \"cep\": \"30130174\"\n        }\n    },\n    \"servico\": {\n                \"descricao\": \"Teste webservice\",\n                \"aliquotaIss\": 3.0,\n                \"issRetidoFonte\": false,\n                \"codigoServicoMunicipio\": \"4.12\",\n                \"itemListaServicoLC116\": \"4.12\",\n                \"cnae\": \"8630504\",\n                \"municipioPrestacaoServico\": \"3300704\"\n            },\n    \"valorTotal\": 1\n}\n\n\n\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "https://sandbox.notagateway.com.br/v1/empresas/:empresaid/nfes",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"notagateway",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaid",
+								"nfes"
+							],
+							"variable": [
+								{
+									"key": "empresaid",
+									"value": ""
+								}
+							]
+						},
+						"description": "Emite uma Nota Fiscal com todos os seus dados. Será retornado o identificador único da nota fiscal."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar NFS-e pelo id do GW",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/:nfeId",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								":nfeId"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "nfeId",
+									"value": "",
+									"description": "Identificador único da Nota Fiscal que deseja requisitar."
+								}
+							]
+						},
+						"description": "Cancela uma Nota Fiscal identificada pelo seu identificador único (paramêtro {nfeID})."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar NFS-e pelo id externo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content-type}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{apiKey}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.enotasgw.com.br/v1/empresas/:empresaId/nfes/porIdExterno/:idExterno",
+							"protocol": "https",
+							"host": [
+								"api",
+								"enotasgw",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaId",
+								"nfes",
+								"porIdExterno",
+								":idExterno"
+							],
+							"variable": [
+								{
+									"key": "empresaId",
+									"value": "97fd6fbc-6548-4b39-95f8-28004dd00700",
+									"description": "Identificador único da empresa."
+								},
+								{
+									"key": "idExterno",
+									"value": "teste",
+									"description": "Identificador único da Nota Fiscal que deseja cancelar."
+								}
+							]
+						},
+						"description": "Cancela uma Nota Fiscal identificada pelo seu ID Externo (paramêtro {idExterno})."
+					},
+					"response": []
+				},
+				{
+					"name": "Redisparo Webhook Teste",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://enm66pe0izxob.x.pipedream.net/",
+							"protocol": "https",
+							"host": [
+								"enm66pe0izxob",
+								"x",
+								"pipedream",
+								"net"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sandbox - Reforma",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic e0I3QzBGNzkxLUYzODItNEY3MC04NTlFLThFNEE2RDAwQkE2RX0=",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{content-type}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tipo\": \"NFS-e\",\r\n  \"idExterno\": \"NFSe-001011_8\",\r\n  \"ambienteEmissao\": \"Homologacao\",\r\n  \"enviarPorEmail\": false,\r\n  \"cliente\": {\r\n    \"tipoPessoa\": \"J\",\r\n    \"nome\": \"NOTA GATEWAY DESENVOLVIMENTO DE SOFTWARES LTDA\",\r\n    \"email\": \"teste@notagateway.com.br\",\r\n    \"cpfCnpj\": \"57743975000127\",\r\n    \"inscricaoMunicipal\": null,\r\n    \"inscricaoEstadual\": null,\r\n    \"telefone\": \"3391375671\",\r\n    \"endereco\": {\r\n      \"cidade\": \"BELO HORIZONTE\",\r\n      \"logradouro\": \"AV GETULIO VARGAS\",\r\n      \"numero\": \"671\",\r\n      \"complemento\": \"SALA 500\",\r\n      \"bairro\": \"SAVASSI\",\r\n      \"cep\": \"30.112\",\r\n      \"pais\": \"Brasil\",\r\n      \"uf\": \"MG\"\r\n    }\r\n  },\r\n  \"servico\": {\r\n    \"descricao\": \"Servico de consultoria\",\r\n    \"aliquotaIss\": 3,\r\n    \"issRetidoFonte\": false,\r\n    \"codigoServicoMunicipio\": \"010700188\",\r\n    \"itemListaServicoLC116\": \"1.07\",\r\n    \"cnae\": null,\r\n    \"municipioPrestacaoServico\": \"3106200\",\r\n    \"codigoNBS\": \"101011100\",\r\n    \"codigoTributacaoNacional\": \"010101\",\r\n    \"ibsCbs\": {\r\n      \"classificacaoTributaria\": \"000001\",\r\n      \"codigoIndicadorOperacao\": \"030101\"\r\n    }\r\n  },\r\n  \"valorTotal\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sandbox.notagateway.com.br/v1/empresas/:empresaid/nfes",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"notagateway",
+								"com",
+								"br"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":empresaid",
+								"nfes"
+							],
+							"variable": [
+								{
+									"key": "empresaid",
+									"value": "DFDDE834-3AF1-494A-8F24-EBC1EF4E0B00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Métodos relacionados à NFS-e.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

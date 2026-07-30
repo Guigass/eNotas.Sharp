@@ -1,0 +1,49 @@
+---
+description: Segurança ao alterar integração com API eNotas
+globs: eNotas.Sharp/Services/**/*.cs,eNotas.Sharp/Clients/**/*.cs
+alwaysApply: false
+---
+
+# Segurança de Integração
+
+## Propósito
+
+Evitar regressões no contrato HTTP com `api.enotasgw.com.br`.
+
+## Quando aplicar
+
+Mudanças em `RestService`, headers, base URL, serialização, paths do client, ou interpretação de respostas.
+
+## Contexto do projeto
+
+Única integração externa: eNotas GW. Auth: `Authorization: Basic {apiKey}`. JSON via Newtonsoft; XML via XmlSerializer em GETs com `deserializer: "xml"`.
+
+Referência: `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` e [KB NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) (skill `notagateway-kb-lookup`).
+
+## Regras obrigatórias
+
+1. Não alterar formato de autenticação sem validação humana e comunicação de breaking change.
+2. Não mudar base URL hardcoded sem mecanismo explícito e documentado.
+3. Paths novos devem seguir o padrão `/v2/empresas/{empresaId}/...`.
+4. Preservar comportamento de `ApiResponse` (IsSuccess, Status, Message, Exception, Object).
+5. Comparar com Postman V2 e, quando a regra não estiver clara no repo, com a KB NotaGateway.
+6. Nunca logar/commitar API Key.
+
+## O que fazer
+
+- Revisar impacto em todos os métodos que usam `Post`/`Get`/`Delete`.
+- Validar GETs JSON e XML separadamente.
+- Ao tocar `SerializeObject`, considerar datas UTC e null handling.
+
+## O que evitar
+
+- Trocar Newtonsoft por outra lib sem plano de migração.
+- Engolir mais exceções sem surfacing.
+- Usar Postman V1 (NFS-e) como fonte de verdade para o client atual.
+
+## Checklist antes de alterar
+
+- [ ] Métodos do client afetados listados
+- [ ] Postman V2 consultado
+- [ ] Auth e serialização revisadas
+- [ ] Risco de produção avaliado
