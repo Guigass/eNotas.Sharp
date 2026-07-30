@@ -3,6 +3,7 @@
   "tipo": "NF-e",
   "ambienteEmissao": "Homologacao",
   "enviarPorEmail": false,
+  "forcarEmissaoContingencia": false,
   "pedido": {
     "presencaConsumidor": "NaoSeAplica",
     "pagamento": {

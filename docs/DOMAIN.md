@@ -63,7 +63,10 @@
 - Valores permitidos de enumeráveis enviados como `string`/`int` (CST, CFOP, presença do consumidor, etc.).
 - Regras de prazo e elegibilidade para cancelamento e CC-e (não estão no código).
 - Se NFC-e deve ou não aceitar os mesmos campos de transporte/referência que NF-e.
-- Significado operacional de `forcarEmissaoContingencia` / `emitidaEmContingencia`.
+
+## Contingência (NF-e / NFC-e)
+
+**Fato (KB NotaGateway):** `forcarEmissaoContingencia` (boolean) no request força emissão em contingência; omitir/`false` deixa o Gateway gerenciar. `emitidaEmContingencia` é campo de retorno, para identificar se houve contingência. Ambos existem em `Nota` e `Consulta` (nullable + Ignore).
 
 ## Áreas sensíveis
 

@@ -34,6 +34,12 @@ namespace eNotas.Sharp.Models
         [JsonProperty("enviarPorEmail", NullValueHandling = NullValueHandling.Ignore)]
         public bool? EnviarPorEmail { get; set; }
 
+        [JsonProperty("forcarEmissaoContingencia", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ForcarEmissaoContingencia { get; set; }
+
+        [JsonProperty("emitidaEmContingencia", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? EmitidaEmContingencia { get; set; }
+
         [JsonProperty("nfeReferenciada", NullValueHandling = NullValueHandling.Ignore)]
         public List<NfeReferenciada> NfeReferenciada { get; set; }
 

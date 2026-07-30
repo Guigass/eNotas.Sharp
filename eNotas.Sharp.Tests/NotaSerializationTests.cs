@@ -19,6 +19,7 @@ public class NotaSerializationTests
         Assert.Equal("NF-e", nota.Tipo);
         Assert.Equal("Homologacao", nota.AmbienteEmissao);
         Assert.False(nota.EnviarPorEmail);
+        Assert.False(nota.ForcarEmissaoContingencia);
         Assert.Equal(1.00m, nota.ValorTotal);
         Assert.NotNull(nota.Cliente);
         Assert.Equal("Cliente Teste", nota.Cliente!.Nome);
@@ -60,6 +61,25 @@ public class NotaSerializationTests
         Assert.NotNull(obj["itens"]);
         Assert.Null(obj["naturezaOperacao"]);
         Assert.Null(obj["itens"]![0]!["sku"]);
+        Assert.Null(obj["forcarEmissaoContingencia"]);
+        Assert.Null(obj["emitidaEmContingencia"]);
+    }
+
+    [Fact]
+    public void Serialize_IncludesContingenciaWhenSet()
+    {
+        var nota = new Nota
+        {
+            Id = "abc",
+            ForcarEmissaoContingencia = false,
+            EmitidaEmContingencia = true
+        };
+
+        var json = JsonConvert.SerializeObject(nota);
+        var obj = JObject.Parse(json);
+
+        Assert.False(obj["forcarEmissaoContingencia"]?.Value<bool>());
+        Assert.True(obj["emitidaEmContingencia"]?.Value<bool>());
     }
 
     [Fact]

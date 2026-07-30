@@ -36,7 +36,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Área | Campo / tema | Situação |
 |------|--------------|----------|
 | Raiz `Nota` | `tipo` | **Feito:** presente em `Nota.cs` (e em `Consulta`); sample Postman V2 |
-| Raiz `Nota` | `forcarEmissaoContingencia`, `emitidaEmContingencia` | **Fato:** no sample / resposta; ausentes em `Nota.cs` |
+| Raiz `Nota` | `forcarEmissaoContingencia`, `emitidaEmContingencia` | **Feito:** presentes em `Nota.cs` (e já em `Consulta`); KB: request vs retorno |
 | Raiz `Nota` | `enviarPorEmail` vs `enviadaPorEmail` | **Fato:** model usa `enviarPorEmail`; sample Postman usa `enviadaPorEmail` — **validação humana** do nome oficial |
 | `itens[]` (`Iten`) | `codigoBeneficioFiscal`, `extipi`, `quantidadeTributavel`, `unidadeMedidaTributavel`, `valorTotal` | **Fato:** no sample Postman; ausentes em `Iten.cs` |
 | Impostos | `ibsCbs` tipado como `Imposto` genérico | **Fato:** propriedade existe; **inferência:** subcampos da reforma (além de `situacaoTributaria` / `porAliquota` / `classificacaoTributaria`) podem exigir model próprio — **validação humana** |
@@ -44,7 +44,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 #### Critério de aceite
 
-- [x] Properties aditivas em `Nota`, `Iten` e aninhados alinhadas ao contrato oficial — parcial: `Nota.tipo` feito; demais gaps da tabela acima abertos
+- [x] Properties aditivas em `Nota`, `Iten` e aninhados alinhadas ao contrato oficial — parcial: `Nota.tipo` + contingência feitos; gaps de `Iten` / e-mail / IBS abertos
 - [x] Paridade considerada para NF-e e NFC-e (mesmo model compartilhado) — `Nota` compartilhado; campo aditivo cobre ambos
 - [x] Sem remoção/renomeação de propriedades públicas existentes
 - [x] README / versão NuGet atualizados quando a superfície pública crescer — Version bump patch (README sem lista de props de model)
