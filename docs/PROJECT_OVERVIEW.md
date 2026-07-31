@@ -20,7 +20,7 @@ Publicada como pacote NuGet (`Install-Package eNotas.Sharp`), versão atual do p
 
 ## Principais responsabilidades
 
-1. Expor um client público (`eNotasClient`) para emitir, consultar, cancelar e inutilizar NF-e/NFC-e, e para carta de correção.
+1. Expor um client público (`eNotasClient`) para emitir, consultar, cancelar e inutilizar NF-e/NFC-e, carta de correção, gestão de empresas/SAT e consulta de manifestação.
 2. Mapear payloads da API em modelos POCOs com `[JsonProperty]`.
 3. Deserializar respostas JSON e XMLs fiscais (procNFe, cancelamento, inutilização, CC-e).
 4. Autenticar chamadas com API Key via header `Authorization: Basic {apiKey}`.
@@ -54,8 +54,8 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - Contratos JSON devem permanecer alinhados à API oficial e às coleções Postman em `docs/`.
 - Há suite mínima xUnit em `eNotas.Sharp.Tests`; integração com API real permanece manual (`TESTING.md`).
 - Sample compilável em `Exemplos/EmissaoNfeHomologacao` (credenciais via env; sem API Key no código).
-- README lista NFS-e e envio de manifestação como futuros; `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**), `DesabilitarEmpresa` (**P2-07**), `HabilitarEmpresa` (**P2-08**), `SetupSat` (**P2-09**), `ConsultaSat` (**P2-10**) e `ConsultaManifestacao` (**P2-11**, host `api2`) já estão no client. Postman V1 cobre NFS-e, mas o client C# ainda não implementa esses métodos.
-- Lacunas e priorização do backlog estão em `ROADMAP.md` (gaps restantes de models, NFS-e, empresas/manifestação/SAT, qualidade).
+- Empresas/SAT/consulta de manifestação (**P2-01..P2-11**, **P2-13** docs) já estão no client e no README como disponíveis. Ainda fora do client: envio de manifestação (**P2-12**, bloqueado) e NFS-e (**P1** / Postman V1).
+- Lacunas e priorização do backlog estão em `ROADMAP.md` (gaps restantes de models P0, NFS-e P1, envio de manifestação P2-12, qualidade P3).
 
 ## Onde começar
 
@@ -79,5 +79,5 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 
 - Se a publicação NuGet é manual ou automatizada fora do repositório.
 - Quais campos tributários novos além do `IbsCbs` tipado (KB 595993) ainda faltam nos demais aninhados.
-- Prioridade e escopo de NFS-e / empresas / manifestação — ver lista em `ROADMAP.md`.
+- Prioridade e escopo de NFS-e (P1) e envio de manifestação (P2-12) — ver lista em `ROADMAP.md`.
 - Se `NotaWebhook` é usado apenas como DTO pelo consumidor ou se haverá suporte futuro no client.

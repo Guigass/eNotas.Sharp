@@ -117,13 +117,13 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | P2-10 | Consultar SAT | `GET /v2/sat/{satId}/all` (Postman) | P2-09 | **Agente-pronto** | Path conforme Postman; documentar parâmetro `satId` | Feito |
 | P2-11 | Consultar manifestação | `GET https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}` | — | **Agente-pronto** (cuidado host) | Requer chamada com **host `api2`** (não o BaseAddress atual). Preferir overload/path absoluto mínimo documentado; não alterar base URL padrão do client sem nota no README | Feito |
 | P2-12 | Enviar manifestação | path/verbo **não** fechados | — | **Bloqueado** | Só após validação humana do POST oficial (FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) tem body, sem URL) | Bloqueado |
-| P2-13 | Docs empresas/SAT | — | P2-02..P2-08 (mínimo CRUD + cert/logo ou habilitar) | **Agente-pronto** | README: tirar “futuro” do que estiver implementado; sem secrets | Aberto |
+| P2-13 | Docs empresas/SAT | — | P2-02..P2-08 (mínimo CRUD + cert/logo ou habilitar) | **Agente-pronto** | README: tirar “futuro” do que estiver implementado; sem secrets | Feito |
 
 **Critério de aceite do épico P2** (itens Agente-pronto Feito; P2-12 permanece Bloqueado até humano):
 
-- [ ] Métodos async `ApiResponse` / `ApiResponse<T>`
-- [ ] Models empresa + suporte multipart onde exigido
-- [ ] README atualizado para métodos disponíveis
+- [x] Métodos async `ApiResponse` / `ApiResponse<T>`
+- [x] Models empresa + suporte multipart onde exigido
+- [x] README atualizado para métodos disponíveis
 
 ### P3 — Qualidade e DX da library
 
@@ -157,7 +157,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
-| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); `HabilitarEmpresa` (**P2-08** Feito); `SetupSat` (**P2-09** Feito — body em `Message`, schema Postman vazio); `ConsultaSat` (**P2-10** Feito — `GET /v2/sat/{satId}/all`, body em `Message`, schema Postman vazio); **P2-13** aberto; pré-req **INFRA-02** Feito |
+| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); `HabilitarEmpresa` (**P2-08** Feito); `SetupSat` (**P2-09** Feito — body em `Message`, schema Postman vazio); `ConsultaSat` (**P2-10** Feito — `GET /v2/sat/{satId}/all`, body em `Message`, schema Postman vazio); **P2-13** Feito (README/docs sem “futuro” no que já está no client); pré-req **INFRA-02** Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** Feito (`ConsultaManifestacao`, host `api2`/`v3`, body em `Message`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
 | Postman V1 — NFS-e + apoio municipal + PDF | Não implementado — itens **P1-01..P1-12** + **INFRA-01** (PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 

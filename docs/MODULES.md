@@ -3,31 +3,31 @@
 ## Client — eNotasClient
 
 ### Responsabilidade
-Fachada pública da biblioteca: métodos async para NF-e e NFC-e.
+Fachada pública da biblioteca: métodos async para NF-e, NFC-e, empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
 
 ### Caminhos principais
 - `eNotas.Sharp/Clients/eNotasClient.cs`
 
 ### Dependências
 - `RestService`
-- Models: `Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, wrappers XML
+- Models: `Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Empresa`, `ListaEmpresas`, wrappers XML
 
 ### Fluxos relacionados
-Emissão, consulta, cancelamento, inutilização, carta de correção, download XML.
+Emissão, consulta, cancelamento, inutilização, carta de correção, download XML; incluir/alterar/consultar/listar empresa; certificado/logo multipart; setup/consulta SAT; consulta de manifestação (host `api2`).
 
 ### Pontos de atenção
-- Base URL hardcoded: `https://api.enotasgw.com.br`
+- Base URL hardcoded: `https://api.enotasgw.com.br` (`ConsultaManifestacao` usa URL absoluta em `api2`)
 - Implementa `IDisposable`
 - Lista de métodos públicos deve permanecer alinhada ao `README.md`
 
 ### Como alterar com segurança
 1. Manter assinaturas públicas estáveis.
-2. Novos métodos: adicionar na região correta (NFe/NFCe).
-3. Reutilizar `Post`/`Get`/`Delete` existentes.
+2. Novos métodos: adicionar na região correta (NFe/NFCe/Empresas).
+3. Reutilizar `Post`/`Get`/`Delete`/`PostMultipart` existentes.
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado) e métodos futuros do README (NFS-e). Consulta (**P2-11** / `ConsultaManifestacao`) já está no client.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e (**P1**) ainda não está no client. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 

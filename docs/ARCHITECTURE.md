@@ -79,7 +79,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - Não alterar a API pública (`eNotasClient` e models públicos) sem considerar breaking change no NuGet.
 - `RestService` deve permanecer `internal` (detalhe de implementação).
-- Novos endpoints devem seguir o padrão de regiões `#region NFe` / `#region NFCe` no client.
+- Novos endpoints devem seguir o padrão de regiões `#region NFe` / `#region NFCe` / `#region Empresas` no client.
 - Esta biblioteca **não** deve incorporar UI, banco ou lógica de negócio do consumidor.
 
 ## Decisões observadas
@@ -94,7 +94,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - Classes XML grandes (`Xml.cs`, etc.) parecem mapeamento direto do schema/retorno da SEFAZ via gateway.
 - `NotaWebhook` sugere suporte a payload de webhook no lado do consumidor, sem receber webhooks nesta lib.
-- Coleção Postman V1 (NFS-e) indica escopo futuro ou referência externa, não implementação atual.
+- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**, não implementação atual no client.
 
 ## Riscos arquiteturais
 

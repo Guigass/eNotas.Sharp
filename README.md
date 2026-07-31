@@ -88,16 +88,12 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
 
-- Métodos em Construção (P2 — ver roadmap):
+Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat` e `ConsultaManifestacao` devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
+
+- Ainda não no client (ver [roadmap](docs/ROADMAP.md)):
     ```
     * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
+    * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1 / itens P1
     ```
-
-- Métodos Futuros (P1–P2 — ver roadmap):
-    ```
-    * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1
-    ```
-
-Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**), `DesabilitarEmpresa` (**P2-07**), `HabilitarEmpresa` (**P2-08**), `SetupSat` (**P2-09**) e `ConsultaSat` (**P2-10**, parâmetro `satId`); `ConsultaManifestacao` (**P2-11**, host `api2`/`v3`); envio de manifestação ainda bloqueado (**P2-12**).
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).
