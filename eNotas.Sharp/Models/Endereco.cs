@@ -7,6 +7,12 @@ namespace eNotas.Sharp.Models
 {
     public partial class Endereco
     {
+        [JsonProperty("codigoIbgeUf", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CodigoIbgeUf { get; set; }
+
+        [JsonProperty("codigoIbgeCidade", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CodigoIbgeCidade { get; set; }
+
         [JsonProperty("pais", NullValueHandling = NullValueHandling.Ignore)]
         public string Pais { get; set; }
 

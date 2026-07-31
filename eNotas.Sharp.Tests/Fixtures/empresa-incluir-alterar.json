@@ -1,0 +1,47 @@
+{
+  "id": null,
+  "cnpj": "99999999999999",
+  "inscricaoMunicipal": "999999",
+  "inscricaoEstadual": null,
+  "razaoSocial": "Cliente Teste",
+  "nomeFantasia": "Cliente Teste",
+  "optanteSimplesNacional": true,
+  "email": "email@email.com.br",
+  "telefoneComercial": null,
+  "incentivadorCultural": false,
+  "endereco": {
+    "codigoIbgeUf": 31,
+    "codigoIbgeCidade": 3106200,
+    "pais": "Brasil",
+    "uf": "MG",
+    "cidade": "Belo Horizonte",
+    "logradouro": "Rua Teste",
+    "numero": "999",
+    "complemento": "APT 999",
+    "bairro": "Bairro Teste",
+    "cep": "85100000"
+  },
+  "regimeEspecialTributacao": "0",
+  "codigoServicoMunicipal": "4219",
+  "itemListaServicoLC116": null,
+  "cnae": null,
+  "aliquotaIss": 0.02,
+  "descricaoServico": "Discriminacao do servico prestado.",
+  "enviarEmailCliente": true,
+  "configuracoesNFSeHomologacao": {
+    "sequencialNFe": 1,
+    "serieNFe": "NF",
+    "sequencialLoteNFe": 1,
+    "usuarioAcessoProvedor": null,
+    "senhaAcessoProvedor": null,
+    "tokenAcessoProvedor": null
+  },
+  "configuracoesNFSeProducao": {
+    "sequencialNFe": 1,
+    "serieNFe": "NF",
+    "sequencialLoteNFe": 1,
+    "usuarioAcessoProvedor": null,
+    "senhaAcessoProvedor": null,
+    "tokenAcessoProvedor": null
+  }
+}

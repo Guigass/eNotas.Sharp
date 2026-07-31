@@ -4,7 +4,7 @@
 
 Há um projeto `eNotas.Sharp.Tests` (xUnit, `net8.0`) cobrindo:
 
-1. Serialização/deserialização JSON (`Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Impostos`/`IbsCbs` completo e simplificado) e `CustomDateTimeConverter`
+1. Serialização/deserialização JSON (`Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Impostos`/`IbsCbs` completo e simplificado, `Empresa`/`ConfiguracoesNfse`) e `CustomDateTimeConverter`
 2. Deserialização XML (`NfeProc`, cancelamento, inutilização, CC-e)
 3. Smoke de paths/auth/`ApiResponse` de **todos** os métodos públicos do `eNotasClient` com `HttpMessageHandler` fake (inclui cancelamento)
 4. Edge cases do `RestService` (JSON inválido, exceção de rede, `Put`, `Delete` path relativo, `GetBytes` binário, `PostMultipart`, `CancellationToken`)
@@ -27,7 +27,7 @@ dotnet build eNotas.Sharp.sln -c Release
 
 | Tipo | Local | Observação |
 |------|-------|------------|
-| Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `InutilizacaoSerializationTests`, `CartaCorrecaoSerializationTests`, `ImpostosSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` |
+| Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `InutilizacaoSerializationTests`, `CartaCorrecaoSerializationTests`, `ImpostosSerializationTests`, `EmpresaSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` (incl. `empresa-incluir-alterar.json`) |
 | XML | `NfeProcXmlTests`, `XmlDocumentTests` | Fixtures mínimas, não documento fiscal completo |
 | HTTP smoke | `eNotasClientPathTests` | Todos os métodos NF-e/NFC-e; auth Basic; sucesso e 4xx; `CancellationToken` cancelado |
 | RestService | `RestServiceTests` | Parse JSON/XML inválido deixa `Object` null e preenche `Exception`; exceção de rede não relança; `Put`; `Delete` path relativo; `GetBytes` (sucesso → bytes em `Object`, 4xx → `Message`); `PostMultipart` (sucesso → multipart/form-data, 4xx → `Message`); cancelamento relança `OperationCanceledException` |

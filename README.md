@@ -94,4 +94,6 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * Download EXE customizado do S@T
     ```
 
+Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade` — prontos para serialização; métodos do client ainda não implementados (P2-02+).
+
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

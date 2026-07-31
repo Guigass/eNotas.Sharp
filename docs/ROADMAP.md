@@ -104,7 +104,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete`, **`GetBytes`** (INFRA-0
 
 | ID | Item | Method + path | Depends | Classificação | Critério de aceite | Status |
 |----|------|---------------|---------|---------------|--------------------|--------|
-| P2-01 | Model empresa | — (DTO) | — | **Agente-pronto** | Model(s) alinhados ao body Postman **Incluir/Alterar empresa** (endereço, CNPJ, IE/IM, razões, flags, `ConfiguracoesNFSeHomologacao`/`Producao`, etc.); nullable + Ignore; teste serialização | Aberto |
+| P2-01 | Model empresa | — (DTO) | — | **Agente-pronto** | Model(s) alinhados ao body Postman **Incluir/Alterar empresa** (endereço, CNPJ, IE/IM, razões, flags, `ConfiguracoesNFSeHomologacao`/`Producao`, etc.); nullable + Ignore; teste serialização | Feito |
 | P2-02 | Incluir/Alterar empresa | `POST /v2/empresas` | P2-01 | **Agente-pronto** | Método público → `ApiResponse`; smoke | Aberto |
 | P2-03 | Consultar empresa por id | `GET /v2/empresas/{empresaId}` | P2-01 | **Agente-pronto** | `ApiResponse<T>` com model de empresa | Aberto |
 | P2-04 | Listar empresas | `GET /v2/empresas?pageNumber&pageSize&searchBy&searchTerm&sortBy&sortDirection` | P2-03 | **Agente-pronto** | Query params como Postman; model de lista | Aberto |
@@ -156,7 +156,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete`, **`GetBytes`** (INFRA-0
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
-| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Não implementado — itens **P2-01..P2-10**, **P2-13**; pré-req **INFRA-02** (multipart) Feito |
+| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse` (**P2-01** Feito); métodos client **P2-02..P2-10**, **P2-13** abertos; pré-req **INFRA-02** Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** (host `api2`/`v3`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
 | Postman V1 — NFS-e + apoio municipal + PDF | Não implementado — itens **P1-01..P1-12** + **INFRA-01** (PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 
