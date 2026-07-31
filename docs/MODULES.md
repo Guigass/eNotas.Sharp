@@ -48,7 +48,8 @@ Todas as chamadas de rede da biblioteca.
 ### Pontos de atenção
 - Classe `internal` — não expor publicamente.
 - Exceções engolidas e expostas em `Exception` / `Message` (exceto `OperationCanceledException`, que é relançada).
-- `CancellationToken` opcional propagado até `SendAsync` / `DeleteAsync`.
+- `CancellationToken` opcional propagado até `SendAsync` (Post/Get/Put/Delete).
+- `Delete` usa path relativo ao `BaseAddress`, igual aos demais verbos.
 - Header `Accept: application/json` e `Authorization: Basic {apiKey}`.
 
 ### Como alterar com segurança
@@ -56,9 +57,6 @@ Todas as chamadas de rede da biblioteca.
 2. Não quebrar formato de serialização sem versionamento.
 3. Validar Get JSON e Get XML após mudanças.
 4. Revisar com skill `integration-change-review`.
-
-### Informações incertas
-Comportamento exato do `Delete` quanto à montagem da URL em diferentes bases.
 
 ---
 

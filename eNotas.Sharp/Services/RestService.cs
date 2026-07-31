@@ -14,7 +14,6 @@ namespace eNotas.Sharp.Services
     internal class RestService : IDisposable
     {
         private HttpClient client;
-        private string _apiUrl;
         private string _apiKey;
 
         public RestService(string apiUrl, string apiKey)
@@ -30,7 +29,6 @@ namespace eNotas.Sharp.Services
         private RestService(string apiUrl, string apiKey, HttpClient httpClient)
         {
             _apiKey = apiKey;
-            _apiUrl = apiUrl;
 
             client = httpClient;
             client.BaseAddress = new Uri(apiUrl);
@@ -146,14 +144,17 @@ namespace eNotas.Sharp.Services
 
             try
             {
-                var result = await client.DeleteAsync($"{_apiUrl}/{action}", cancellationToken).ConfigureAwait(false);
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Delete, action))
+                {
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-                apiResponse.Status = result.StatusCode.ToString();
-                apiResponse.IsSuccess = result.IsSuccessStatusCode;
+                    apiResponse.Status = result.StatusCode.ToString();
+                    apiResponse.IsSuccess = result.IsSuccessStatusCode;
 
-                var jsonResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var jsonResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                apiResponse.Message = apiResponse.Message = jsonResult;
+                    apiResponse.Message = jsonResult;
+                }
             }
             catch (OperationCanceledException)
             {

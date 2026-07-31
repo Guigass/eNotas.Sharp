@@ -10,7 +10,6 @@ Documentados a partir do código e lacunas do repositório (não há issue track
 | Pasta `Exemplos/` vazia | Diretório sem arquivos |
 | Docs Postman V1 vs client só V2 NF-e/NFC-e | Escopo divergente |
 | `Version` ≠ `AssemblyVersion` | `.csproj` |
-| Possível inconsistência no `Delete` (URL absoluta vs relativa) | `RestService.Delete` |
 
 ## Erros comuns
 

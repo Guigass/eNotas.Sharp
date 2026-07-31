@@ -94,6 +94,28 @@ public class RestServiceTests
     }
 
     [Fact]
+    public async Task Delete_SendsDeleteToExpectedPath()
+    {
+        var handler = new FakeHandler
+        {
+            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{\"ok\":true}")
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+
+        var response = await service.Delete("/v2/empresas/x/nf-e/y");
+
+        Assert.True(response.IsSuccess);
+        Assert.Equal(HttpMethod.Delete, handler.LastRequest!.Method);
+        Assert.EndsWith("/v2/empresas/x/nf-e/y", handler.LastRequest.RequestUri!.AbsolutePath);
+        Assert.DoesNotContain("//v2", handler.LastRequest.RequestUri.AbsoluteUri);
+        Assert.Equal("{\"ok\":true}", response.Message);
+    }
+
+    [Fact]
     public async Task Post_WhenTokenAlreadyCanceled_ThrowsOperationCanceledException()
     {
         var handler = new FakeHandler();

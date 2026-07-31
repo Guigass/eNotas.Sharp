@@ -98,7 +98,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Pasta `Exemplos/` vazia | Fato | Diretório existe sem samples |
 | Sem `CancellationToken` | **Feito** | Parâmetro opcional em todos os métodos públicos + `RestService`; cancelamento relança `OperationCanceledException` |
 | `RestService.Put` sem consumidor | Fato | Método interno não usado pelo client |
-| `Delete` com URL absoluta vs Post/Get relativos | Fato | `ARCHITECTURE.md` / `RestService` |
+| `Delete` com URL absoluta vs Post/Get relativos | **Feito** | Path relativo via `SendAsync` + `HttpMethod.Delete`, igual a Post/Get/Put |
 | Catch vazio na deserialização do `Get` | **Feito** | Falha de parse JSON/XML preenche `ApiResponse.Exception` |
 | `Version` ≠ `AssemblyVersion` no csproj | Fato | Empacotamento NuGet |
 | Base URL hardcoded | Fato | `eNotasClient` |
@@ -110,7 +110,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 - [x] Suite mínima (serialização de models + smoke de paths) — xUnit em `eNotas.Sharp.Tests`
 - [ ] Exemplos compiláveis sem secrets
-- [x] Correções de transporte documentadas e sem breaking silencioso — parcial: catch do `Get` preenche `Exception` em falha de parse; `CancellationToken` aditivo feito; demais gaps de transporte abertos (`Put` sem uso, `Delete` URL absoluta, base URL hardcoded)
+- [x] Correções de transporte documentadas e sem breaking silencioso — parcial: catch do `Get` preenche `Exception` em falha de parse; `CancellationToken` aditivo feito; `Delete` alinhado a path relativo; demais gaps abertos (`Put` sem uso, base URL hardcoded)
 - [x] README alinhado aos métodos reais do client — lista de métodos e nota de P0; revisar a cada bump
 - [x] `CancellationToken` opcional (`= default`) em `eNotasClient` / `RestService` — source-compatible; cancelamento não é engolido em `ApiResponse`
 
