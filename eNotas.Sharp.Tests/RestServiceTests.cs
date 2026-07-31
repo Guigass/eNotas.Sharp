@@ -94,6 +94,27 @@ public class RestServiceTests
     }
 
     [Fact]
+    public async Task Get_Untyped_SendsGetAndPutsBodyInMessage()
+    {
+        var handler = new FakeHandler
+        {
+            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{\"ok\":true}")
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+
+        var response = await service.Get("/v2/empresas/x/sat/setup");
+
+        Assert.True(response.IsSuccess);
+        Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+        Assert.EndsWith("/v2/empresas/x/sat/setup", handler.LastRequest.RequestUri!.AbsolutePath);
+        Assert.Equal("{\"ok\":true}", response.Message);
+    }
+
+    [Fact]
     public async Task Delete_SendsDeleteToExpectedPath()
     {
         var handler = new FakeHandler

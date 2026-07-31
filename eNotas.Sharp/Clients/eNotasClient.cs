@@ -255,6 +255,13 @@ namespace eNotas.Sharp.Clients
             return await _client.Post(path, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> SetupSat(string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v2/empresas/{empresaId}/sat/setup";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         public void Dispose()
