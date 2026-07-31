@@ -63,6 +63,25 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ConsultaEmpresa_GetsTypedEmpresa()
+    {
+        var json = "{\"id\":\"empresa-teste\",\"cnpj\":\"99999999999999\",\"razaoSocial\":\"Cliente Teste\"}";
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ConsultaEmpresa(ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v2/empresas/{ClientTestFactory.EmpresaId}", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Equal("empresa-teste", response.Object!.Id);
+            Assert.Equal("99999999999999", response.Object.Cnpj);
+            Assert.Equal("Cliente Teste", response.Object.RazaoSocial);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");

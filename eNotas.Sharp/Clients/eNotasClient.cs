@@ -173,6 +173,13 @@ namespace eNotas.Sharp.Clients
             return await _client.Post(path, empresa, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse<Empresa>> ConsultaEmpresa(string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v2/empresas/{empresaId}";
+
+            return await _client.Get<Empresa>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         public void Dispose()
