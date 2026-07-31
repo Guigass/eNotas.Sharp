@@ -160,6 +160,60 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ListarNfse_GetsTypedListaWithQueryParams()
+    {
+        const string json = """
+            {
+              "totalRecords": 1,
+              "data": [
+                {
+                  "id": "nota-123",
+                  "tipo": "NFS-e",
+                  "idExterno": "TESTE231024",
+                  "status": "Autorizada",
+                  "numero": "100",
+                  "valorTotal": 1.0
+                }
+              ]
+            }
+            """;
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ListarNfse(
+                ClientTestFactory.EmpresaId,
+                pageNumber: 0,
+                pageSize: 100,
+                sortBy: "datacriacao",
+                sortDirection: "asc",
+                filter: "status eq 'negada'");
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+
+            var query = handler.LastRequest.RequestUri.Query;
+            Assert.Contains("pageNumber=0", query);
+            Assert.Contains("pageSize=100", query);
+            Assert.Contains("sortBy=datacriacao", query);
+            Assert.Contains("sortDirection=asc", query);
+            Assert.Contains("filter=status%20eq%20%27negada%27", query);
+
+            Assert.Equal(1, response.Object!.TotalRecords);
+            Assert.NotNull(response.Object.Data);
+            Assert.Single(response.Object.Data!);
+            Assert.Equal("nota-123", response.Object.Data[0].Id);
+            Assert.Equal("NFS-e", response.Object.Data[0].Tipo);
+            Assert.Equal("TESTE231024", response.Object.Data[0].IdExterno);
+            Assert.Equal("Autorizada", response.Object.Data[0].Status);
+            Assert.Equal(1m, response.Object.Data[0].ValorTotal);
+        }
+    }
+
+    [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));

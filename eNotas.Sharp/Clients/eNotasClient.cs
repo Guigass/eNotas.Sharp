@@ -196,6 +196,29 @@ namespace eNotas.Sharp.Clients
             return await _client.Get<ConsultaNfse>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse<ListaNfse>> ListarNfse(
+            string empresaId,
+            int pageNumber,
+            int pageSize,
+            string sortBy = null,
+            string sortDirection = null,
+            string filter = null,
+            CancellationToken cancellationToken = default)
+        {
+            var path = new StringBuilder($"/v1/empresas/{empresaId}/nfes?pageNumber={pageNumber}&pageSize={pageSize}");
+
+            if (!string.IsNullOrEmpty(sortBy))
+                path.Append("&sortBy=").Append(Uri.EscapeDataString(sortBy));
+
+            if (!string.IsNullOrEmpty(sortDirection))
+                path.Append("&sortDirection=").Append(Uri.EscapeDataString(sortDirection));
+
+            if (!string.IsNullOrEmpty(filter))
+                path.Append("&filter=").Append(Uri.EscapeDataString(filter));
+
+            return await _client.Get<ListaNfse>(path.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Empresas

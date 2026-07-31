@@ -61,7 +61,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - `eNotasClient` → `RestService` + `Models`
 - `RestService` → Newtonsoft.Json, HttpClient, XmlSerializer, `ApiResponse`
-- Models de emissão → composição (`Nota` → `Cliente`, `Iten`, `Impostos`, `Pedido`, `Transporte`, …); NFS-e V1 → `Nfse` → `Cliente`, `Servico` (**P1-01**; `EmitirNfse` / **P1-02**); consulta NFS-e → `ConsultaNfse` (**P1-03**/**P1-04**; ≠ `Consulta` de NF-e/NFC-e)
+- Models de emissão → composição (`Nota` → `Cliente`, `Iten`, `Impostos`, `Pedido`, `Transporte`, …); NFS-e V1 → `Nfse` → `Cliente`, `Servico` (**P1-01**; `EmitirNfse` / **P1-02**); consulta NFS-e → `ConsultaNfse` (**P1-03**/**P1-04**; ≠ `Consulta` de NF-e/NFC-e); lista NFS-e → `ListaNfse` (**P1-05**)
 - Models XML (`Xml*.cs`) → namespaces próprios aninhados sob `eNotas.Sharp.Models`
 
 ## Dependências externas
@@ -94,7 +94,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - Classes XML grandes (`Xml.cs`, etc.) parecem mapeamento direto do schema/retorno da SEFAZ via gateway.
 - `NotaWebhook` sugere suporte a payload de webhook no lado do consumidor, sem receber webhooks nesta lib.
-- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**; DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**) e `ConsultaNfsePorIdExterno` (**P1-04**) no client; demais métodos P1-05+.
+- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**; DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**) e `ListarNfse` (**P1-05**, model `ListaNfse`) no client; demais métodos P1-06+.
 
 ## Riscos arquiteturais
 

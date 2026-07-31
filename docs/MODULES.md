@@ -3,17 +3,17 @@
 ## Client — eNotasClient
 
 ### Responsabilidade
-Fachada pública da biblioteca: métodos async para NF-e, NFC-e, NFS-e (emitir/consultar por id GW), empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
+Fachada pública da biblioteca: métodos async para NF-e, NFC-e, NFS-e (emitir/consultar/listar), empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
 
 ### Caminhos principais
 - `eNotas.Sharp/Clients/eNotasClient.cs`
 
 ### Dependências
 - `RestService`
-- Models: `Nota`, `Nfse`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Empresa`, `ListaEmpresas`, wrappers XML
+- Models: `Nota`, `Nfse`, `Consulta`, `ConsultaNfse`, `ListaNfse`, `Inutilizacao`, `CartaCorrecao`, `Empresa`, `ListaEmpresas`, wrappers XML
 
 ### Fluxos relacionados
-Emissão NF-e/NFC-e/NFS-e, consulta, cancelamento, inutilização, carta de correção, download XML; incluir/alterar/consultar/listar empresa; certificado/logo multipart; setup/consulta SAT; consulta de manifestação (host `api2`).
+Emissão NF-e/NFC-e/NFS-e, consulta/listagem NFS-e, cancelamento, inutilização, carta de correção, download XML; incluir/alterar/consultar/listar empresa; certificado/logo multipart; setup/consulta SAT; consulta de manifestação (host `api2`).
 
 ### Pontos de atenção
 - Base URL hardcoded: `https://api.enotasgw.com.br` (`ConsultaManifestacao` usa URL absoluta em `api2`)
@@ -27,7 +27,7 @@ Emissão NF-e/NFC-e/NFS-e, consulta, cancelamento, inutilização, carta de corr
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito), `ConsultaNfse` (**P1-03** Feito) e `ConsultaNfsePorIdExterno` (**P1-04** Feito); demais métodos (**P1-05+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**/**P1-04**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito), `ConsultaNfse` (**P1-03** Feito), `ConsultaNfsePorIdExterno` (**P1-04** Feito) e `ListarNfse` (**P1-05** Feito); demais métodos (**P1-06+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**/**P1-04**; lista `ListaNfse` — **P1-05**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 
@@ -68,12 +68,13 @@ Todas as chamadas de rede da biblioteca.
 ## Models — DTOs de emissão e consulta
 
 ### Responsabilidade
-Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS-e V1 em `Nfse`/`Servico`; consulta NFS-e em `ConsultaNfse`).
+Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS-e V1 em `Nfse`/`Servico`; consulta NFS-e em `ConsultaNfse`; lista NFS-e em `ListaNfse`).
 
 ### Caminhos principais
 - `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão NF-e/NFC-e)
 - `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
 - `ConsultaNfse.cs` (consulta NFS-e V1 — **P1-03**/**P1-04**; reutiliza `Cliente`/`Servico`; distinto de `Consulta` NF-e/NFC-e)
+- `ListaNfse.cs` (listagem NFS-e V1 — **P1-05**; `totalRecords` + `data` de `ConsultaNfse`)
 - `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto` para PIS/COFINS/IPI), `IbsCbs.cs` (IBS/CBS NF-e/NFC-e), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
 - `Consulta.cs`, `ConsultaInutilizacao.cs`, `Inutilizacao.cs`, `CartaCorrecao.cs`, `CorrecaoResponse.cs`
 - `ApiResponse.cs`, `NotaWebhook.cs`
@@ -144,4 +145,4 @@ Coleções Postman como referência de contrato.
 - `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 
 ### Pontos de atenção
-V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**) e `ConsultaNfsePorIdExterno` (**P1-04**) no pacote; demais métodos P1-05+. V2 permanece referência primária para NF-e/NFC-e/empresas.
+V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**) e `ListarNfse` (**P1-05**, model `ListaNfse`) no pacote; demais métodos P1-06+. V2 permanece referência primária para NF-e/NFC-e/empresas.
