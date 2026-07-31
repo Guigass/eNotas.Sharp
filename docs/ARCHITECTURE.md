@@ -52,7 +52,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 1. Consumidor instancia `eNotasClient(apiKey)`.
 2. Construtor cria `RestService` com base URL fixa e header `Authorization: Basic {apiKey}`.
-3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...` ou `/v2/empresas` para incluir/alterar/listar) e chamam `Post` / `Get` / `Delete`, com `CancellationToken` opcional. Exceção: `ConsultaManifestacao` usa URL absoluta em `https://api2.enotasgw.com.br/v3/...` (host distinto; base padrão inalterada).
+3. Métodos do client montam o path conforme a API: NF-e/NFC-e/empresas em `/v2/...`; NFS-e e apoio municipal em `/v1/.../nfes` (e correlatos). Chamam `Post` / `Get` / `Delete` / `GetBytes` / `PostMultipart`, com `CancellationToken` opcional. Exceção: `ConsultaManifestacao` usa URL absoluta em `https://api2.enotasgw.com.br/v3/...` (host distinto; base padrão inalterada).
 4. Request: objeto → `JsonConvert.SerializeObject` (UTC).
 5. Response: string em `ApiResponse.Message`; se tipado, também `Object` (JSON ou XML conforme parâmetro `deserializer`).
 6. Exceções de rede/processamento vão para `ApiResponse.Exception` sem relançar (**fato observado**).
@@ -73,13 +73,13 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - **Biblioteca:** `eNotas.Sharp.Clients.eNotasClient`
 - **Pacote:** build do `eNotas.Sharp.csproj` gera `.nupkg`
-- **Documentação de API de referência:** `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
+- **Documentação de API de referência:** Postman V2 (`docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`) para NF-e/NFC-e/empresas; Postman V1 (`docs/API - eNotas - V1 - NFS-e.postman_collection.json`) para NFS-e — ver README seção NFS-e (V1 ≠ V2)
 
 ## Fronteiras arquiteturais
 
 - Não alterar a API pública (`eNotasClient` e models públicos) sem considerar breaking change no NuGet.
 - `RestService` deve permanecer `internal` (detalhe de implementação).
-- Novos endpoints devem seguir o padrão de regiões `#region NFe` / `#region NFCe` / `#region Empresas` no client.
+- Novos endpoints devem seguir o padrão de regiões `#region NFe` / `#region NFCe` / `#region NFSe` / `#region Empresas` no client.
 - Esta biblioteca **não** deve incorporar UI, banco ou lógica de negócio do consumidor.
 
 ## Decisões observadas
@@ -94,7 +94,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - Classes XML grandes (`Xml.cs`, etc.) parecem mapeamento direto do schema/retorno da SEFAZ via gateway.
 - `NotaWebhook` sugere suporte a payload de webhook no lado do consumidor, sem receber webhooks nesta lib.
-- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**; DTO emissão (`Nfse`/`Servico`, **P1-01**; Reforma **P1-11**: `ServicoIbsCbs`), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object` via `GetBytes`), apoio municipal (**P1-10**, body em `Message`) no client; docs P1-12 aberto.
+- Coleção Postman V1 (NFS-e) é a referência de contrato do ciclo **P1-01..P1-12** (Feito): `#region NFSe`, models `Nfse`/`Servico`/`ConsultaNfse`/`ListaNfse`/`ServicoIbsCbs`, métodos reais listados no README (V1 `nfes` ≠ V2 `nf-e`/`nfc-e`).
 
 ## Riscos arquiteturais
 

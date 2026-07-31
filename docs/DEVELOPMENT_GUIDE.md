@@ -108,7 +108,7 @@ chore(nuget): bump package version to 1.4.5
 ## Padrões de organização
 
 - Um arquivo por conceito principal de model (exceto XMLs agregados).
-- Regiões `#region NFe` / `#region NFCe` no client.
+- Regiões `#region NFe` / `#region NFCe` / `#region NFSe` / `#region Empresas` no client.
 - `partial class` nos models — manter o padrão ao editar.
 
 ## Cuidados antes de abrir PR ou finalizar tarefa
@@ -125,4 +125,4 @@ chore(nuget): bump package version to 1.4.5
 - Alterar só NF-e e esquecer NFC-e (ou o contrário) quando o model é compartilhado.
 - Commitar API Key em exemplos.
 - Subir versão do pacote sem mudança real (ou o contrário).
-- Tratar Postman V1 (NFS-e) como se já estivesse implementado no client.
+- Usar Postman V1 (NFS-e / `nfes`) como referência de paths NF-e/NFC-e V2 (`nf-e`/`nfc-e`), ou o inverso.

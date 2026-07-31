@@ -14,24 +14,38 @@
 | Inutilização | `Inutilizacao.cs` | Série e faixa numérica |
 | Carta de Correção | `CartaCorrecao.cs` | Evento CC-e (NF-e) |
 | Consulta | `Consulta.cs` | Status, chave, `linkDanfe` (URL do PDF/DANFE NF-e/NFC-e — não há `GET .../pdf` na API V2), `linkDownloadXml`, protocolo |
+| NFS-e | `Nfse.cs`, `Servico.cs`, `ConsultaNfse.cs`, `ListaNfse.cs` | Emissão/consulta/lista V1 (`/v1/.../nfes`); ≠ `Nota`/`Consulta` V2 |
 | Webhook | `NotaWebhook.cs` | Payload tipado para o consumidor |
 
 ## Fluxos de negócio
 
-### Emissão NF-e / NFC-e
+### Emissão NF-e / NFC-e (API V2)
 1. Montar `Nota` (ambiente, natureza, cliente, itens, impostos, pagamento, etc.).
 2. Chamar `EmitirNfe` ou `EmitirNfce` com `empresaId`.
 3. Avaliar `ApiResponse.IsSuccess`, `Status`, `Message`.
 
 **Sensibilidade:** alta — gera documento fiscal.
 
-### Consulta
+### Emissão / ciclo NFS-e (API V1)
+1. Montar `Nfse` + `Servico` (não usar `Nota` de mercadoria).
+2. `EmitirNfse` → `POST /v1/empresas/{empresaId}/nfes`.
+3. Consultar: `ConsultaNfse` / `ConsultaNfsePorIdExterno`; listar: `ListarNfse`.
+4. XML: `ConsultaNfseXML` / `ConsultaNfseXMLPorIdExterno` → string em `ApiResponse.Message` ([KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal)).
+5. PDF: `ConsultaNfsePDF` / `ConsultaNfsePDFPorIdExterno` → `byte[]` em `Object`.
+6. Cancelar: `CancelaNfse` / `CancelaNfsePorIdExterno` (DELETE V1).
+7. Apoio municipal (read-only): `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`.
+
+**Fato:** paths V1 `nfes` ≠ V2 `nf-e`/`nfc-e`. Inventário e exemplo no README (seção NFS-e).
+
+**Sensibilidade:** alta — gera/cancela documento de serviço.
+
+### Consulta (NF-e / NFC-e)
 - Status/dados: `ConsultaNfe` / `ConsultaNfce` → `ApiResponse<Consulta>`
 - XML autorizado: `ConsultaNfeXML` / `ConsultaNfceXML`
 - XML cancelamento: `ConsultaNfeXMLCancelamento` / `ConsultaNfceXMLCancelamento`
 
-### Cancelamento
-`CancelaNfe` / `CancelaNfce` via HTTP DELETE (V2 `nf-e`/`nfc-e`). NFS-e: `CancelaNfse` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/{nfeId}` (**P1-06**); `CancelaNfsePorIdExterno` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` (**P1-07**). Download XML NFS-e: `ConsultaNfseXML` / `ConsultaNfseXMLPorIdExterno` via HTTP GET em `.../xml` (**P1-08**); conteúdo XML bruto em `ApiResponse.Message` (sem model tipado). Download PDF NFS-e: `ConsultaNfsePDF` / `ConsultaNfsePDFPorIdExterno` via HTTP GET em `.../pdf` (**P1-09**); bytes em `ApiResponse<byte[]>.Object` via `GetBytes`. Apoio municipal NFS-e (**P1-10**): `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — GETs V1 read-only; body bruto em `ApiResponse.Message` (schema Postman vazio).
+### Cancelamento (NF-e / NFC-e)
+`CancelaNfe` / `CancelaNfce` via HTTP DELETE (V2 `nf-e`/`nfc-e`).
 
 **Sensibilidade:** alta — efeito fiscal.
 
@@ -48,7 +62,7 @@
 ## Regras explícitas encontradas
 
 - Autenticação por API Key no client (**fato observado** no `RestService`).
-- Paths versionados em `/v2/empresas/...` (**fato observado**).
+- Paths NF-e/NFC-e em `/v2/empresas/.../nf-e|nfc-e/...`; NFS-e em `/v1/empresas/.../nfes...` (**fato observado**).
 - Campo `ambienteEmissao` nos modelos de emissão/inutilização (valores exatos **não documentados no código** — validar com API/Postman).
 - Propriedades omitidas quando nulas (`NullValueHandling.Ignore`).
 

@@ -17,33 +17,35 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Falhas comuns |
 | [Workflow agentico](docs/AGENTIC_WORKFLOW.md) | Rules, skills e agents Cursor |
 
-Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (NF-e/NFC-e/empresas). NFS-e: coleção V1 `docs/API - eNotas - V1 - NFS-e.postman_collection.json` — no client C# há `EmitirNfse` (P1-02), `ConsultaNfse` (P1-03), `ConsultaNfsePorIdExterno` (P1-04), `ListarNfse` (P1-05), `CancelaNfse` (P1-06), `CancelaNfsePorIdExterno` (P1-07), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (P1-08), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (P1-09), apoio municipal (P1-10), campos Reforma em `Servico` (P1-11: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs`); docs NFS-e consolidados ainda no roadmap (P1-12).
+Referência de API (Postman):
+
+| Coleção | Escopo | Paths típicos |
+|---------|--------|---------------|
+| `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` | NF-e, NFC-e, empresas, SAT | `/v2/empresas/.../nf-e`, `/nfc-e`, `/v2/empresas` |
+| `docs/API - eNotas - V1 - NFS-e.postman_collection.json` | NFS-e e apoio municipal | `/v1/empresas/.../nfes`, `/v1/estados/...`, `/v1/servicos/...` |
+
+**Não misturar:** V2 usa `nf-e`/`nfc-e` (mercadorias); V1 usa `nfes` (serviço). Mesmo host base (`https://api.enotasgw.com.br`), versões e models distintos. Docs oficiais: [API V2](https://docs.notagateway.com.br/v2/docs/sobre-a-api) · [API V1](https://docs.notagateway.com.br/docs).
 
 Documentação oficial NotaGateway: [Central de ajuda](https://atendimento.notagateway.com.br/kb/pt-br) — consulta via agent `notagateway-docs-specialist` / skill `notagateway-kb-lookup`.
 
 Governança Cursor: `.cursor/rules`, `.cursor/skills`, `.cursor/agents` (comece por `.cursor/agents/agent-router.md`).
 
-- Exemplo de Uso
+- Exemplo de Uso (NF-e)
     ```
-    //Uso da biblioteca é simples basta dar o using passando sua APIKEY, 
-    //chamar o método passando o modelo nescessário e o id da empresa 
-    //(APIKEY e empresaID fornecidos pela eNotas).
-    using (var enotas = new eNotasClient("apiKey"))
+    // API Key e empresaId via configuração do consumidor — nunca commitados.
+    using (var enotas = new eNotasClient(apiKey))
     {
         var nota = new Nota
         {
             //......
         };
-        var response = enotas.EmitirNfe(nota, "empresaID").Result;
-        // Ou
-        // var resp = await enotas.EmitirNfe(nota, "empresaID");
+        var response = await enotas.EmitirNfe(nota, empresaId);
         // Ou com cancelamento:
-        // var resp = await enotas.EmitirNfe(nota, "empresaID", cancellationToken);
-        // Para Metodos ASYNC
+        // var resp = await enotas.EmitirNfe(nota, empresaId, cancellationToken);
     }
     ```
 
-Sample compilável (homologação, sem API Key no código): [`Exemplos/EmissaoNfeHomologacao`](Exemplos/EmissaoNfeHomologacao) — define `ENOTAS_API_KEY` e `ENOTAS_EMPRESA_ID` antes de `dotnet run`.
+Sample compilável (homologação NF-e, sem API Key no código): [`Exemplos/EmissaoNfeHomologacao`](Exemplos/EmissaoNfeHomologacao) — define `ENOTAS_API_KEY` e `ENOTAS_EMPRESA_ID` antes de `dotnet run`.
 
 Métodos públicos aceitam `CancellationToken cancellationToken = default` (opcional; source-compatible).
 --------------------------------------------------------------------------------------------------
@@ -53,7 +55,54 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     ```
 --------------------------------------------------------------------------------------------------
 
-- Métodos Disponíveis:
+## NFS-e (API V1) ≠ NF-e / NFC-e (API V2)
+
+NFS-e usa a **API V1** (`/v1/.../nfes`), models próprios (`Nfse`, `Servico`, `ConsultaNfse`, `ListaNfse`) e a região `#region NFSe` em `eNotasClient`. Não reutilize `Nota` / `Consulta` / paths V2 `nf-e`/`nfc-e` para serviço.
+
+Contrato: Postman V1 + [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) (PDF/XML). XML em `ApiResponse.Message`; PDF em `ApiResponse<byte[]>.Object`.
+
+- Exemplo de uso (NFS-e) — sem API Key no código:
+    ```
+    using (var enotas = new eNotasClient(apiKey))
+    {
+        var nfse = new Nfse
+        {
+            // tipo, idExterno, ambienteEmissao, cliente, servico, valorTotal, ...
+        };
+        var emitida = await enotas.EmitirNfse(nfse, empresaId);
+        var consulta = await enotas.ConsultaNfse(nfeId, empresaId);
+        // var porExt = await enotas.ConsultaNfsePorIdExterno(idExterno, empresaId);
+        // var xml = await enotas.ConsultaNfseXML(nfeId, empresaId); // Message
+        // var pdf = await enotas.ConsultaNfsePDF(nfeId, empresaId); // Object = byte[]
+    }
+    ```
+
+Testes offline (sem API Key): `NfseSerializationTests` + fixtures `nfse-emissao.json` / `nfse-reforma.json`; smoke de paths em `eNotasClientPathTests`.
+
+### Métodos NFS-e no client
+
+| Método | Path |
+|--------|------|
+| `EmitirNfse` | `POST /v1/empresas/{empresaId}/nfes` |
+| `ConsultaNfse` | `GET /v1/empresas/{empresaId}/nfes/{nfeId}` |
+| `ConsultaNfsePorIdExterno` | `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` |
+| `ListarNfse` | `GET /v1/empresas/{empresaId}/nfes?pageNumber&pageSize&sortBy&sortDirection&filter` |
+| `CancelaNfse` | `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}` |
+| `CancelaNfsePorIdExterno` | `DELETE /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` |
+| `ConsultaNfseXML` | `GET .../nfes/{nfeId}/xml` (XML em `Message`) |
+| `ConsultaNfseXMLPorIdExterno` | `GET .../porIdExterno/{idExterno}/xml` |
+| `ConsultaNfsePDF` | `GET .../nfes/{nfeId}/pdf` (bytes em `Object`) |
+| `ConsultaNfsePDFPorIdExterno` | `GET .../porIdExterno/{idExterno}/pdf` |
+| `ConsultaServicosMunicipais` | `GET /v1/estados/{uf}/cidades/{nome}/servicos?...` (body em `Message`) |
+| `ConsultaServicosMunicipaisUnificados` | `GET /v1/servicos/cidades?...` |
+| `ConsultaProvedorCidade` | `GET /v1/estados/cidades/{codigoIBGECidade}/provedor` |
+| `CriticarDadosObrigatorios` | `GET /v1/empresas/{empresaId}/criticardadosobrigatorios` |
+
+Models: `Nfse`/`Servico` (emissão; Reforma: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs` — distinto de `IbsCbs` NF-e/NFC-e), `ConsultaNfse`, `ListaNfse`.
+
+--------------------------------------------------------------------------------------------------
+
+- Métodos Disponíveis (NF-e / NFC-e / empresas / SAT / manifestação):
     ```
     * Emitir NF-e
     * Consultar NF-e
@@ -84,32 +133,17 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Setup SAT (`SetupSat`) — body bruto em `ApiResponse.Message` (schema Postman incerto)
     * Consultar SAT (`ConsultaSat`) — parâmetro `satId` no path `GET /v2/sat/{satId}/all`; body bruto em `ApiResponse.Message` (schema Postman incerto)
     * Consultar Manifestação de Destinatário NF-e (`ConsultaManifestacao`) — `GET` absoluto em `https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}` (host **api2**, distinto da base padrão `api.enotasgw.com.br`); body bruto em `ApiResponse.Message` (schema Postman vazio)
-    * Emitir NFS-e (`EmitirNfse`) — `POST /v1/empresas/{empresaId}/nfes` (API V1; model `Nfse`)
-    * Consultar NFS-e por id GW (`ConsultaNfse`) — `GET /v1/empresas/{empresaId}/nfes/{nfeId}` (API V1; model `ConsultaNfse`)
-    * Consultar NFS-e por idExterno (`ConsultaNfsePorIdExterno`) — `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` (API V1; model `ConsultaNfse`)
-    * Listar NFS-e (`ListarNfse`) — `GET /v1/empresas/{empresaId}/nfes?pageNumber&pageSize&sortBy&sortDirection&filter` (API V1; model `ListaNfse`)
-    * Cancelar NFS-e por id GW (`CancelaNfse`) — `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}` (API V1)
-    * Cancelar NFS-e por idExterno (`CancelaNfsePorIdExterno`) — `DELETE /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` (API V1)
-    * Download XML NFS-e por id GW (`ConsultaNfseXML`) — `GET /v1/empresas/{empresaId}/nfes/{nfeId}/xml` (API V1; XML bruto em `ApiResponse.Message`)
-    * Download XML NFS-e por idExterno (`ConsultaNfseXMLPorIdExterno`) — `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/xml` (API V1; XML bruto em `ApiResponse.Message`)
-    * Download PDF NFS-e por id GW (`ConsultaNfsePDF`) — `GET /v1/empresas/{empresaId}/nfes/{nfeId}/pdf` (API V1; bytes em `ApiResponse<byte[]>.Object`)
-    * Download PDF NFS-e por idExterno (`ConsultaNfsePDFPorIdExterno`) — `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/pdf` (API V1; bytes em `ApiResponse<byte[]>.Object`)
-    * Serviços municipais da prefeitura (`ConsultaServicosMunicipais`) — `GET /v1/estados/{uf}/cidades/{nome}/servicos?...` (API V1; body em `ApiResponse.Message`, schema Postman vazio)
-    * Serviços municipais unificados (`ConsultaServicosMunicipaisUnificados`) — `GET /v1/servicos/cidades?...` (API V1; body em `ApiResponse.Message`)
-    * Características da prefeitura / provedor (`ConsultaProvedorCidade`) — `GET /v1/estados/cidades/{codigoIBGECidade}/provedor` (API V1; body em `ApiResponse.Message`)
-    * Criticar dados obrigatórios da empresa (`CriticarDadosObrigatorios`) — `GET /v1/empresas/{empresaId}/criticardadosobrigatorios` (API V1; body em `ApiResponse.Message`)
     ```
 
-Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
+NFS-e: ver seção **NFS-e (API V1)** acima (métodos reais do `#region NFSe`).
 
-Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat`, `ConsultaManifestacao` e os GETs de apoio municipal NFS-e (**P1-10**) devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
+Backlog detalhado: [docs/ROADMAP.md](docs/ROADMAP.md).
 
-NFS-e: models `Nfse`/`Servico` (**P1-01**; Reforma **P1-11**: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs` — distinto de `IbsCbs` NF-e/NFC-e), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**, path V1 `nfes/porIdExterno/{idExterno}` — distinto de V2 `nf-e`/`nfc-e` e do model `Consulta`), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`), apoio municipal (**P1-10**: `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`).
+Empresas / SAT / consulta de manifestação: models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; certificado e logo usam multipart; `SetupSat`, `ConsultaSat` e `ConsultaManifestacao` devolvem body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
 
 - Ainda não no client (ver [roadmap](docs/ROADMAP.md)):
     ```
     * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
-    * Docs NFS-e consolidados (P1-12) — Postman V1 / README seção dedicada
     ```
 
-P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).
+P0 (campos opcionais de emissão NF-e/NFC-e): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).
