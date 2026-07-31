@@ -191,7 +191,7 @@ namespace eNotas.Sharp.Clients
 
         public async Task<ApiResponse<ConsultaNfse>> ConsultaNfsePorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
         {
-            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}";
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{Uri.EscapeDataString(idExterno)}";
 
             return await _client.Get<ConsultaNfse>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -228,7 +228,7 @@ namespace eNotas.Sharp.Clients
 
         public async Task<ApiResponse> CancelaNfsePorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
         {
-            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}";
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{Uri.EscapeDataString(idExterno)}";
 
             return await _client.Delete(path, cancellationToken).ConfigureAwait(false);
         }
@@ -242,7 +242,7 @@ namespace eNotas.Sharp.Clients
 
         public async Task<ApiResponse> ConsultaNfseXMLPorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
         {
-            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/xml";
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{Uri.EscapeDataString(idExterno)}/xml";
 
             return await _client.Get(path, cancellationToken).ConfigureAwait(false);
         }
@@ -256,7 +256,7 @@ namespace eNotas.Sharp.Clients
 
         public async Task<ApiResponse<byte[]>> ConsultaNfsePDFPorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
         {
-            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/pdf";
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{Uri.EscapeDataString(idExterno)}/pdf";
 
             return await _client.GetBytes(path, cancellationToken).ConfigureAwait(false);
         }

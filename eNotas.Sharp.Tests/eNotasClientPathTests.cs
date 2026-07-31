@@ -336,6 +336,42 @@ public class eNotasClientPathTests
         }
     }
 
+    [Theory]
+    [InlineData("pedido 123", "pedido%20123")]
+    [InlineData("a%b", "a%25b")]
+    public async Task NfsePorIdExterno_EscapesIdExternoInPath(string idExterno, string encodedIdExterno)
+    {
+        var basePath = $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/porIdExterno/{encodedIdExterno}";
+
+        var (consultaClient, consultaHandler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{}"));
+        using (consultaClient)
+        {
+            await consultaClient.ConsultaNfsePorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+            Assert.EndsWith(basePath, consultaHandler.LastRequest!.RequestUri!.AbsolutePath);
+        }
+
+        var (cancelaClient, cancelaHandler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{}"));
+        using (cancelaClient)
+        {
+            await cancelaClient.CancelaNfsePorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+            Assert.Contains(basePath, cancelaHandler.LastRequest!.RequestUri!.AbsoluteUri);
+        }
+
+        var (xmlClient, xmlHandler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("<x/>"));
+        using (xmlClient)
+        {
+            await xmlClient.ConsultaNfseXMLPorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+            Assert.EndsWith($"{basePath}/xml", xmlHandler.LastRequest!.RequestUri!.AbsolutePath);
+        }
+
+        var (pdfClient, pdfHandler) = ClientTestFactory.Create(_ => ClientTestFactory.OkBytes(new byte[] { 0x25 }));
+        using (pdfClient)
+        {
+            await pdfClient.ConsultaNfsePDFPorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+            Assert.EndsWith($"{basePath}/pdf", pdfHandler.LastRequest!.RequestUri!.AbsolutePath);
+        }
+    }
+
     [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
