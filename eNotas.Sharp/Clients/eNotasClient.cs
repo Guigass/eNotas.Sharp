@@ -105,6 +105,14 @@ namespace eNotas.Sharp.Clients
             return await _client.Get<Models.XmlCorrecao.ProcEventoNFe>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> ConsultaManifestacao(string chaveAcesso, string empresaId, CancellationToken cancellationToken = default)
+        {
+            // Host api2 / v3 (Postman); URL absoluta — não altera _url padrão (api.enotasgw.com.br).
+            string path = $"https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region NFCe

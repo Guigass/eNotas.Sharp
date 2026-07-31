@@ -27,7 +27,7 @@ Emissão, consulta, cancelamento, inutilização, carta de correção, download 
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Escopo e prioridade de “Manifestação de Destinatário” e métodos futuros do README.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado) e métodos futuros do README (NFS-e). Consulta (**P2-11** / `ConsultaManifestacao`) já está no client.
 
 ---
 
@@ -50,7 +50,8 @@ Todas as chamadas de rede da biblioteca.
 - Exceções engolidas e expostas em `Exception` / `Message` (exceto `OperationCanceledException`, que é relançada).
 - `CancellationToken` opcional propagado até `SendAsync` (Post/PostMultipart/Get tipado e não tipado/GetBytes/Put/Delete).
 - `Delete` usa path relativo ao `BaseAddress`, igual aos demais verbos.
-- `Get` (não tipado) retorna `ApiResponse` com body em `Message` (usado por `SetupSat` / P2-09 e `ConsultaSat` / P2-10 quando schema de resposta é incerto).
+- `Get` (não tipado) retorna `ApiResponse` com body em `Message` (usado por `SetupSat` / P2-09, `ConsultaSat` / P2-10 e `ConsultaManifestacao` / P2-11 quando schema de resposta é incerto).
+- `ConsultaManifestacao` chama URL absoluta em `api2.enotasgw.com.br` (v3); a base padrão do client permanece `api.enotasgw.com.br`.
 - `GetBytes` retorna `ApiResponse<byte[]>`: sucesso → `Object` com bytes; falha HTTP → `Message` com body UTF-8 (pré-req PDF NFS-e / P1-09).
 - `Post(string, CancellationToken)` envia POST sem body (usado por `DesabilitarEmpresa` / P2-07 e `HabilitarEmpresa` / P2-08; Postman formdata vazio).
 - `PostMultipart` aceita `MultipartFormDataContent` montado pelo caller; Content-Type com boundary vem do conteúdo (não força `application/json`); retorno `ApiResponse` como `Post` (usado por `VincularCertificadoDigital` / P2-05 e `VincularLogotipo` / P2-06).

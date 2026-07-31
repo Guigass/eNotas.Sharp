@@ -28,7 +28,7 @@ using (var enotas = new eNotasClient("apiKey"))
 
 | Item | Valor observado |
 |------|-----------------|
-| Base URL | `https://api.enotasgw.com.br` (hardcoded em `eNotasClient`) |
+| Base URL | `https://api.enotasgw.com.br` (hardcoded em `eNotasClient`; `ConsultaManifestacao` usa URL absoluta em `https://api2.enotasgw.com.br`) |
 | Auth header | `Authorization: Basic {apiKey}` |
 | Content-Type request | `application/json` |
 

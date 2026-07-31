@@ -11,6 +11,7 @@ internal static class ClientTestFactory
     public const string NotaId = "nota-123";
     public const string InutilizacaoId = "inut-123";
     public const string CartaId = "cce-123";
+    public const string ChaveAcesso = "35200100000000000000550010000000011000000010";
 
     public static (eNotasClient Client, FakeHandler Handler) Create(
         Func<HttpRequestMessage, HttpResponseMessage>? responder = null)

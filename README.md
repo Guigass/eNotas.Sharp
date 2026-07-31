@@ -83,13 +83,14 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Habilitar Empresa (`HabilitarEmpresa`)
     * Setup SAT (`SetupSat`) — body bruto em `ApiResponse.Message` (schema Postman incerto)
     * Consultar SAT (`ConsultaSat`) — parâmetro `satId` no path `GET /v2/sat/{satId}/all`; body bruto em `ApiResponse.Message` (schema Postman incerto)
+    * Consultar Manifestação de Destinatário NF-e (`ConsultaManifestacao`) — `GET` absoluto em `https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}` (host **api2**, distinto da base padrão `api.enotasgw.com.br`); body bruto em `ApiResponse.Message` (schema Postman vazio)
     ```
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
 
 - Métodos em Construção (P2 — ver roadmap):
     ```
-    * Manifestação de Destinatário NF-e
+    * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
     ```
 
 - Métodos Futuros (P1–P2 — ver roadmap):
@@ -97,6 +98,6 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1
     ```
 
-Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**), `DesabilitarEmpresa` (**P2-07**), `HabilitarEmpresa` (**P2-08**), `SetupSat` (**P2-09**) e `ConsultaSat` (**P2-10**, parâmetro `satId`); demais endpoints de empresas ainda no roadmap (P2-11+).
+Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**), `DesabilitarEmpresa` (**P2-07**), `HabilitarEmpresa` (**P2-08**), `SetupSat` (**P2-09**) e `ConsultaSat` (**P2-10**, parâmetro `satId`); `ConsultaManifestacao` (**P2-11**, host `api2`/`v3`); envio de manifestação ainda bloqueado (**P2-12**).
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

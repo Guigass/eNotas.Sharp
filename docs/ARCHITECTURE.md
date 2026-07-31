@@ -15,6 +15,7 @@ Consumidor (app externo)
         │
         ▼
  API eNotas GW (HTTPS)      ← https://api.enotasgw.com.br
+                                 (+ api2.enotasgw.com.br só em ConsultaManifestacao)
 ```
 
 Modelos em `Models/` são serializados/deserializados nas bordas HTTP. Não há camada de domínio rica, persistência ou UI.
@@ -51,7 +52,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 1. Consumidor instancia `eNotasClient(apiKey)`.
 2. Construtor cria `RestService` com base URL fixa e header `Authorization: Basic {apiKey}`.
-3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...` ou `/v2/empresas` para incluir/alterar/listar) e chamam `Post` / `Get` / `Delete`, com `CancellationToken` opcional.
+3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...` ou `/v2/empresas` para incluir/alterar/listar) e chamam `Post` / `Get` / `Delete`, com `CancellationToken` opcional. Exceção: `ConsultaManifestacao` usa URL absoluta em `https://api2.enotasgw.com.br/v3/...` (host distinto; base padrão inalterada).
 4. Request: objeto → `JsonConvert.SerializeObject` (UTC).
 5. Response: string em `ApiResponse.Message`; se tipado, também `Object` (JSON ou XML conforme parâmetro `deserializer`).
 6. Exceções de rede/processamento vão para `ApiResponse.Exception` sem relançar (**fato observado**).
@@ -65,7 +66,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 ## Dependências externas
 
-- API eNotas Gateway (`api.enotasgw.com.br`)
+- API eNotas Gateway (`api.enotasgw.com.br`; manifestação consulta também `api2.enotasgw.com.br`)
 - Pacote NuGet `Newtonsoft.Json`
 
 ## Pontos de entrada
