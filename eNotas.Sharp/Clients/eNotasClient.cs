@@ -226,6 +226,13 @@ namespace eNotas.Sharp.Clients
             return await _client.Delete(path, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> CancelaNfsePorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}";
+
+            return await _client.Delete(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Empresas

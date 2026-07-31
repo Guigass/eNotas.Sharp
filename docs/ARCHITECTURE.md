@@ -94,7 +94,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - Classes XML grandes (`Xml.cs`, etc.) parecem mapeamento direto do schema/retorno da SEFAZ via gateway.
 - `NotaWebhook` sugere suporte a payload de webhook no lado do consumidor, sem receber webhooks nesta lib.
-- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**; DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`) e `CancelaNfse` (**P1-06**) no client; demais métodos P1-07+.
+- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**; DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**) e `CancelaNfsePorIdExterno` (**P1-07**) no client; demais métodos P1-08+.
 
 ## Riscos arquiteturais
 

@@ -231,6 +231,24 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task CancelaNfsePorIdExterno_DeletesExpectedPath()
+    {
+        const string idExterno = "TESTE231024";
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
+        {
+            var response = await client.CancelaNfsePorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Delete, handler.LastRequest!.Method);
+            Assert.Contains(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/porIdExterno/{idExterno}",
+                handler.LastRequest.RequestUri!.AbsoluteUri);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+        }
+    }
+
+    [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));
