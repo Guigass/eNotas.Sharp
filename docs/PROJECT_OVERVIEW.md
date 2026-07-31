@@ -54,7 +54,7 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - Contratos JSON devem permanecer alinhados à API oficial e às coleções Postman em `docs/`.
 - Há suite mínima xUnit em `eNotas.Sharp.Tests`; integração com API real permanece manual (`TESTING.md`).
 - Sample compilável em `Exemplos/EmissaoNfeHomologacao` (credenciais via env; sem API Key no código).
-- README lista NFS-e e gestão de empresas como futuros; Postman V1 cobre NFS-e, mas o client C# atual não implementa esses métodos.
+- README lista NFS-e e restante da gestão de empresas (consultar/listar/cert/logo/SAT) como futuros; `IncluirAlterarEmpresa` já está no client (**P2-02**). Postman V1 cobre NFS-e, mas o client C# ainda não implementa esses métodos.
 - Lacunas e priorização do backlog estão em `ROADMAP.md` (gaps restantes de models, NFS-e, empresas/manifestação/SAT, qualidade).
 
 ## Onde começar

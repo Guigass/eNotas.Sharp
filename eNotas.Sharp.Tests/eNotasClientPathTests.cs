@@ -40,6 +40,29 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));
+        using (client)
+        {
+            var response = await client.IncluirAlterarEmpresa(new Empresa
+            {
+                Cnpj = "99999999999999",
+                RazaoSocial = "Cliente Teste"
+            });
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"empresaId\":\"emp-1\"}", response.Message);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith("/v2/empresas", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Contains("\"cnpj\":\"99999999999999\"", handler.LastContent);
+            Assert.Contains("\"razaoSocial\":\"Cliente Teste\"", handler.LastContent);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");

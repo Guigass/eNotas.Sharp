@@ -51,7 +51,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 1. Consumidor instancia `eNotasClient(apiKey)`.
 2. Construtor cria `RestService` com base URL fixa e header `Authorization: Basic {apiKey}`.
-3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...`) e chamam `Post` / `Get` / `Delete`, com `CancellationToken` opcional.
+3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...` ou `/v2/empresas` para incluir/alterar) e chamam `Post` / `Get` / `Delete`, com `CancellationToken` opcional.
 4. Request: objeto → `JsonConvert.SerializeObject` (UTC).
 5. Response: string em `ApiResponse.Message`; se tipado, também `Object` (JSON ou XML conforme parâmetro `deserializer`).
 6. Exceções de rede/processamento vão para `ApiResponse.Exception` sem relançar (**fato observado**).

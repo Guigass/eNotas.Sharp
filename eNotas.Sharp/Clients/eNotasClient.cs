@@ -164,6 +164,17 @@ namespace eNotas.Sharp.Clients
         }
         #endregion
 
+        #region Empresas
+
+        public async Task<ApiResponse> IncluirAlterarEmpresa(Empresa empresa, CancellationToken cancellationToken = default)
+        {
+            string path = "/v2/empresas";
+
+            return await _client.Post(path, empresa, cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
+
         public void Dispose()
         {
             GC.Collect();
