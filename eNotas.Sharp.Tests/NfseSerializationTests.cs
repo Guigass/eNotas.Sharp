@@ -1,0 +1,139 @@
+using eNotas.Sharp.Models;
+using eNotas.Sharp.Tests.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace eNotas.Sharp.Tests;
+
+public class NfseSerializationTests
+{
+    [Fact]
+    public void Deserialize_Fixture_PopulatesKnownFields()
+    {
+        var json = FixtureLoader.Read("nfse-emissao.json");
+
+        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
+
+        Assert.NotNull(nfse);
+        Assert.Equal("NFS-e", nfse!.Tipo);
+        Assert.Equal("TESTE231024", nfse.IdExterno);
+        Assert.Equal("Producao", nfse.AmbienteEmissao);
+        Assert.False(nfse.EnviadaPorEmail);
+        Assert.Equal(1m, nfse.ValorTotal);
+
+        Assert.NotNull(nfse.Cliente);
+        Assert.Equal("F", nfse.Cliente!.TipoPessoa);
+        Assert.Equal("Cliente teste", nfse.Cliente.Nome);
+        Assert.Equal("teste@teste.com.br", nfse.Cliente.Email);
+        Assert.Equal("38618699772", nfse.Cliente.CpfCnpj);
+        Assert.Equal("3132223333", nfse.Cliente.Telefone);
+
+        Assert.NotNull(nfse.Cliente.Endereco);
+        Assert.Equal("Brasil", nfse.Cliente.Endereco!.Pais);
+        Assert.Equal("MG", nfse.Cliente.Endereco.Uf);
+        Assert.Equal("Belo Horizonte", nfse.Cliente.Endereco.Cidade);
+        Assert.Equal("Rua Sergipe", nfse.Cliente.Endereco.Logradouro);
+        Assert.Equal("1014", nfse.Cliente.Endereco.Numero);
+        Assert.Equal("7o Andar", nfse.Cliente.Endereco.Complemento);
+        Assert.Equal("Savassi", nfse.Cliente.Endereco.Bairro);
+        Assert.Equal("30130174", nfse.Cliente.Endereco.Cep);
+
+        Assert.NotNull(nfse.Servico);
+        Assert.Equal("Teste webservice", nfse.Servico!.Descricao);
+        Assert.Equal(3.0m, nfse.Servico.AliquotaIss);
+        Assert.False(nfse.Servico.IssRetidoFonte);
+        Assert.Equal("4.12", nfse.Servico.CodigoServicoMunicipio);
+        Assert.Equal("4.12", nfse.Servico.ItemListaServicoLC116);
+        Assert.Equal("8630504", nfse.Servico.Cnae);
+        Assert.Equal("3300704", nfse.Servico.MunicipioPrestacaoServico);
+    }
+
+    [Fact]
+    public void Serialize_UsesCamelCaseAndOmitsNulls()
+    {
+        var nfse = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "TESTE231024",
+            AmbienteEmissao = "Producao",
+            EnviadaPorEmail = false,
+            ValorTotal = 1m,
+            Cliente = new Cliente
+            {
+                TipoPessoa = "F",
+                Nome = "Cliente teste",
+                Email = "teste@teste.com.br",
+                CpfCnpj = "38618699772",
+                InscricaoMunicipal = null,
+                InscricaoEstadual = null,
+                Telefone = "3132223333",
+                Endereco = new Endereco
+                {
+                    Pais = "Brasil",
+                    Uf = "MG",
+                    Cidade = "Belo Horizonte",
+                    Logradouro = "Rua Sergipe",
+                    Numero = "1014",
+                    Complemento = "7o Andar",
+                    Bairro = "Savassi",
+                    Cep = "30130174"
+                }
+            },
+            Servico = new Servico
+            {
+                Descricao = "Teste webservice",
+                AliquotaIss = 3.0m,
+                IssRetidoFonte = false,
+                CodigoServicoMunicipio = "4.12",
+                ItemListaServicoLC116 = "4.12",
+                Cnae = "8630504",
+                MunicipioPrestacaoServico = "3300704"
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(nfse);
+        var obj = JObject.Parse(json);
+
+        Assert.Equal("NFS-e", obj["tipo"]?.Value<string>());
+        Assert.Equal("TESTE231024", obj["idExterno"]?.Value<string>());
+        Assert.Equal("Producao", obj["ambienteEmissao"]?.Value<string>());
+        Assert.False(obj["enviadaPorEmail"]?.Value<bool>());
+        Assert.Equal(1m, obj["valorTotal"]?.Value<decimal>());
+        Assert.Null(obj["cliente"]?["inscricaoMunicipal"]);
+        Assert.Null(obj["cliente"]?["inscricaoEstadual"]);
+        Assert.Equal("Cliente teste", obj["cliente"]?["nome"]?.Value<string>());
+        Assert.Equal("MG", obj["cliente"]?["endereco"]?["uf"]?.Value<string>());
+        Assert.Equal("Teste webservice", obj["servico"]?["descricao"]?.Value<string>());
+        Assert.Equal(3.0m, obj["servico"]?["aliquotaIss"]?.Value<decimal>());
+        Assert.False(obj["servico"]?["issRetidoFonte"]?.Value<bool>());
+        Assert.Equal("4.12", obj["servico"]?["codigoServicoMunicipio"]?.Value<string>());
+        Assert.Equal("4.12", obj["servico"]?["itemListaServicoLC116"]?.Value<string>());
+        Assert.Equal("8630504", obj["servico"]?["cnae"]?.Value<string>());
+        Assert.Equal("3300704", obj["servico"]?["municipioPrestacaoServico"]?.Value<string>());
+        Assert.Null(obj["codigoNBS"]);
+        Assert.Null(obj["servico"]?["codigoNBS"]);
+        Assert.Null(obj["servico"]?["ibsCbs"]);
+    }
+
+    [Fact]
+    public void RoundTrip_Fixture_PreservesJsonShape()
+    {
+        var json = FixtureLoader.Read("nfse-emissao.json");
+        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
+        Assert.NotNull(nfse);
+
+        var serialized = JsonConvert.SerializeObject(nfse);
+        var again = JsonConvert.DeserializeObject<Nfse>(serialized);
+
+        Assert.NotNull(again);
+        Assert.Equal(nfse!.Tipo, again!.Tipo);
+        Assert.Equal(nfse.IdExterno, again.IdExterno);
+        Assert.Equal(nfse.AmbienteEmissao, again.AmbienteEmissao);
+        Assert.Equal(nfse.EnviadaPorEmail, again.EnviadaPorEmail);
+        Assert.Equal(nfse.ValorTotal, again.ValorTotal);
+        Assert.Equal(nfse.Cliente!.Nome, again.Cliente!.Nome);
+        Assert.Equal(nfse.Cliente.Endereco!.Cidade, again.Cliente.Endereco!.Cidade);
+        Assert.Equal(nfse.Servico!.CodigoServicoMunicipio, again.Servico!.CodigoServicoMunicipio);
+        Assert.Equal(nfse.Servico.MunicipioPrestacaoServico, again.Servico.MunicipioPrestacaoServico);
+    }
+}

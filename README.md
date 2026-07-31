@@ -90,10 +90,12 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
 
 Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat` e `ConsultaManifestacao` devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
 
+DTO de emissão NFS-e (**P1-01**): models `Nfse` e `Servico` (reutilizam `Cliente`/`Endereco`); ainda **sem** método no `eNotasClient` (P1-02+).
+
 - Ainda não no client (ver [roadmap](docs/ROADMAP.md)):
     ```
     * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
-    * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1 / itens P1
+    * NFS-e métodos (emitir, consultar, cancelar, XML, PDF) — Postman V1 / itens P1-02+
     ```
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

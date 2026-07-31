@@ -1,0 +1,35 @@
+{
+  "tipo": "NFS-e",
+  "idExterno": "TESTE231024",
+  "ambienteEmissao": "Producao",
+  "enviadaPorEmail": false,
+  "cliente": {
+    "tipoPessoa": "F",
+    "nome": "Cliente teste",
+    "email": "teste@teste.com.br",
+    "cpfCnpj": "38618699772",
+    "inscricaoMunicipal": null,
+    "inscricaoEstadual": null,
+    "telefone": "3132223333",
+    "endereco": {
+      "pais": "Brasil",
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "logradouro": "Rua Sergipe",
+      "numero": "1014",
+      "complemento": "7o Andar",
+      "bairro": "Savassi",
+      "cep": "30130174"
+    }
+  },
+  "servico": {
+    "descricao": "Teste webservice",
+    "aliquotaIss": 3.0,
+    "issRetidoFonte": false,
+    "codigoServicoMunicipio": "4.12",
+    "itemListaServicoLC116": "4.12",
+    "cnae": "8630504",
+    "municipioPrestacaoServico": "3300704"
+  },
+  "valorTotal": 1
+}

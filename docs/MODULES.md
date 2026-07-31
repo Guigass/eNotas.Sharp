@@ -27,7 +27,7 @@ Emissão, consulta, cancelamento, inutilização, carta de correção, download 
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e (**P1**) ainda não está no client. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). Métodos NFS-e (**P1-02+**) ainda não estão no client (DTO emissão `Nfse`/`Servico` — **P1-01** Feito). Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 
@@ -68,10 +68,11 @@ Todas as chamadas de rede da biblioteca.
 ## Models — DTOs de emissão e consulta
 
 ### Responsabilidade
-Representar payloads de request/response da API v2.
+Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS-e V1 em `Nfse`/`Servico`).
 
 ### Caminhos principais
-- `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão)
+- `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão NF-e/NFC-e)
+- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; reutiliza `Cliente`/`Endereco`; sem método no client ainda)
 - `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto` para PIS/COFINS/IPI), `IbsCbs.cs` (IBS/CBS NF-e/NFC-e), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
 - `Consulta.cs`, `ConsultaInutilizacao.cs`, `Inutilizacao.cs`, `CartaCorrecao.cs`, `CorrecaoResponse.cs`
 - `ApiResponse.cs`, `NotaWebhook.cs`
@@ -142,4 +143,4 @@ Coleções Postman como referência de contrato.
 - `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 
 ### Pontos de atenção
-V1 NFS-e **não** está implementada no client C# atual. Usar V2 como referência primária para o código existente.
+V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**) já no pacote; métodos no client ainda não. Usar V2 como referência primária para o client atual (NF-e/NFC-e/empresas).

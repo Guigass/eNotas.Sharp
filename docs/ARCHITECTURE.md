@@ -61,7 +61,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - `eNotasClient` → `RestService` + `Models`
 - `RestService` → Newtonsoft.Json, HttpClient, XmlSerializer, `ApiResponse`
-- Models de emissão → composição (`Nota` → `Cliente`, `Iten`, `Impostos`, `Pedido`, `Transporte`, …)
+- Models de emissão → composição (`Nota` → `Cliente`, `Iten`, `Impostos`, `Pedido`, `Transporte`, …); NFS-e V1 → `Nfse` → `Cliente`, `Servico` (**P1-01**, sem método no client ainda)
 - Models XML (`Xml*.cs`) → namespaces próprios aninhados sob `eNotas.Sharp.Models`
 
 ## Dependências externas
@@ -94,7 +94,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 - Classes XML grandes (`Xml.cs`, etc.) parecem mapeamento direto do schema/retorno da SEFAZ via gateway.
 - `NotaWebhook` sugere suporte a payload de webhook no lado do consumidor, sem receber webhooks nesta lib.
-- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**, não implementação atual no client.
+- Coleção Postman V1 (NFS-e) é referência de contrato para o backlog **P1**; DTO emissão (`Nfse`/`Servico`) existe (**P1-01**); métodos no client ainda são P1-02+.
 
 ## Riscos arquiteturais
 
