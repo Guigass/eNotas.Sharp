@@ -249,6 +249,49 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ConsultaNfseXML_GetsExpectedPathWithXmlInMessage()
+    {
+        const string xmlBody = "<?xml version=\"1.0\"?><Nfse><Numero>1</Numero></Nfse>";
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xmlBody));
+        using (client)
+        {
+            var response = await client.ConsultaNfseXML(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(xmlBody, response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/{ClientTestFactory.NotaId}/xml",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaNfseXMLPorIdExterno_GetsExpectedPathWithXmlInMessage()
+    {
+        const string idExterno = "TESTE231024";
+        const string xmlBody = "<?xml version=\"1.0\"?><Nfse><Numero>1</Numero></Nfse>";
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(xmlBody));
+        using (client)
+        {
+            var response = await client.ConsultaNfseXMLPorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(xmlBody, response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/porIdExterno/{idExterno}/xml",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));

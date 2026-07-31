@@ -233,6 +233,20 @@ namespace eNotas.Sharp.Clients
             return await _client.Delete(path, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> ConsultaNfseXML(string nfeId, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes/{nfeId}/xml";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ApiResponse> ConsultaNfseXMLPorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/xml";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Empresas

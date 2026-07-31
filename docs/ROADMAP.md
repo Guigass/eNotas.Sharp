@@ -2,7 +2,7 @@
 
 Backlog de lacunas da library cliente em relação à API eNotas Gateway e à qualidade do SDK.
 
-Este documento **não** descreve features já disponíveis como se estivessem prontas. O envio de manifestação (P2-12) e a maior parte dos métodos NFS-e (P1-08+) ainda não estão no `eNotasClient`. Já disponíveis: CRUD empresas/certificado/logo/desabilitar/habilitar/setup SAT/consultar SAT/consultar manifestação, emitir NFS-e (**P1-02**), consultar NFS-e por id GW (**P1-03**) e por idExterno (**P1-04**), listar NFS-e (**P1-05**), cancelar NFS-e por id GW (**P1-06**) e por idExterno (**P1-07**).
+Este documento **não** descreve features já disponíveis como se estivessem prontas. O envio de manifestação (P2-12) e parte dos métodos NFS-e (P1-09+) ainda não estão no `eNotasClient`. Já disponíveis: CRUD empresas/certificado/logo/desabilitar/habilitar/setup SAT/consultar SAT/consultar manifestação, emitir NFS-e (**P1-02**), consultar NFS-e por id GW (**P1-03**) e por idExterno (**P1-04**), listar NFS-e (**P1-05**), cancelar NFS-e por id GW (**P1-06**) e por idExterno (**P1-07**), download XML NFS-e por id GW e idExterno (**P1-08**).
 
 ## Como ler este documento
 
@@ -20,12 +20,12 @@ Este documento **não** descreve features já disponíveis como se estivessem pr
 |------|---------|
 | NF-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML), carta de correção (+ consulta/XML); Consultar manifestação (`ConsultaManifestacao` → `GET` absoluto `https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}`, body em `ApiResponse.Message`) |
 | NFC-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML) |
-| NFS-e | Emitir (`EmitirNfse` → `POST /v1/empresas/{empresaId}/nfes`); Consultar por id GW (`ConsultaNfse` → `GET /v1/empresas/{empresaId}/nfes/{nfeId}`); Consultar por idExterno (`ConsultaNfsePorIdExterno` → `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}`); Listar (`ListarNfse` → `GET /v1/empresas/{empresaId}/nfes?...`); Cancelar por id GW (`CancelaNfse` → `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}`); Cancelar por idExterno (`CancelaNfsePorIdExterno` → `DELETE /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}`); demais métodos P1-08+ ainda abertos |
+| NFS-e | Emitir (`EmitirNfse` → `POST /v1/empresas/{empresaId}/nfes`); Consultar por id GW (`ConsultaNfse` → `GET /v1/empresas/{empresaId}/nfes/{nfeId}`); Consultar por idExterno (`ConsultaNfsePorIdExterno` → `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}`); Listar (`ListarNfse` → `GET /v1/empresas/{empresaId}/nfes?...`); Cancelar por id GW (`CancelaNfse` → `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}`); Cancelar por idExterno (`CancelaNfsePorIdExterno` → `DELETE /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}`); XML por id GW (`ConsultaNfseXML` → `GET /v1/empresas/{empresaId}/nfes/{nfeId}/xml`, body em `Message`); XML por idExterno (`ConsultaNfseXMLPorIdExterno` → `GET .../porIdExterno/{idExterno}/xml`, body em `Message`); demais métodos P1-09+ ainda abertos |
 | Empresas | Incluir/Alterar (`IncluirAlterarEmpresa` → `POST /v2/empresas`); Consultar por id (`ConsultaEmpresa` → `GET /v2/empresas/{empresaId}`); Listar (`ListarEmpresas` → `GET /v2/empresas?...`); Vincular certificado (`VincularCertificadoDigital` → `POST /v2/empresas/{empresaId}/certificadoDigital` multipart); Vincular logo (`VincularLogotipo` → `POST /v2/empresas/{empresaId}/logo` multipart `logotipo`); Desabilitar (`DesabilitarEmpresa` → `POST /v1/empresas/{empresaId}/desabilitar`); Habilitar (`HabilitarEmpresa` → `POST /v1/empresas/{empresaId}/habilitar`); Setup SAT (`SetupSat` → `GET /v2/empresas/{empresaId}/sat/setup`, body em `ApiResponse.Message`); Consultar SAT (`ConsultaSat` → `GET /v2/sat/{satId}/all`, parâmetro `satId`, body em `ApiResponse.Message`) |
 
 Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impostos, pagamento, transporte, etc.), emissão NFS-e DTO (`Nfse`, `Servico` — **P1-01**), consulta NFS-e (`ConsultaNfse` — **P1-03**), lista NFS-e (`ListaNfse` — **P1-05**), consultas NF-e/NFC-e, XML fiscal e empresa (`Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`).
 
-**Fato:** `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**), `CancelaNfse` (**P1-06**) e `CancelaNfsePorIdExterno` (**P1-07**) estão no client; demais métodos NFS-e (P1-08+) e envio de manifestação (P2-12) ainda abertos/bloqueados. Models de emissão NFS-e (**P1-01**) já existem. `SetupSat` (**P2-09**), `ConsultaSat` (**P2-10**) e `ConsultaManifestacao` (**P2-11**, host `api2`) já estão no client.
+**Fato:** `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (**P1-08**) estão no client; demais métodos NFS-e (P1-09+) e envio de manifestação (P2-12) ainda abertos/bloqueados. Models de emissão NFS-e (**P1-01**) já existem. `SetupSat` (**P2-09**), `ConsultaSat` (**P2-10**) e `ConsultaManifestacao` (**P2-11**, host `api2`) já estão no client.
 
 ## Backlog priorizado
 
@@ -87,7 +87,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | P1-05 | Listar NFS-e | `GET /v1/empresas/{empresaId}/nfes?pageNumber&pageSize&sortBy&sortDirection&filter` | P1-03 | **Agente-pronto** | Método com parâmetros de paginação/filtro espelhando query Postman; model de lista tipado o suficiente para deserializar | Feito |
 | P1-06 | Cancelar por id GW | `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}` | P1-02 | **Agente-pronto** | Método → `ApiResponse`; smoke | Feito |
 | P1-07 | Cancelar por idExterno | `DELETE /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` | P1-06 | **Agente-pronto** | Paridade com P1-06 | Feito |
-| P1-08 | Download XML (id + idExterno) | `GET .../nfes/{nfeId}/xml` e `.../porIdExterno/{idExterno}/xml` | P1-03 | **Agente-pronto** | Dois métodos (ou overload claro); retorno string/`ApiResponse` sem inventar schema XML se não houver model; [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Aberto |
+| P1-08 | Download XML (id + idExterno) | `GET .../nfes/{nfeId}/xml` e `.../porIdExterno/{idExterno}/xml` | P1-03 | **Agente-pronto** | Dois métodos (ou overload claro); retorno string/`ApiResponse` sem inventar schema XML se não houver model; [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Feito |
 | P1-09 | Download PDF (id + idExterno) | `GET .../nfes/{nfeId}/pdf` e `.../porIdExterno/{idExterno}/pdf` | INFRA-01, P1-03 | **Agente-pronto** | Dois métodos retornando bytes via INFRA-01; [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Aberto |
 | P1-10 | Apoio municipal | `GET /v1/estados/{uf}/cidades/{nome}/servicos`, `GET /v1/servicos/cidades`, `GET /v1/estados/cidades/{codigoIBGECidade}/provedor`, `GET /v1/empresas/{empresaId}/criticardadosobrigatorios` | — | **Agente-pronto** | Métodos read-only tipados o suficiente; pode ser 1 commit por endpoint se preferir atomicidade | Aberto |
 | P1-11 | Campos Reforma em `servico` | — (DTO) | P1-01 | **Agente-pronto** (aditivo) | Adicionar ao model de serviço os campos do sample **Sandbox - Reforma**: `codigoNBS`, `codigoTributacaoNacional`, `ibsCbs` (shape do sample); nullable; sem apontar sandbox como base URL padrão | Aberto |
@@ -95,10 +95,10 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 
 **Critério de aceite do épico P1** (fechado quando todos Agente-pronto acima estiverem Feito):
 
-- [x] `#region NFSe` (ou superfície equivalente) em `eNotasClient` — parcial: região + `EmitirNfse` (**P1-02**) + `ConsultaNfse` (**P1-03**) + `ConsultaNfsePorIdExterno` (**P1-04**) + `ListarNfse` (**P1-05**) + `CancelaNfse` (**P1-06**) + `CancelaNfsePorIdExterno` (**P1-07**); demais métodos P1-08+
-- [x] Models request/response tipados — parcial: emissão (`Nfse`/`Servico`, **P1-01**) + consulta (`ConsultaNfse`, **P1-03**/**P1-04**) + lista (`ListaNfse`, **P1-05**)
+- [x] `#region NFSe` (ou superfície equivalente) em `eNotasClient` — parcial: região + `EmitirNfse` (**P1-02**) + `ConsultaNfse` (**P1-03**) + `ConsultaNfsePorIdExterno` (**P1-04**) + `ListarNfse` (**P1-05**) + `CancelaNfse` (**P1-06**) + `CancelaNfsePorIdExterno` (**P1-07**) + `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08**); demais métodos P1-09+
+- [x] Models request/response tipados — parcial: emissão (`Nfse`/`Servico`, **P1-01**) + consulta (`ConsultaNfse`, **P1-03**/**P1-04**) + lista (`ListaNfse`, **P1-05**); XML (**P1-08**) retorna string em `ApiResponse.Message` (sem schema tipado)
 - [ ] Documentação clara V1 ≠ V2
-- [x] Exemplos/testes sem API Key real — parcial: `NfseSerializationTests` + fixture Postman + smoke `EmitirNfse`/`ConsultaNfse`/`ConsultaNfsePorIdExterno`/`ListarNfse`/`CancelaNfse`/`CancelaNfsePorIdExterno` (sem API Key); exemplos de uso NFS-e ainda em P1-12
+- [x] Exemplos/testes sem API Key real — parcial: `NfseSerializationTests` + fixture Postman + smoke `EmitirNfse`/`ConsultaNfse`/`ConsultaNfsePorIdExterno`/`ListarNfse`/`CancelaNfse`/`CancelaNfsePorIdExterno`/`ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (sem API Key); exemplos de uso NFS-e ainda em P1-12
 
 ### P2 — Empresas V2 + SAT + habilitação (+ manifestação)
 
@@ -160,13 +160,13 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
 | Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); `HabilitarEmpresa` (**P2-08** Feito); `SetupSat` (**P2-09** Feito — body em `Message`, schema Postman vazio); `ConsultaSat` (**P2-10** Feito — `GET /v2/sat/{satId}/all`, body em `Message`, schema Postman vazio); **P2-13** Feito (README/docs sem “futuro” no que já está no client); pré-req **INFRA-02** Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** Feito (`ConsultaManifestacao`, host `api2`/`v3`, body em `Message`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
-| Postman V1 — NFS-e + apoio municipal + PDF | Models emissão (**P1-01** Feito: `Nfse`/`Servico`); `EmitirNfse` (**P1-02** Feito); `ConsultaNfse` (**P1-03** Feito: model `ConsultaNfse`); `ConsultaNfsePorIdExterno` (**P1-04** Feito); `ListarNfse` (**P1-05** Feito: model `ListaNfse`); `CancelaNfse` (**P1-06** Feito); `CancelaNfsePorIdExterno` (**P1-07** Feito); demais itens **P1-08..P1-12** abertos; **INFRA-01** Feito (pré-req PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
+| Postman V1 — NFS-e + apoio municipal + PDF | Models emissão (**P1-01** Feito: `Nfse`/`Servico`); `EmitirNfse` (**P1-02** Feito); `ConsultaNfse` (**P1-03** Feito: model `ConsultaNfse`); `ConsultaNfsePorIdExterno` (**P1-04** Feito); `ListarNfse` (**P1-05** Feito: model `ListaNfse`); `CancelaNfse` (**P1-06** Feito); `CancelaNfsePorIdExterno` (**P1-07** Feito); `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08** Feito — XML em `Message`); demais itens **P1-09..P1-12** abertos; **INFRA-01** Feito (pré-req PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 
 ## Fontes de verdade
 
 1. Código: `eNotas.Sharp/Clients/eNotasClient.cs`, `eNotas.Sharp/Models/`
 2. Postman V2 (client atual): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
-3. Postman V1 (NFS-e; `EmitirNfse`/`ConsultaNfse`/`ConsultaNfsePorIdExterno`/`ListarNfse`/`CancelaNfse`/`CancelaNfsePorIdExterno` no client; demais P1-08+): `docs/API - eNotas - V1 - NFS-e.postman_collection.json`
+3. Postman V1 (NFS-e; `EmitirNfse`/`ConsultaNfse`/`ConsultaNfsePorIdExterno`/`ListarNfse`/`CancelaNfse`/`CancelaNfsePorIdExterno`/`ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` no client; demais P1-09+): `docs/API - eNotas - V1 - NFS-e.postman_collection.json`
 4. KB oficial: [Central de ajuda NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) (skill `notagateway-kb-lookup` / agent `notagateway-docs-specialist`)
 5. Docs oficiais ReadMe: [API V2](https://docs.notagateway.com.br/v2/docs/sobre-a-api) (NF-e/NFC-e/DC-e) e [API V1](https://docs.notagateway.com.br/docs) (NFS-e)
 6. Docs internos: `ARCHITECTURE.md`, `DOMAIN.md`, `MODULES.md`, `TESTING.md`
@@ -180,11 +180,11 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 ### Validações fechadas (evidência)
 
 - **PDF NF-e/NFC-e (V2):** não existe `GET /v2/.../pdf` na referência oficial. Download do DANFE/PDF = URL em `linkDanfe` (consulta) / `nfeLinkDanfe` (webhook → `.../file/(...)/pdf`). Status `Autorizada` = PDF pronto ([Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Consultar NF-e](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1)). Já coberto por `Consulta.LinkDanfe` e `NotaWebhook.NfeLinkDanfe` — **não** adicionar método `Consulta*Pdf` no client V2.
-- **PDF/XML NFS-e (V1):** [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) — `/v1/empresas/{empresaId}/nfes/{nfeId|porIdExterno}/{id}/pdf|xml` (escopo P1, não client atual).
+- **PDF/XML NFS-e (V1):** [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) — XML no client (**P1-08**: `ConsultaNfseXML` / `ConsultaNfseXMLPorIdExterno`, body em `Message`); PDF ainda aberto (**P1-09**, paths `/pdf`).
 
 ## Fora de escopo deste roadmap
 
 - Implementar a feature em si (este arquivo só rastreia o backlog).
-- Tratar o ciclo NFS-e completo como disponível na lib (só emitir + consultar por id GW/idExterno + listar + cancelar por id GW/idExterno estão no client; XML/PDF/apoio municipal ainda abertos).
+- Tratar o ciclo NFS-e completo como disponível na lib (emitir + consultar + listar + cancelar + XML estão no client; PDF/apoio municipal ainda abertos).
 - Inventar endpoints ou campos sem evidência em Postman, KB ou código.
 - Assumir CI/CD, Docker ou stacks que não existem no repositório.
