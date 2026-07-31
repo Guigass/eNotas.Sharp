@@ -27,7 +27,7 @@ Emissão NF-e/NFC-e/NFS-e, consulta/listagem/cancelamento/XML/PDF NFS-e, apoio m
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito), `ConsultaNfse` (**P1-03** Feito), `ConsultaNfsePorIdExterno` (**P1-04** Feito), `ListarNfse` (**P1-05** Feito), `CancelaNfse` (**P1-06** Feito), `CancelaNfsePorIdExterno` (**P1-07** Feito), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08** Feito — XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09** Feito — bytes em `Object` via `GetBytes`), apoio municipal (**P1-10** Feito — `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios`, body em `Message`); demais métodos (**P1-11+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**/**P1-04**; lista `ListaNfse` — **P1-05**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito), `ConsultaNfse` (**P1-03** Feito), `ConsultaNfsePorIdExterno` (**P1-04** Feito), `ListarNfse` (**P1-05** Feito), `CancelaNfse` (**P1-06** Feito), `CancelaNfsePorIdExterno` (**P1-07** Feito), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08** Feito — XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09** Feito — bytes em `Object` via `GetBytes`), apoio municipal (**P1-10** Feito — `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios`, body em `Message`); campos Reforma em `Servico` (**P1-11** Feito); docs (**P1-12**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**/**P1-04**; lista `ListaNfse` — **P1-05**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 
@@ -72,7 +72,8 @@ Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS
 
 ### Caminhos principais
 - `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão NF-e/NFC-e)
-- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
+- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; Reforma **P1-11**: `codigoNBS`, `codigoTributacaoNacional`, `ibsCbs` → `ServicoIbsCbs`; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
+- `ServicoIbsCbs.cs` (IBS/CBS NFS-e — **P1-11**; shape sample Sandbox - Reforma; ≠ `IbsCbs` de NF-e/NFC-e)
 - `ConsultaNfse.cs` (consulta NFS-e V1 — **P1-03**/**P1-04**; reutiliza `Cliente`/`Servico`; distinto de `Consulta` NF-e/NFC-e)
 - `ListaNfse.cs` (listagem NFS-e V1 — **P1-05**; `totalRecords` + `data` de `ConsultaNfse`)
 - `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto` para PIS/COFINS/IPI), `IbsCbs.cs` (IBS/CBS NF-e/NFC-e), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
@@ -145,4 +146,4 @@ Coleções Postman como referência de contrato.
 - `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 
 ### Pontos de atenção
-V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`), apoio municipal (**P1-10**, body em `Message`) no pacote; demais métodos P1-11+. V2 permanece referência primária para NF-e/NFC-e/empresas.
+V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**; Reforma **P1-11**: `ServicoIbsCbs`), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`), apoio municipal (**P1-10**, body em `Message`) no pacote; docs P1-12 aberto. V2 permanece referência primária para NF-e/NFC-e/empresas.

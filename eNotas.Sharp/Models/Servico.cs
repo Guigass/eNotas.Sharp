@@ -27,5 +27,14 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("municipioPrestacaoServico", NullValueHandling = NullValueHandling.Ignore)]
         public string MunicipioPrestacaoServico { get; set; }
+
+        [JsonProperty("codigoNBS", NullValueHandling = NullValueHandling.Ignore)]
+        public string CodigoNBS { get; set; }
+
+        [JsonProperty("codigoTributacaoNacional", NullValueHandling = NullValueHandling.Ignore)]
+        public string CodigoTributacaoNacional { get; set; }
+
+        [JsonProperty("ibsCbs", NullValueHandling = NullValueHandling.Ignore)]
+        public ServicoIbsCbs IbsCbs { get; set; }
     }
 }

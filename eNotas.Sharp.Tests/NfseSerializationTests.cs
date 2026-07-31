@@ -136,4 +136,77 @@ public class NfseSerializationTests
         Assert.Equal(nfse.Servico!.CodigoServicoMunicipio, again.Servico!.CodigoServicoMunicipio);
         Assert.Equal(nfse.Servico.MunicipioPrestacaoServico, again.Servico.MunicipioPrestacaoServico);
     }
+
+    [Fact]
+    public void Deserialize_ReformaFixture_PopulatesServicoReformaFields()
+    {
+        var json = FixtureLoader.Read("nfse-reforma.json");
+
+        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
+
+        Assert.NotNull(nfse);
+        Assert.NotNull(nfse!.Servico);
+        Assert.Equal("101011100", nfse.Servico!.CodigoNBS);
+        Assert.Equal("010101", nfse.Servico.CodigoTributacaoNacional);
+        Assert.NotNull(nfse.Servico.IbsCbs);
+        Assert.Equal("000001", nfse.Servico.IbsCbs!.ClassificacaoTributaria);
+        Assert.Equal("030101", nfse.Servico.IbsCbs.CodigoIndicadorOperacao);
+    }
+
+    [Fact]
+    public void Serialize_ReformaFields_UsesCamelCaseAndOmitsNulls()
+    {
+        var nfse = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "NFSe-REFORMA-001",
+            AmbienteEmissao = "Homologacao",
+            ValorTotal = 1m,
+            Servico = new Servico
+            {
+                Descricao = "Servico de consultoria",
+                AliquotaIss = 3m,
+                IssRetidoFonte = false,
+                CodigoServicoMunicipio = "010700188",
+                ItemListaServicoLC116 = "1.07",
+                MunicipioPrestacaoServico = "3106200",
+                CodigoNBS = "101011100",
+                CodigoTributacaoNacional = "010101",
+                IbsCbs = new ServicoIbsCbs
+                {
+                    ClassificacaoTributaria = "000001",
+                    CodigoIndicadorOperacao = "030101"
+                }
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(nfse);
+        var obj = JObject.Parse(json);
+
+        Assert.Equal("101011100", obj["servico"]?["codigoNBS"]?.Value<string>());
+        Assert.Equal("010101", obj["servico"]?["codigoTributacaoNacional"]?.Value<string>());
+        Assert.Equal("000001", obj["servico"]?["ibsCbs"]?["classificacaoTributaria"]?.Value<string>());
+        Assert.Equal("030101", obj["servico"]?["ibsCbs"]?["codigoIndicadorOperacao"]?.Value<string>());
+        Assert.Null(obj["servico"]?["ibsCbs"]?["situacaoTributaria"]);
+        Assert.Null(obj["servico"]?["ibsCbs"]?["ibs"]);
+        Assert.Null(obj["servico"]?["ibsCbs"]?["cbs"]);
+        Assert.Null(obj["servico"]?["cnae"]);
+    }
+
+    [Fact]
+    public void RoundTrip_ReformaFixture_PreservesJsonShape()
+    {
+        var json = FixtureLoader.Read("nfse-reforma.json");
+        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
+        Assert.NotNull(nfse);
+
+        var serialized = JsonConvert.SerializeObject(nfse);
+        var again = JsonConvert.DeserializeObject<Nfse>(serialized);
+
+        Assert.NotNull(again);
+        Assert.Equal(nfse!.Servico!.CodigoNBS, again!.Servico!.CodigoNBS);
+        Assert.Equal(nfse.Servico.CodigoTributacaoNacional, again.Servico.CodigoTributacaoNacional);
+        Assert.Equal(nfse.Servico.IbsCbs!.ClassificacaoTributaria, again.Servico.IbsCbs!.ClassificacaoTributaria);
+        Assert.Equal(nfse.Servico.IbsCbs.CodigoIndicadorOperacao, again.Servico.IbsCbs.CodigoIndicadorOperacao);
+    }
 }

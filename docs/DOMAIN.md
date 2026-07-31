@@ -7,7 +7,7 @@
 | Empresa | Path `{empresaId}` | Identificador fornecido pela eNotas |
 | Nota (NF-e/NFC-e) | `Models/Nota.cs` | Payload de emissão compartilhado; opcionais: `tipo`, `forcarEmissaoContingencia`, `emitidaEmContingencia`, `enviarPorEmail` (request; retorno em `Consulta` usa `enviadaPorEmail`) |
 | Item | `Models/Iten.cs` | CFOP, NCM, valores, impostos; opcionais Postman V2: `extipi`, `codigoBeneficioFiscal`, `quantidadeTributavel`, `unidadeMedidaTributavel`, `valorTotal` (item) |
-| Impostos | `Models/Impostos.cs`, `Models/IbsCbs.cs` | ICMS, PIS, COFINS, IPI, II; IBS/CBS tipado em `IbsCbs` (KB 595993: `classificacaoTributaria`, `ibs`/`cbs` aninhados) |
+| Impostos | `Models/Impostos.cs`, `Models/IbsCbs.cs`, `Models/ServicoIbsCbs.cs` | ICMS, PIS, COFINS, IPI, II; IBS/CBS NF-e/NFC-e tipado em `IbsCbs` (KB 595993: `classificacaoTributaria`, `ibs`/`cbs` aninhados); NFS-e Reforma em `Servico.IbsCbs` como `ServicoIbsCbs` (`classificacaoTributaria` + `codigoIndicadorOperacao` — sample Sandbox - Reforma / KB 595993 §2; distinto de `IbsCbs`) |
 | Cliente | `Models/Cliente.cs` | Destinatário |
 | Pedido / Pagamento | `Pedido.cs`, `Pagamento.cs`, `Forma.cs` | Presença, formas, credenciadora, intermediador |
 | Transporte | `Transporte.cs` e correlatos | Frete, volumes, veículo, transportadora |

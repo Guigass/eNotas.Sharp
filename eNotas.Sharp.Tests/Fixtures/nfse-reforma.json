@@ -1,0 +1,41 @@
+{
+  "tipo": "NFS-e",
+  "idExterno": "NFSe-REFORMA-001",
+  "ambienteEmissao": "Homologacao",
+  "enviadaPorEmail": false,
+  "cliente": {
+    "tipoPessoa": "J",
+    "nome": "Cliente Homologacao Reforma",
+    "email": "teste@teste.com.br",
+    "cpfCnpj": "57743975000127",
+    "inscricaoMunicipal": null,
+    "inscricaoEstadual": null,
+    "telefone": "3391375671",
+    "endereco": {
+      "cidade": "BELO HORIZONTE",
+      "logradouro": "AV GETULIO VARGAS",
+      "numero": "671",
+      "complemento": "SALA 500",
+      "bairro": "SAVASSI",
+      "cep": "30112000",
+      "pais": "Brasil",
+      "uf": "MG"
+    }
+  },
+  "servico": {
+    "descricao": "Servico de consultoria",
+    "aliquotaIss": 3,
+    "issRetidoFonte": false,
+    "codigoServicoMunicipio": "010700188",
+    "itemListaServicoLC116": "1.07",
+    "cnae": null,
+    "municipioPrestacaoServico": "3106200",
+    "codigoNBS": "101011100",
+    "codigoTributacaoNacional": "010101",
+    "ibsCbs": {
+      "classificacaoTributaria": "000001",
+      "codigoIndicadorOperacao": "030101"
+    }
+  },
+  "valorTotal": 1
+}

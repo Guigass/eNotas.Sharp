@@ -17,7 +17,7 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Falhas comuns |
 | [Workflow agentico](docs/AGENTIC_WORKFLOW.md) | Rules, skills e agents Cursor |
 
-Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (NF-e/NFC-e/empresas). NFS-e: coleção V1 `docs/API - eNotas - V1 - NFS-e.postman_collection.json` — no client C# há `EmitirNfse` (P1-02), `ConsultaNfse` (P1-03), `ConsultaNfsePorIdExterno` (P1-04), `ListarNfse` (P1-05), `CancelaNfse` (P1-06), `CancelaNfsePorIdExterno` (P1-07), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (P1-08), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (P1-09), apoio municipal (P1-10: `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios`); demais métodos NFS-e ainda no roadmap.
+Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (NF-e/NFC-e/empresas). NFS-e: coleção V1 `docs/API - eNotas - V1 - NFS-e.postman_collection.json` — no client C# há `EmitirNfse` (P1-02), `ConsultaNfse` (P1-03), `ConsultaNfsePorIdExterno` (P1-04), `ListarNfse` (P1-05), `CancelaNfse` (P1-06), `CancelaNfsePorIdExterno` (P1-07), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (P1-08), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (P1-09), apoio municipal (P1-10), campos Reforma em `Servico` (P1-11: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs`); docs NFS-e consolidados ainda no roadmap (P1-12).
 
 Documentação oficial NotaGateway: [Central de ajuda](https://atendimento.notagateway.com.br/kb/pt-br) — consulta via agent `notagateway-docs-specialist` / skill `notagateway-kb-lookup`.
 
@@ -104,12 +104,12 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
 
 Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat`, `ConsultaManifestacao` e os GETs de apoio municipal NFS-e (**P1-10**) devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
 
-NFS-e: models `Nfse`/`Servico` (**P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**, path V1 `nfes/porIdExterno/{idExterno}` — distinto de V2 `nf-e`/`nfc-e` e do model `Consulta`), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`), apoio municipal (**P1-10**: `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`).
+NFS-e: models `Nfse`/`Servico` (**P1-01**; Reforma **P1-11**: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs` — distinto de `IbsCbs` NF-e/NFC-e), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**, path V1 `nfes/porIdExterno/{idExterno}` — distinto de V2 `nf-e`/`nfc-e` e do model `Consulta`), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`), apoio municipal (**P1-10**: `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`).
 
 - Ainda não no client (ver [roadmap](docs/ROADMAP.md)):
     ```
     * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
-    * NFS-e campos Reforma em `servico` / docs P1-12 — Postman V1 / itens P1-11+
+    * Docs NFS-e consolidados (P1-12) — Postman V1 / README seção dedicada
     ```
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).
