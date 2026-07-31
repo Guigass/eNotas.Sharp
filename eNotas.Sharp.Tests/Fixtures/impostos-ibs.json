@@ -23,10 +23,20 @@
   "ibsCbs": {
     "situacaoTributaria": "000",
     "classificacaoTributaria": "000001",
-    "porAliquota": {
-      "aliquota": 0.1,
-      "baseCalculo": 1.00,
-      "valor": 0.00
+    "ibs": {
+      "uf": {
+        "aliquota": 0.10,
+        "percentualDiferimento": 0.00,
+        "percentualReducaoAliquota": 60.00
+      },
+      "municipio": {
+        "aliquota": 0.00
+      }
+    },
+    "cbs": {
+      "aliquota": 0.90,
+      "percentualDiferimento": 0.00,
+      "percentualReducaoAliquota": 60.00
     }
   }
 }

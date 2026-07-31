@@ -5,15 +5,15 @@
 | Conceito | Onde aparece | Notas |
 |----------|--------------|--------|
 | Empresa | Path `{empresaId}` | Identificador fornecido pela eNotas |
-| Nota (NF-e/NFC-e) | `Models/Nota.cs` | Payload de emissão compartilhado; opcionais: `tipo`, `forcarEmissaoContingencia`, `emitidaEmContingencia`, `enviarPorEmail` |
+| Nota (NF-e/NFC-e) | `Models/Nota.cs` | Payload de emissão compartilhado; opcionais: `tipo`, `forcarEmissaoContingencia`, `emitidaEmContingencia`, `enviarPorEmail` (request; retorno em `Consulta` usa `enviadaPorEmail`) |
 | Item | `Models/Iten.cs` | CFOP, NCM, valores, impostos; opcionais Postman V2: `extipi`, `codigoBeneficioFiscal`, `quantidadeTributavel`, `unidadeMedidaTributavel`, `valorTotal` (item) |
-| Impostos | `Models/Impostos.cs` | ICMS, PIS, COFINS, IPI, II, IBS/CBS |
+| Impostos | `Models/Impostos.cs`, `Models/IbsCbs.cs` | ICMS, PIS, COFINS, IPI, II; IBS/CBS tipado em `IbsCbs` (KB 595993: `classificacaoTributaria`, `ibs`/`cbs` aninhados) |
 | Cliente | `Models/Cliente.cs` | Destinatário |
 | Pedido / Pagamento | `Pedido.cs`, `Pagamento.cs`, `Forma.cs` | Presença, formas, credenciadora, intermediador |
 | Transporte | `Transporte.cs` e correlatos | Frete, volumes, veículo, transportadora |
 | Inutilização | `Inutilizacao.cs` | Série e faixa numérica |
 | Carta de Correção | `CartaCorrecao.cs` | Evento CC-e (NF-e) |
-| Consulta | `Consulta.cs` | Status, chave, links DANFE/XML, protocolo |
+| Consulta | `Consulta.cs` | Status, chave, `linkDanfe` (URL do PDF/DANFE NF-e/NFC-e — não há `GET .../pdf` na API V2), `linkDownloadXml`, protocolo |
 | Webhook | `NotaWebhook.cs` | Payload tipado para o consumidor |
 
 ## Fluxos de negócio

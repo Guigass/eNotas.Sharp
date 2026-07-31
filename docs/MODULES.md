@@ -67,7 +67,7 @@ Representar payloads de request/response da API v2.
 
 ### Caminhos principais
 - `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão)
-- `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto`), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
+- `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto` para PIS/COFINS/IPI), `IbsCbs.cs` (IBS/CBS NF-e/NFC-e), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
 - `Consulta.cs`, `ConsultaInutilizacao.cs`, `Inutilizacao.cs`, `CartaCorrecao.cs`, `CorrecaoResponse.cs`
 - `ApiResponse.cs`, `NotaWebhook.cs`
 
@@ -79,7 +79,8 @@ Serialização na emissão; deserialização na consulta.
 
 ### Pontos de atenção
 - Nomenclatura `Iten` / `Adicoe` (pluralização atípica) — **preservar** para não quebrar consumidores.
-- Arquivo `Cofins.cs` define `class Imposto` (PIS/COFINS/IPI/IBS-CBS reutilizam o mesmo tipo).
+- Arquivo `Cofins.cs` define `class Imposto` (PIS/COFINS/IPI).
+- `Impostos.IbsCbs` usa tipo dedicado `IbsCbs` ([KB 595993](https://atendimento.notagateway.com.br/kb/pt-br/article/595993/como-enviar-ibs-e-cbs-ao-emitir-uma-nf-via-api)); não reutiliza `Imposto`/`porAliquota`.
 - Propriedades em geral nullable + `NullValueHandling.Ignore`.
 
 ### Como alterar com segurança

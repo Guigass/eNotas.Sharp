@@ -78,6 +78,6 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 ## Pontos que precisam de validação humana
 
 - Se a publicação NuGet é manual ou automatizada fora do repositório.
-- Quais campos tributários novos (ex.: `ibsCbs`, `classificacaoTributaria`) já estão estáveis na API.
+- Quais campos tributários novos além do `IbsCbs` tipado (KB 595993) ainda faltam nos demais aninhados.
 - Prioridade e escopo de NFS-e / empresas / manifestação — ver lista em `ROADMAP.md`.
 - Se `NotaWebhook` é usado apenas como DTO pelo consumidor ou se haverá suporte futuro no client.

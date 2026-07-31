@@ -38,17 +38,17 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Raiz `Nota` | `tipo` | **Feito:** presente em `Nota.cs` (e em `Consulta`); sample Postman V2 |
 | Raiz `Nota` | `forcarEmissaoContingencia`, `emitidaEmContingencia` | **Feito:** presentes em `Nota.cs` (e já em `Consulta`); KB: request vs retorno |
 | Raiz `Nota` | `indicadorPresencaConsumidor` | **Feito:** presente em `Nota.cs`; sample Postman V2 `Emitir NF-e - api11` (coexiste com `pedido.presencaConsumidor`) |
-| Raiz `Nota` | `enviarPorEmail` vs `enviadaPorEmail` | **Fato:** model usa `enviarPorEmail`; sample Postman usa `enviadaPorEmail` — **validação humana** do nome oficial |
+| Raiz `Nota` | `enviarPorEmail` vs `enviadaPorEmail` | **Feito:** request = `enviarPorEmail` ([KB 170286](https://atendimento.notagateway.com.br/kb/pt-br/article/170286/campo-enviarporemail)); retorno = `enviadaPorEmail` em `Consulta`. Sample Postman V2 com `enviadaPorEmail` no body de emissão diverge da KB |
 | `itens[]` (`Iten`) | `codigoBeneficioFiscal`, `extipi`, `quantidadeTributavel`, `unidadeMedidaTributavel`, `valorTotal` | **Feito:** presentes em `Iten.cs`; sample Postman V2 Emitir NF-e |
-| Impostos | `ibsCbs` tipado como `Imposto` genérico | **Fato:** propriedade existe; **inferência:** subcampos da reforma (além de `situacaoTributaria` / `porAliquota` / `classificacaoTributaria`) podem exigir model próprio — **validação humana** |
+| Impostos | `ibsCbs` tipado como `Imposto` genérico | **Feito:** tipo dedicado `IbsCbs` (`ibs.uf` / `ibs.municipio` / `cbs`) alinhado à [KB 595993](https://atendimento.notagateway.com.br/kb/pt-br/article/595993/como-enviar-ibs-e-cbs-ao-emitir-uma-nf-via-api); `Imposto` permanece para PIS/COFINS/IPI |
 | Demais aninhados | cliente, pedido, pagamento, transporte, referências, impostos | **Inferência:** Postman é amostra incompleta; auditar V2 + [KB NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) para opcionais restantes |
 
 #### Critério de aceite
 
-- [x] Properties aditivas em `Nota`, `Iten` e aninhados alinhadas ao contrato oficial — parcial: `Nota.tipo` + contingência + `indicadorPresencaConsumidor` + campos `Iten` feitos; gaps de e-mail / IBS abertos
+- [x] Properties aditivas em `Nota`, `Iten` e aninhados alinhadas ao contrato oficial — parcial: `Nota.tipo` + contingência + `indicadorPresencaConsumidor` + campos `Iten` + `enviarPorEmail` (request) + `IbsCbs` dedicado (KB 595993); demais aninhados/opcionais ainda em auditoria
 - [x] Paridade considerada para NF-e e NFC-e (mesmo model compartilhado) — `Nota`/`Iten` compartilhados; campos aditivos cobrem ambos
 - [x] Sem remoção/renomeação de propriedades públicas existentes
-- [x] README / versão NuGet atualizados quando a superfície pública crescer — Version bump patch (README sem lista de props de model)
+- [x] README / versão NuGet atualizados quando a superfície pública crescer — Version **1.5.0** (minor: tipo público `IbsCbs` no lugar de `Imposto` em `Impostos.IbsCbs`)
 
 ### P1 — NFS-e (API V1)
 
@@ -60,6 +60,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 |------|---------|
 | Models | Payload com `servico.*` (ISS, código municipal, LC116, etc.); sem model `Servico` hoje |
 | Operações NFS-e | Emitir, listar, consultar (id / idExterno), cancelar (id / idExterno), download XML, download **PDF** |
+| PDF / XML (download) | **Fato ([KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal)):** base `https://api.enotasgw.com.br/v1`; paths `/v1/empresas/{empresaId}/nfes/{nfeId}/pdf\|xml` e `.../porIdExterno/{idExterno}/pdf\|xml` — alinhado ao Postman V1 (`nfes`). Escopo **NFS-e V1**, não path V2 `nf-e`/`nfc-e` |
 | Apoio municipal | Serviços municipais, dados obrigatórios, características da prefeitura (Postman V1 pasta empresas) |
 | Reforma / sandbox | Sample `Sandbox - Reforma` (IBS/CBS em serviço) — contrato a validar na KB |
 
@@ -76,7 +77,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 | Item | Evidência | Status no client |
 |------|-----------|------------------|
-| Manifestação de Destinatário NF-e | Postman: `GET https://api2.enotasgw.com.br/v3/empresas/{empresaid}/nf-e/manifestacao/{chaveacesso}` | Ausente — **validação humana** de host (`api2`) e versão (`v3`) |
+| Manifestação de Destinatário NF-e | **Consulta (Postman):** `GET https://api2.enotasgw.com.br/v3/empresas/{empresaid}/nf-e/manifestacao/{chaveacesso}`. **Envio ([KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas)):** body `{"tipo":"CienciaDaOperacao","justificativa":null}` — path/método HTTP **não** documentados no artigo; justificativa 15–255 só em “Operação não Realizada”; troca de status permitida conforme evento anterior; limite SEFAZ 20 req/h (`consChNFe`/`distNSU`). Docs V2 emissão: 0 endpoints | Ausente — produto Consulta/Manifestação ≠ API V2 emissão; **validação humana** do path de **POST/envio** (FAQ só traz body) |
 | Incluir/Alterar empresa | `POST /v2/empresas` | Ausente |
 | Consultar empresa / listar empresas | `GET /v2/empresas...` | Ausente |
 | Vincular certificado digital | `POST /v2/empresas/{id}/certificadoDigital` | Ausente |
@@ -121,9 +122,10 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Postman V2 — pasta NF-e (emitir/consultar/cancelar/inutilizar/CC-e/XML cancelamento) | Implementado |
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
+| PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
 | Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Não implementado |
-| Postman V2/V3 — manifestação destinatário | Não implementado |
-| Postman V1 — NFS-e + apoio municipal + PDF | Não implementado |
+| Postman V2/V3 — manifestação destinatário | Não implementado; **fora** da API V2 de emissão (busca “manifesta” em docs.notagateway.com.br/v2 = 0 resultados). Postman GET `api2`/`v3` + FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path) |
+| Postman V1 — NFS-e + apoio municipal + PDF | Não implementado; PDF/XML V1 evidenciados na [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) (`/v1/.../nfes/.../pdf`) |
 
 ## Fontes de verdade
 
@@ -131,16 +133,19 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 2. Postman V2 (client atual): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 3. Postman V1 (referência NFS-e / futuro): `docs/API - eNotas - V1 - NFS-e.postman_collection.json`
 4. KB oficial: [Central de ajuda NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) (skill `notagateway-kb-lookup` / agent `notagateway-docs-specialist`)
-5. Docs internos: `ARCHITECTURE.md`, `DOMAIN.md`, `MODULES.md`, `TESTING.md`
+5. Docs oficiais ReadMe: [API V2](https://docs.notagateway.com.br/v2/docs/sobre-a-api) (NF-e/NFC-e/DC-e) e [API V1](https://docs.notagateway.com.br/docs) (NFS-e)
+6. Docs internos: `ARCHITECTURE.md`, `DOMAIN.md`, `MODULES.md`, `TESTING.md`
 
 ## Itens que exigem validação humana
 
-- Contrato completo IBS/CBS para emissão NF-e/NFC-e (além do `Imposto` genérico).
-- Nome oficial do campo de e-mail na emissão (`enviarPorEmail` vs `enviadaPorEmail`).
-- Host/versão da Manifestação de Destinatário (`api2` / `v3`).
+- Manifestação de Destinatário — [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) fecha regras de negócio + shape do body de **envio** (`tipo`, `justificativa`), mas **não** publica URL/verbo. Postman só tem **GET** consulta em `api2`/`v3`. Falta path oficial do envio e lista completa de `tipo` (só `CienciaDaOperacao` aparece no exemplo). Fora da API V2 de emissão.
 - Prioridade real entre P1 (NFS-e) e P2 (empresas / manifestação / SAT).
-- Se PDF de NF-e/NFC-e existe na API (hoje PDF aparece no Postman V1 NFS-e).
 - Processo de publicação NuGet e política de bump de versão para mudanças aditivas grandes.
+
+### Validações fechadas (evidência)
+
+- **PDF NF-e/NFC-e (V2):** não existe `GET /v2/.../pdf` na referência oficial. Download do DANFE/PDF = URL em `linkDanfe` (consulta) / `nfeLinkDanfe` (webhook → `.../file/(...)/pdf`). Status `Autorizada` = PDF pronto ([Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Consultar NF-e](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1)). Já coberto por `Consulta.LinkDanfe` e `NotaWebhook.NfeLinkDanfe` — **não** adicionar método `Consulta*Pdf` no client V2.
+- **PDF/XML NFS-e (V1):** [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) — `/v1/empresas/{empresaId}/nfes/{nfeId|porIdExterno}/{id}/pdf|xml` (escopo P1, não client atual).
 
 ## Fora de escopo deste roadmap
 
