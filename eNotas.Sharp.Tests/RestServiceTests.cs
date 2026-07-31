@@ -92,4 +92,16 @@ public class RestServiceTests
         Assert.EndsWith("/v2/empresas/x/recurso", handler.LastRequest.RequestUri!.AbsolutePath);
         Assert.Equal("{\"ok\":true}", response.Message);
     }
+
+    [Fact]
+    public async Task Post_WhenTokenAlreadyCanceled_ThrowsOperationCanceledException()
+    {
+        var handler = new FakeHandler();
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            service.Post("/v2/empresas/x/nf-e", new Nota { Id = "1" }, cts.Token));
+    }
 }

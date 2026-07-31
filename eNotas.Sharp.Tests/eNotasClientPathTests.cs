@@ -342,4 +342,18 @@ public class eNotasClientPathTests
             Assert.NotNull(response.Object);
         }
     }
+
+    [Fact]
+    public async Task EmitirNfe_WhenTokenAlreadyCanceled_ThrowsOperationCanceledException()
+    {
+        var (client, _) = ClientTestFactory.Create();
+        using (client)
+        using (var cts = new CancellationTokenSource())
+        {
+            cts.Cancel();
+
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+                client.EmitirNfe(new Nota { Id = "x" }, ClientTestFactory.EmpresaId, cts.Token));
+        }
+    }
 }

@@ -51,7 +51,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 1. Consumidor instancia `eNotasClient(apiKey)`.
 2. Construtor cria `RestService` com base URL fixa e header `Authorization: Basic {apiKey}`.
-3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...`) e chamam `Post` / `Get` / `Delete`.
+3. Métodos do client montam o path (`/v2/empresas/{empresaId}/...`) e chamam `Post` / `Get` / `Delete`, com `CancellationToken` opcional.
 4. Request: objeto → `JsonConvert.SerializeObject` (UTC).
 5. Response: string em `ApiResponse.Message`; se tipado, também `Object` (JSON ou XML conforme parâmetro `deserializer`).
 6. Exceções de rede/processamento vão para `ApiResponse.Exception` sem relançar (**fato observado**).
@@ -98,6 +98,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 ## Riscos arquiteturais
 
 - Falha de deserialização no `Get` (JSON/XML) preenche `ApiResponse.Exception` mantendo `Message` bruto e `Object` nulo (**fato**).
+- `CancellationToken` opcional nos métodos do client e do `RestService`; cancelamento relança `OperationCanceledException` e não preenche `ApiResponse` (**fato**).
 - `Delete` concatena `_apiUrl` + `action` enquanto outros métodos usam path relativo ao `BaseAddress` — possível inconsistência de URL (**inferência; validar em runtime**).
 - `Dispose` do client chama `GC.Collect()` — padrão atípico e potencialmente custoso.
 - `Version` do pacote e `AssemblyVersion` divergem no `.csproj`.

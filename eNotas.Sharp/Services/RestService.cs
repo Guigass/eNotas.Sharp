@@ -2,10 +2,10 @@
 using Newtonsoft.Json;
 using System.Xml.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 
@@ -39,7 +39,7 @@ namespace eNotas.Sharp.Services
             client.DefaultRequestHeaders.Add("Authorization", $"Basic {_apiKey}");
         }
 
-        public async Task<ApiResponse> Post(string action, object obj)
+        public async Task<ApiResponse> Post(string action, object obj, CancellationToken cancellationToken = default)
         {
             var apiResponse = new ApiResponse();
             try
@@ -52,7 +52,7 @@ namespace eNotas.Sharp.Services
 
                     requestMessage.Content = jsonContent;
 
-                    var result = await client.SendAsync(requestMessage);
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
                     apiResponse.Status = result.StatusCode.ToString();
                     apiResponse.IsSuccess = result.IsSuccessStatusCode;
@@ -62,19 +62,23 @@ namespace eNotas.Sharp.Services
                     apiResponse.Message = jsonResult;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
             catch (Exception ex) { apiResponse.Exception = ex; }
 
             return apiResponse;
         }
 
-        public async Task<ApiResponse> Put(string action)
+        public async Task<ApiResponse> Put(string action, CancellationToken cancellationToken = default)
         {
             var apiResponse = new ApiResponse();
             try
             {
                 using (var requestMessage = new HttpRequestMessage(HttpMethod.Put, action))
                 {
-                    var result = await client.SendAsync(requestMessage);
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
                     apiResponse.Status = result.StatusCode.ToString();
                     apiResponse.IsSuccess = result.IsSuccessStatusCode;
@@ -84,19 +88,23 @@ namespace eNotas.Sharp.Services
                     apiResponse.Message = jsonResult;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
             catch (Exception ex) { apiResponse.Exception = ex; }
 
             return apiResponse;
         }
 
-        public async Task<ApiResponse<T>> Get<T>(string action, string deserializer = "json") where T : class
+        public async Task<ApiResponse<T>> Get<T>(string action, string deserializer = "json", CancellationToken cancellationToken = default) where T : class
         {
             var apiResponse = new ApiResponse<T>();
             try
             {
                 using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, action))
                 {
-                    var result = await client.SendAsync(requestMessage);
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
                     apiResponse.Status = result.StatusCode.ToString();
                     apiResponse.IsSuccess = result.IsSuccessStatusCode;
@@ -123,18 +131,22 @@ namespace eNotas.Sharp.Services
                     catch (Exception ex) { apiResponse.Exception = ex; }
                 }
             }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
             catch (Exception ex) { apiResponse.Exception = ex; }
 
             return apiResponse;
         }
 
-        public async Task<ApiResponse> Delete(string action)
+        public async Task<ApiResponse> Delete(string action, CancellationToken cancellationToken = default)
         {
             var apiResponse = new ApiResponse();
 
             try
             {
-                var result = await client.DeleteAsync($"{_apiUrl}/{action}");
+                var result = await client.DeleteAsync($"{_apiUrl}/{action}", cancellationToken).ConfigureAwait(false);
 
                 apiResponse.Status = result.StatusCode.ToString();
                 apiResponse.IsSuccess = result.IsSuccessStatusCode;
@@ -142,6 +154,10 @@ namespace eNotas.Sharp.Services
                 var jsonResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 apiResponse.Message = apiResponse.Message = jsonResult;
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch (Exception ex) { apiResponse.Exception = ex; }
 

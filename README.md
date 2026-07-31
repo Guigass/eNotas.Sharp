@@ -37,10 +37,13 @@ Governança Cursor: `.cursor/rules`, `.cursor/skills`, `.cursor/agents` (comece 
         var response = enotas.EmitirNfe(nota, "empresaID").Result;
         // Ou
         // var resp = await enotas.EmitirNfe(nota, "empresaID");
+        // Ou com cancelamento:
+        // var resp = await enotas.EmitirNfe(nota, "empresaID", cancellationToken);
         // Para Metodos ASYNC
     }
     ```
 
+Métodos públicos aceitam `CancellationToken cancellationToken = default` (opcional; source-compatible).
 --------------------------------------------------------------------------------------------------
 - Instalação no Nuget PM
     ```

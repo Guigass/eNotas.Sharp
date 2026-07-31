@@ -6,8 +6,8 @@ Há um projeto `eNotas.Sharp.Tests` (xUnit, `net8.0`) cobrindo:
 
 1. Serialização/deserialização JSON (`Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Impostos`/`ibsCbs`) e `CustomDateTimeConverter`
 2. Deserialização XML (`NfeProc`, cancelamento, inutilização, CC-e)
-3. Smoke de paths/auth/`ApiResponse` de **todos** os métodos públicos do `eNotasClient` com `HttpMessageHandler` fake
-4. Edge cases do `RestService` (JSON inválido, exceção de rede, `Put`)
+3. Smoke de paths/auth/`ApiResponse` de **todos** os métodos públicos do `eNotasClient` com `HttpMessageHandler` fake (inclui cancelamento)
+4. Edge cases do `RestService` (JSON inválido, exceção de rede, `Put`, `CancellationToken`)
 
 Validação complementar: build da library + checklist manual / integração em sistemas consumidores.
 
@@ -29,8 +29,8 @@ dotnet build eNotas.Sharp.sln -c Release
 |------|-------|------------|
 | Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `InutilizacaoSerializationTests`, `CartaCorrecaoSerializationTests`, `ImpostosSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` |
 | XML | `NfeProcXmlTests`, `XmlDocumentTests` | Fixtures mínimas, não documento fiscal completo |
-| HTTP smoke | `eNotasClientPathTests` | Todos os métodos NF-e/NFC-e; auth Basic; sucesso e 4xx |
-| RestService | `RestServiceTests` | Parse JSON/XML inválido deixa `Object` null e preenche `Exception`; exceção de rede não relança; `Put` |
+| HTTP smoke | `eNotasClientPathTests` | Todos os métodos NF-e/NFC-e; auth Basic; sucesso e 4xx; `CancellationToken` cancelado |
+| RestService | `RestServiceTests` | Parse JSON/XML inválido deixa `Object` null e preenche `Exception`; exceção de rede não relança; `Put`; cancelamento relança `OperationCanceledException` |
 
 ## Lacunas de teste
 

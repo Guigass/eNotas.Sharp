@@ -47,7 +47,8 @@ Todas as chamadas de rede da biblioteca.
 
 ### Pontos de atenção
 - Classe `internal` — não expor publicamente.
-- Exceções engolidas e expostas em `Exception` / `Message`.
+- Exceções engolidas e expostas em `Exception` / `Message` (exceto `OperationCanceledException`, que é relançada).
+- `CancellationToken` opcional propagado até `SendAsync` / `DeleteAsync`.
 - Header `Accept: application/json` e `Authorization: Basic {apiKey}`.
 
 ### Como alterar com segurança

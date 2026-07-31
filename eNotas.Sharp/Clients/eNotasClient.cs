@@ -1,9 +1,8 @@
 ﻿using eNotas.Sharp.Models;
 using eNotas.Sharp.Services;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace eNotas.Sharp.Clients
@@ -28,140 +27,140 @@ namespace eNotas.Sharp.Clients
 
         #region NFe
 
-        public async Task<ApiResponse> EmitirNfe(Nota nota, string empresaId)
+        public async Task<ApiResponse> EmitirNfe(Nota nota, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e";
 
-            return await _client.Post(path, nota);
+            return await _client.Post(path, nota, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Consulta>> ConsultaNfe(string notaId, string empresaId)
+        public async Task<ApiResponse<Consulta>> ConsultaNfe(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}";
 
-            return await _client.Get<Consulta>(path);
+            return await _client.Get<Consulta>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.Xml.NfeProc>> ConsultaNfeXML(string notaId, string empresaId)
+        public async Task<ApiResponse<Models.Xml.NfeProc>> ConsultaNfeXML(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}/xml";
 
-            return await _client.Get<Models.Xml.NfeProc>(path, "xml");
+            return await _client.Get<Models.Xml.NfeProc>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.XmlCancelamento.ProcEventoNFe>> ConsultaNfeXMLCancelamento(string notaId, string empresaId)
+        public async Task<ApiResponse<Models.XmlCancelamento.ProcEventoNFe>> ConsultaNfeXMLCancelamento(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}/xmlCancelamento";
 
-            return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml");
+            return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse> CancelaNfe(string notaId, string empresaId)
+        public async Task<ApiResponse> CancelaNfe(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/{notaId}";
 
-            return await _client.Delete(path);
+            return await _client.Delete(path, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse> InutilizacaoNfe(Inutilizacao inutilizacao, string empresaId)
+        public async Task<ApiResponse> InutilizacaoNfe(Inutilizacao inutilizacao, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao";
 
-            return await _client.Post(path, inutilizacao);
+            return await _client.Post(path, inutilizacao, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<ConsultaInutilizacao>> ConsultaInutilizacaoNfe(string inutilizacaoId, string empresaId)
+        public async Task<ApiResponse<ConsultaInutilizacao>> ConsultaInutilizacaoNfe(string inutilizacaoId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao/{inutilizacaoId}";
 
-            return await _client.Get<ConsultaInutilizacao>(path);
+            return await _client.Get<ConsultaInutilizacao>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfe(string inutilizacaoId, string empresaId)
+        public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfe(string inutilizacaoId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/inutilizacao/{inutilizacaoId}/xml";
 
-            return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml");
+            return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse> CartaDeCorrecao(CartaCorrecao cartaCorrecao, string empresaId)
+        public async Task<ApiResponse> CartaDeCorrecao(CartaCorrecao cartaCorrecao, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao";
 
-            return await _client.Post(path, cartaCorrecao);
+            return await _client.Post(path, cartaCorrecao, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<CorrecaoResponse>> ConsultaCartaDeCorrecao(string cartaCorrecaoId, string empresaId)
+        public async Task<ApiResponse<CorrecaoResponse>> ConsultaCartaDeCorrecao(string cartaCorrecaoId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao/{cartaCorrecaoId}";
 
-            return await _client.Get<CorrecaoResponse>(path);
+            return await _client.Get<CorrecaoResponse>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.XmlCorrecao.ProcEventoNFe>> ConsultaCartaDeCorrecaoXml(string cartaCorrecaoId, string empresaId)
+        public async Task<ApiResponse<Models.XmlCorrecao.ProcEventoNFe>> ConsultaCartaDeCorrecaoXml(string cartaCorrecaoId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nf-e/cartaCorrecao/{cartaCorrecaoId}/xml";
 
-            return await _client.Get<Models.XmlCorrecao.ProcEventoNFe>(path, "xml");
+            return await _client.Get<Models.XmlCorrecao.ProcEventoNFe>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
 
         #region NFCe
-        public async Task<ApiResponse> EmitirNfce(Nota nota, string empresaId)
+        public async Task<ApiResponse> EmitirNfce(Nota nota, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e";
 
-            return await _client.Post(path, nota);
+            return await _client.Post(path, nota, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Consulta>> ConsultaNfce(string notaId, string empresaId)
+        public async Task<ApiResponse<Consulta>> ConsultaNfce(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}";
 
-            return await _client.Get<Consulta>(path);
+            return await _client.Get<Consulta>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.Xml.NfeProc>> ConsultaNfceXML(string notaId, string empresaId)
+        public async Task<ApiResponse<Models.Xml.NfeProc>> ConsultaNfceXML(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}/xml";
 
-            return await _client.Get<Models.Xml.NfeProc>(path, "xml");
+            return await _client.Get<Models.Xml.NfeProc>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.XmlCancelamento.ProcEventoNFe>> ConsultaNfceXMLCancelamento(string notaId, string empresaId)
+        public async Task<ApiResponse<Models.XmlCancelamento.ProcEventoNFe>> ConsultaNfceXMLCancelamento(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}/xmlCancelamento";
 
-            return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml");
+            return await _client.Get<Models.XmlCancelamento.ProcEventoNFe>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse> CancelaNfce(string notaId, string empresaId)
+        public async Task<ApiResponse> CancelaNfce(string notaId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/{notaId}";
 
-            return await _client.Delete(path);
+            return await _client.Delete(path, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse> InutilizacaoNfce(Inutilizacao inutilizacao, string empresaId)
+        public async Task<ApiResponse> InutilizacaoNfce(Inutilizacao inutilizacao, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao";
 
-            return await _client.Post(path, inutilizacao);
+            return await _client.Post(path, inutilizacao, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<ConsultaInutilizacao>> ConsultaInutilizacaoNfce(string inutilizacaoId, string empresaId)
+        public async Task<ApiResponse<ConsultaInutilizacao>> ConsultaInutilizacaoNfce(string inutilizacaoId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao/{inutilizacaoId}";
 
-            return await _client.Get<ConsultaInutilizacao>(path);
+            return await _client.Get<ConsultaInutilizacao>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfce(string inutilizacaoId, string empresaId)
+        public async Task<ApiResponse<Models.XmlInutilizacao.ProcInutNFe>> ConsultaInutilizacaoXMLNfce(string inutilizacaoId, string empresaId, CancellationToken cancellationToken = default)
         {
             string path = $"/v2/empresas/{empresaId}/nfc-e/inutilizacao/{inutilizacaoId}/xml";
 
-            return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml");
+            return await _client.Get<Models.XmlInutilizacao.ProcInutNFe>(path, "xml", cancellationToken).ConfigureAwait(false);
         }
         #endregion
 
