@@ -157,6 +157,31 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task VincularLogotipo_PostsMultipartToExpectedPathWithAuth()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{}"));
+        using (client)
+        {
+            var arquivo = new byte[] { 0x89, 0x50, 0x4E, 0x47 };
+            var response = await client.VincularLogotipo(
+                ClientTestFactory.EmpresaId,
+                arquivo,
+                "logo.png");
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v2/empresas/{ClientTestFactory.EmpresaId}/logo",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.StartsWith("multipart/form-data", handler.LastRequest.Content!.Headers.ContentType!.MediaType);
+            Assert.Contains("logotipo", handler.LastContent);
+            Assert.Contains("logo.png", handler.LastContent);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");

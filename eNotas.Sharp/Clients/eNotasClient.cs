@@ -225,6 +225,22 @@ namespace eNotas.Sharp.Clients
             }
         }
 
+        public async Task<ApiResponse> VincularLogotipo(
+            string empresaId,
+            byte[] arquivo,
+            string nomeArquivo = "logo.png",
+            CancellationToken cancellationToken = default)
+        {
+            string path = $"/v2/empresas/{empresaId}/logo";
+
+            using (var content = new MultipartFormDataContent())
+            {
+                content.Add(new ByteArrayContent(arquivo), "logotipo", nomeArquivo);
+
+                return await _client.PostMultipart(path, content, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
         #endregion
 
         public void Dispose()
