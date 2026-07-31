@@ -14,7 +14,7 @@
 | Inutilização | `Inutilizacao.cs` | Série e faixa numérica |
 | Carta de Correção | `CartaCorrecao.cs` | Evento CC-e (NF-e) |
 | Consulta | `Consulta.cs` | Status, chave, `linkDanfe` (URL do PDF/DANFE NF-e/NFC-e — não há `GET .../pdf` na API V2), `linkDownloadXml`, protocolo |
-| NFS-e | `Nfse.cs`, `Servico.cs`, `ConsultaNfse.cs`, `ListaNfse.cs` | Emissão/consulta/lista V1 (`/v1/.../nfes`); ≠ `Nota`/`Consulta` V2 |
+| NFS-e | `Nfse.cs`, `Servico.cs`, `ConsultaNfse.cs`, `ListaNfse.cs` | Emissão/consulta/lista V1 (`/v1/.../nfes`); request `enviarPorEmail` (KB 170286); retorno `enviadaPorEmail` em `ConsultaNfse`; ≠ `Nota`/`Consulta` V2 |
 | Webhook | `NotaWebhook.cs` | Payload tipado para o consumidor |
 
 ## Fluxos de negócio

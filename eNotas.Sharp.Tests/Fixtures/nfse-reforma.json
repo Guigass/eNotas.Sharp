@@ -2,7 +2,7 @@
   "tipo": "NFS-e",
   "idExterno": "NFSe-REFORMA-001",
   "ambienteEmissao": "Homologacao",
-  "enviadaPorEmail": false,
+  "enviarPorEmail": false,
   "cliente": {
     "tipoPessoa": "J",
     "nome": "Cliente Homologacao Reforma",

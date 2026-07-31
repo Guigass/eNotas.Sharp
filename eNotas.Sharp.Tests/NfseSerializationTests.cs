@@ -18,7 +18,7 @@ public class NfseSerializationTests
         Assert.Equal("NFS-e", nfse!.Tipo);
         Assert.Equal("TESTE231024", nfse.IdExterno);
         Assert.Equal("Producao", nfse.AmbienteEmissao);
-        Assert.False(nfse.EnviadaPorEmail);
+        Assert.False(nfse.EnviarPorEmail);
         Assert.Equal(1m, nfse.ValorTotal);
 
         Assert.NotNull(nfse.Cliente);
@@ -56,7 +56,7 @@ public class NfseSerializationTests
             Tipo = "NFS-e",
             IdExterno = "TESTE231024",
             AmbienteEmissao = "Producao",
-            EnviadaPorEmail = false,
+            EnviarPorEmail = false,
             ValorTotal = 1m,
             Cliente = new Cliente
             {
@@ -97,7 +97,8 @@ public class NfseSerializationTests
         Assert.Equal("NFS-e", obj["tipo"]?.Value<string>());
         Assert.Equal("TESTE231024", obj["idExterno"]?.Value<string>());
         Assert.Equal("Producao", obj["ambienteEmissao"]?.Value<string>());
-        Assert.False(obj["enviadaPorEmail"]?.Value<bool>());
+        Assert.False(obj["enviarPorEmail"]?.Value<bool>());
+        Assert.Null(obj["enviadaPorEmail"]);
         Assert.Equal(1m, obj["valorTotal"]?.Value<decimal>());
         Assert.Null(obj["cliente"]?["inscricaoMunicipal"]);
         Assert.Null(obj["cliente"]?["inscricaoEstadual"]);
@@ -129,13 +130,34 @@ public class NfseSerializationTests
         Assert.Equal(nfse!.Tipo, again!.Tipo);
         Assert.Equal(nfse.IdExterno, again.IdExterno);
         Assert.Equal(nfse.AmbienteEmissao, again.AmbienteEmissao);
-        Assert.Equal(nfse.EnviadaPorEmail, again.EnviadaPorEmail);
+        Assert.Equal(nfse.EnviarPorEmail, again.EnviarPorEmail);
         Assert.Equal(nfse.ValorTotal, again.ValorTotal);
         Assert.Equal(nfse.Cliente!.Nome, again.Cliente!.Nome);
         Assert.Equal(nfse.Cliente.Endereco!.Cidade, again.Cliente.Endereco!.Cidade);
         Assert.Equal(nfse.Servico!.CodigoServicoMunicipio, again.Servico!.CodigoServicoMunicipio);
         Assert.Equal(nfse.Servico.MunicipioPrestacaoServico, again.Servico.MunicipioPrestacaoServico);
     }
+
+#pragma warning disable CS0618 // EnviadaPorEmail obsolete alias (compat NuGet)
+    [Fact]
+    public void Serialize_ObsoleteEnviadaPorEmailAlias_EmitsEnviarPorEmail()
+    {
+        var nfse = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "ALIAS-001",
+            AmbienteEmissao = "Homologacao",
+            EnviadaPorEmail = true
+        };
+
+        var json = JsonConvert.SerializeObject(nfse);
+        var obj = JObject.Parse(json);
+
+        Assert.True(obj["enviarPorEmail"]?.Value<bool>());
+        Assert.Null(obj["enviadaPorEmail"]);
+        Assert.True(nfse.EnviarPorEmail);
+    }
+#pragma warning restore CS0618
 
     [Fact]
     public void Deserialize_ReformaFixture_PopulatesServicoReformaFields()

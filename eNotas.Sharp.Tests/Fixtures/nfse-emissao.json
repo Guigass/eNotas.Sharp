@@ -2,7 +2,7 @@
   "tipo": "NFS-e",
   "idExterno": "TESTE231024",
   "ambienteEmissao": "Producao",
-  "enviadaPorEmail": false,
+  "enviarPorEmail": false,
   "cliente": {
     "tipoPessoa": "F",
     "nome": "Cliente teste",

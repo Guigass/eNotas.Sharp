@@ -16,8 +16,16 @@ namespace eNotas.Sharp.Models
         [JsonProperty("ambienteEmissao", NullValueHandling = NullValueHandling.Ignore)]
         public string AmbienteEmissao { get; set; }
 
-        [JsonProperty("enviadaPorEmail", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? EnviadaPorEmail { get; set; }
+        [JsonProperty("enviarPorEmail", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? EnviarPorEmail { get; set; }
+
+        [Obsolete("Use EnviarPorEmail. Request JSON: enviarPorEmail (KB 170286).")]
+        [JsonIgnore]
+        public bool? EnviadaPorEmail
+        {
+            get => EnviarPorEmail;
+            set => EnviarPorEmail = value;
+        }
 
         [JsonProperty("cliente", NullValueHandling = NullValueHandling.Ignore)]
         public Cliente Cliente { get; set; }
