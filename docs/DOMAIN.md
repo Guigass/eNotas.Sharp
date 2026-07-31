@@ -31,7 +31,7 @@
 - XML cancelamento: `ConsultaNfeXMLCancelamento` / `ConsultaNfceXMLCancelamento`
 
 ### Cancelamento
-`CancelaNfe` / `CancelaNfce` via HTTP DELETE.
+`CancelaNfe` / `CancelaNfce` via HTTP DELETE (V2 `nf-e`/`nfc-e`). NFS-e: `CancelaNfse` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/{nfeId}` (**P1-06**).
 
 **Sensibilidade:** alta — efeito fiscal.
 
