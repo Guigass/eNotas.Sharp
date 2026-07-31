@@ -173,6 +173,17 @@ namespace eNotas.Sharp.Clients
         }
         #endregion
 
+        #region NFSe
+
+        public async Task<ApiResponse> EmitirNfse(Nfse nfse, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes";
+
+            return await _client.Post(path, nfse, cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region Empresas
 
         public async Task<ApiResponse> IncluirAlterarEmpresa(Empresa empresa, CancellationToken cancellationToken = default)

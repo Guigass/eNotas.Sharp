@@ -17,7 +17,7 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Falhas comuns |
 | [Workflow agentico](docs/AGENTIC_WORKFLOW.md) | Rules, skills e agents Cursor |
 
-Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (client atual). A coleção V1 NFS-e é referência futura/não implementada no client C#.
+Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (NF-e/NFC-e/empresas). NFS-e: coleção V1 `docs/API - eNotas - V1 - NFS-e.postman_collection.json` — no client C# há `EmitirNfse` (P1-02); demais métodos NFS-e ainda no roadmap.
 
 Documentação oficial NotaGateway: [Central de ajuda](https://atendimento.notagateway.com.br/kb/pt-br) — consulta via agent `notagateway-docs-specialist` / skill `notagateway-kb-lookup`.
 
@@ -84,18 +84,19 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Setup SAT (`SetupSat`) — body bruto em `ApiResponse.Message` (schema Postman incerto)
     * Consultar SAT (`ConsultaSat`) — parâmetro `satId` no path `GET /v2/sat/{satId}/all`; body bruto em `ApiResponse.Message` (schema Postman incerto)
     * Consultar Manifestação de Destinatário NF-e (`ConsultaManifestacao`) — `GET` absoluto em `https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}` (host **api2**, distinto da base padrão `api.enotasgw.com.br`); body bruto em `ApiResponse.Message` (schema Postman vazio)
+    * Emitir NFS-e (`EmitirNfse`) — `POST /v1/empresas/{empresaId}/nfes` (API V1; model `Nfse`)
     ```
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
 
 Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat` e `ConsultaManifestacao` devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
 
-DTO de emissão NFS-e (**P1-01**): models `Nfse` e `Servico` (reutilizam `Cliente`/`Endereco`); ainda **sem** método no `eNotasClient` (P1-02+).
+NFS-e: models `Nfse`/`Servico` (**P1-01**) e `EmitirNfse` (**P1-02**, path V1 `nfes` — distinto de V2 `nf-e`/`nfc-e`).
 
 - Ainda não no client (ver [roadmap](docs/ROADMAP.md)):
     ```
     * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
-    * NFS-e métodos (emitir, consultar, cancelar, XML, PDF) — Postman V1 / itens P1-02+
+    * NFS-e demais métodos (consultar, cancelar, XML, PDF, listar, apoio municipal) — Postman V1 / itens P1-03+
     ```
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

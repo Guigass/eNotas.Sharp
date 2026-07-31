@@ -3,17 +3,17 @@
 ## Client — eNotasClient
 
 ### Responsabilidade
-Fachada pública da biblioteca: métodos async para NF-e, NFC-e, empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
+Fachada pública da biblioteca: métodos async para NF-e, NFC-e, NFS-e (emitir), empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
 
 ### Caminhos principais
 - `eNotas.Sharp/Clients/eNotasClient.cs`
 
 ### Dependências
 - `RestService`
-- Models: `Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Empresa`, `ListaEmpresas`, wrappers XML
+- Models: `Nota`, `Nfse`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Empresa`, `ListaEmpresas`, wrappers XML
 
 ### Fluxos relacionados
-Emissão, consulta, cancelamento, inutilização, carta de correção, download XML; incluir/alterar/consultar/listar empresa; certificado/logo multipart; setup/consulta SAT; consulta de manifestação (host `api2`).
+Emissão NF-e/NFC-e/NFS-e, consulta, cancelamento, inutilização, carta de correção, download XML; incluir/alterar/consultar/listar empresa; certificado/logo multipart; setup/consulta SAT; consulta de manifestação (host `api2`).
 
 ### Pontos de atenção
 - Base URL hardcoded: `https://api.enotasgw.com.br` (`ConsultaManifestacao` usa URL absoluta em `api2`)
@@ -22,12 +22,12 @@ Emissão, consulta, cancelamento, inutilização, carta de correção, download 
 
 ### Como alterar com segurança
 1. Manter assinaturas públicas estáveis.
-2. Novos métodos: adicionar na região correta (NFe/NFCe/Empresas).
+2. Novos métodos: adicionar na região correta (NFe/NFCe/NFSe/Empresas).
 3. Reutilizar `Post`/`Get`/`Delete`/`PostMultipart` existentes.
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). Métodos NFS-e (**P1-02+**) ainda não estão no client (DTO emissão `Nfse`/`Servico` — **P1-01** Feito). Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito); demais métodos (**P1-03+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 
@@ -72,7 +72,7 @@ Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS
 
 ### Caminhos principais
 - `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão NF-e/NFC-e)
-- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; reutiliza `Cliente`/`Endereco`; sem método no client ainda)
+- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
 - `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto` para PIS/COFINS/IPI), `IbsCbs.cs` (IBS/CBS NF-e/NFC-e), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
 - `Consulta.cs`, `ConsultaInutilizacao.cs`, `Inutilizacao.cs`, `CartaCorrecao.cs`, `CorrecaoResponse.cs`
 - `ApiResponse.cs`, `NotaWebhook.cs`
@@ -143,4 +143,4 @@ Coleções Postman como referência de contrato.
 - `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 
 ### Pontos de atenção
-V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**) já no pacote; métodos no client ainda não. Usar V2 como referência primária para o client atual (NF-e/NFC-e/empresas).
+V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**) e `EmitirNfse` (**P1-02**) no pacote; demais métodos P1-03+. V2 permanece referência primária para NF-e/NFC-e/empresas.

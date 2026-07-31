@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.17.0</Version>
-    <AssemblyVersion>1.1.7.0</AssemblyVersion>
+    <Version>1.18.0</Version>
+    <AssemblyVersion>1.1.8.0</AssemblyVersion>
     <Authors>Guilherme Gentile</Authors>
     <Company>ExclusivaSex - DevTech</Company>
     <Description>Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.</Description>

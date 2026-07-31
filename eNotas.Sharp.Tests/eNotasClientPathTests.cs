@@ -40,6 +40,27 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task EmitirNfse_PostsToExpectedPathWithAuthAndBody()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"nfeId\":\"ok\"}"));
+        using (client)
+        {
+            var response = await client.EmitirNfse(
+                new Nfse { Tipo = "NFS-e", IdExterno = "TESTE231024", ValorTotal = 1m },
+                ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"nfeId\":\"ok\"}", response.Message);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith($"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Contains("\"tipo\":\"NFS-e\"", handler.LastContent);
+            Assert.Contains("\"idExterno\":\"TESTE231024\"", handler.LastContent);
+        }
+    }
+
+    [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));
