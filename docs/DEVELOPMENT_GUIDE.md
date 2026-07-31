@@ -27,10 +27,10 @@ Cenários típicos neste repo:
 
 ### Novo endpoint no client
 1. Task Preflight (`.cursor/skills/task-preflight`).
-2. Conferir path e payload no Postman V2 (`docs/`).
+2. Conferir path e payload no Postman correto: V2 (NF-e/NFC-e/empresas) ou V1 (NFS-e/apoio municipal) em `docs/`.
 3. Criar/estender models em `Models/` com `[JsonProperty]` e `NullValueHandling.Ignore`.
-4. Adicionar método async em `eNotasClient` na região NFe ou NFCe.
-5. Atualizar lista de métodos no `README.md`.
+4. Adicionar método async em `eNotasClient` na região `#region NFe`, `#region NFCe`, `#region NFSe` ou `#region Empresas`.
+5. Atualizar lista de métodos no `README.md` e `CHANGELOG.md` se for release.
 6. Avaliar bump de `Version` no `.csproj`.
 7. `dotnet test eNotas.Sharp.sln -c Release`; validação manual contra homologação se possível.
 

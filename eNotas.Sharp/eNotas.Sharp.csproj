@@ -13,7 +13,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Guigass/eNotas.Sharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>enotas;notafiscal;nfe;nfce</PackageTags>
+    <PackageTags>enotas;notafiscal;nfe;nfce;nfse</PackageTags>
     <NeutralLanguage>pt-BR</NeutralLanguage>
   </PropertyGroup>
 

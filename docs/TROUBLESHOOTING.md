@@ -8,7 +8,7 @@ Documentados a partir do código e lacunas do repositório (não há issue track
 |----------|-----------|
 | Sem integração automatizada com API real | Suite offline em `eNotas.Sharp.Tests`; checklist em `TESTING.md` |
 | Sample exige env vars | `Exemplos/EmissaoNfeHomologacao` usa `ENOTAS_API_KEY` / `ENOTAS_EMPRESA_ID` |
-| Docs Postman V1 vs client só V2 NF-e/NFC-e | Escopo divergente |
+| Confundir Postman V1 (NFS-e `/nfes`) com V2 (`nf-e`/`nfc-e`) | Models e paths distintos; ver README seção NFS-e |
 | `Version` ≠ `AssemblyVersion` | `.csproj` |
 
 ## Erros comuns

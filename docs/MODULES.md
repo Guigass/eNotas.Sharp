@@ -72,7 +72,7 @@ Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS
 
 ### Caminhos principais
 - `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão NF-e/NFC-e)
-- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; Reforma **P1-11**: `codigoNBS`, `codigoTributacaoNacional`, `ibsCbs` → `ServicoIbsCbs`; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
+- `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; request `enviarPorEmail`, opcionais `numeroRps`/`serieRps`; Reforma **P1-11**: `codigoNBS`, `codigoTributacaoNacional`, `ibsCbs` → `ServicoIbsCbs`; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
 - `ServicoIbsCbs.cs` (IBS/CBS NFS-e — **P1-11**; shape sample Sandbox - Reforma; ≠ `IbsCbs` de NF-e/NFC-e)
 - `ConsultaNfse.cs` (consulta NFS-e V1 — **P1-03**/**P1-04**; reutiliza `Cliente`/`Servico`; distinto de `Consulta` NF-e/NFC-e)
 - `ListaNfse.cs` (listagem NFS-e V1 — **P1-05**; `totalRecords` + `data` de `ConsultaNfse`)

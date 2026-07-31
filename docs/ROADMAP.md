@@ -42,7 +42,10 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Raiz `Nota` | `indicadorPresencaConsumidor` | **Feito:** presente em `Nota.cs`; sample Postman V2 `Emitir NF-e - api11` (coexiste com `pedido.presencaConsumidor`) |
 | Raiz `Nota` | `enviarPorEmail` vs `enviadaPorEmail` | **Feito:** request = `enviarPorEmail` ([KB 170286](https://atendimento.notagateway.com.br/kb/pt-br/article/170286/campo-enviarporemail)); retorno = `enviadaPorEmail` em `Consulta`. Sample Postman V2 com `enviadaPorEmail` no body de emissão diverge da KB |
 | Raiz `Nfse` (request) | `enviarPorEmail` vs `enviadaPorEmail` | **Feito (FIX-01):** request = `enviarPorEmail` (paridade `Nota` + KB 170286); `EnviadaPorEmail` Obsolete+alias; retorno permanece `enviadaPorEmail` em `ConsultaNfse`. Sample Postman V1 “Emitir NFS-e” com `enviadaPorEmail` diverge da KB |
+| Raiz `Nfse` (request) | `numeroRps`, `serieRps` | **Feito (FIX-03):** opcionais no emit ([KB 173801](https://atendimento.notagateway.com.br/kb/pt-br/article/173801/como-especificar-o-numero-de-rps-explicitamente-na-nota-fiscal)); também em `ConsultaNfse` (retorno) |
+| Paths NFS-e `porIdExterno` | Encoding de `idExterno` | **Feito (FIX-02):** `Uri.EscapeDataString` nos 4 métodos; Theory smoke em `eNotasClientPathTests` |
 | `ConsultaNfse` (response) | Confiança de schema / `motivoStatus` | **Feito (FIX-04):** `motivoStatus` permanece `string` (doc V1 portal; ≠ `object` de `Consulta` V2); fixture `consulta-nfse.json` + testes deserialize (string/null); `lista-nfse.json` opcional; residual documentado em DOMAIN (Postman V1 sem body de response) |
+| Testes NFS-e | RoundTrip “PreservesJsonShape” | **Feito (FIX-05):** `JToken.DeepEquals` após strip de nulls em `NfseSerializationTests` |
 | `itens[]` (`Iten`) | `codigoBeneficioFiscal`, `extipi`, `quantidadeTributavel`, `unidadeMedidaTributavel`, `valorTotal` | **Feito:** presentes em `Iten.cs`; sample Postman V2 Emitir NF-e |
 | Impostos | `ibsCbs` tipado como `Imposto` genérico | **Feito:** tipo dedicado `IbsCbs` (`ibs.uf` / `ibs.municipio` / `cbs`) alinhado à [KB 595993](https://atendimento.notagateway.com.br/kb/pt-br/article/595993/como-enviar-ibs-e-cbs-ao-emitir-uma-nf-via-api); `Imposto` permanece para PIS/COFINS/IPI |
 | Demais aninhados | cliente, pedido, pagamento, transporte, referências, impostos | **Inferência:** Postman é amostra incompleta; auditar V2 + [KB NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) para opcionais restantes |
@@ -52,7 +55,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 - [x] Properties aditivas em `Nota`, `Iten` e aninhados alinhadas ao contrato oficial — parcial: `Nota.tipo` + contingência + `indicadorPresencaConsumidor` + campos `Iten` + `enviarPorEmail` (request) + `IbsCbs` dedicado (KB 595993); demais aninhados/opcionais ainda em auditoria
 - [x] Paridade considerada para NF-e e NFC-e (mesmo model compartilhado) — `Nota`/`Iten` compartilhados; campos aditivos cobrem ambos
 - [x] Sem remoção/renomeação de propriedades públicas existentes
-- [x] README / versão NuGet atualizados quando a superfície pública crescer — Version **1.5.0** (minor: tipo público `IbsCbs` no lugar de `Imposto` em `Impostos.IbsCbs`)
+- [x] README / versão NuGet atualizados quando a superfície pública crescer — Version atual no `.csproj` (**1.29.0**; ver `CHANGELOG.md`); histórico P0 inclui minor `IbsCbs` dedicado
 
 ### Como agentes devem executar P1 / P2
 

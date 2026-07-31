@@ -14,7 +14,7 @@
 | Inutilização | `Inutilizacao.cs` | Série e faixa numérica |
 | Carta de Correção | `CartaCorrecao.cs` | Evento CC-e (NF-e) |
 | Consulta | `Consulta.cs` | Status, chave, `linkDanfe` (URL do PDF/DANFE NF-e/NFC-e — não há `GET .../pdf` na API V2), `linkDownloadXml`, protocolo |
-| NFS-e | `Nfse.cs`, `Servico.cs`, `ConsultaNfse.cs`, `ListaNfse.cs` | Emissão/consulta/lista V1 (`/v1/.../nfes`); request `enviarPorEmail` (KB 170286); retorno `enviadaPorEmail` em `ConsultaNfse`; ≠ `Nota`/`Consulta` V2 |
+| NFS-e | `Nfse.cs`, `Servico.cs`, `ConsultaNfse.cs`, `ListaNfse.cs` | Emissão/consulta/lista V1 (`/v1/.../nfes`); request `enviarPorEmail` (KB 170286), opcionais `numeroRps`/`serieRps` (KB 173801); retorno `enviadaPorEmail` em `ConsultaNfse`; ≠ `Nota`/`Consulta` V2 |
 | ConsultaNfse | `ConsultaNfse.cs` | Response V1: `motivoStatus` é **string** (portal eNotas Resultado GET; ≠ `Consulta.MotivoStatus` `object` da V2). Campos evidenciados no Resultado oficial: `id`, `tipo`, `idExterno`, `status`, `motivoStatus`, `cliente`, `servico`, `valorTotal`, `enviadaPorEmail`, `numero`, `codigoVerificacao`, `chaveAcesso`, `linkDownloadPDF`/`XML`. Residual sem sample Postman de response: `naturezaOperacao`, `valorIss`, `deducoes`, `descontos`, `descontoCondicionado`, `observacoes`, `dataCompetenciaRps`, `rpsGerenciado`, datas auxiliares — permanecem nullable; não remover sem major |
 | Webhook | `NotaWebhook.cs` | Payload tipado para o consumidor |
 
@@ -28,13 +28,14 @@
 **Sensibilidade:** alta — gera documento fiscal.
 
 ### Emissão / ciclo NFS-e (API V1)
-1. Montar `Nfse` + `Servico` (não usar `Nota` de mercadoria).
+1. Montar `Nfse` + `Servico` (não usar `Nota` de mercadoria); RPS explícito opcional via `numeroRps`/`serieRps`.
 2. `EmitirNfse` → `POST /v1/empresas/{empresaId}/nfes`.
 3. Consultar: `ConsultaNfse` / `ConsultaNfsePorIdExterno`; listar: `ListarNfse`.
 4. XML: `ConsultaNfseXML` / `ConsultaNfseXMLPorIdExterno` → string em `ApiResponse.Message` ([KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal)).
 5. PDF: `ConsultaNfsePDF` / `ConsultaNfsePDFPorIdExterno` → `byte[]` em `Object`.
 6. Cancelar: `CancelaNfse` / `CancelaNfsePorIdExterno` (DELETE V1).
-7. Apoio municipal (read-only): `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`.
+7. Segmentos `porIdExterno` escapam `idExterno` com `Uri.EscapeDataString` (IDs com espaço/`%` etc.).
+8. Apoio municipal (read-only): `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`.
 
 **Fato:** paths V1 `nfes` ≠ V2 `nf-e`/`nfc-e`. Inventário e exemplo no README (seção NFS-e).
 

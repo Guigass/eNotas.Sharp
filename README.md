@@ -1,12 +1,15 @@
 # eNotas.Sharp
 Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 
+**Versão NuGet:** `1.29.0` — notas em [CHANGELOG.md](CHANGELOG.md).
+
 ## Documentação
 
 | Documento | Conteúdo |
 |-----------|----------|
 | [Visão geral](docs/PROJECT_OVERVIEW.md) | Propósito, stack, pontos de atenção |
 | [Roadmap](docs/ROADMAP.md) | Lacunas e backlog priorizado (P0–P3) |
+| [Changelog](CHANGELOG.md) | Notas por versão NuGet |
 | [Arquitetura](docs/ARCHITECTURE.md) | Camadas Client → Service → Models |
 | [Módulos](docs/MODULES.md) | Responsabilidades por área |
 | [Domínio](docs/DOMAIN.md) | Fluxos NF-e/NFC-e e áreas sensíveis |
@@ -52,6 +55,7 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
 - Instalação no Nuget PM
     ```
     Install-Package eNotas.Sharp
+    # ou pin: Install-Package eNotas.Sharp -Version 1.29.0
     ```
 --------------------------------------------------------------------------------------------------
 
@@ -98,7 +102,7 @@ Testes offline (sem API Key): `NfseSerializationTests` + fixtures `nfse-emissao.
 | `ConsultaProvedorCidade` | `GET /v1/estados/cidades/{codigoIBGECidade}/provedor` |
 | `CriticarDadosObrigatorios` | `GET /v1/empresas/{empresaId}/criticardadosobrigatorios` |
 
-Models: `Nfse`/`Servico` (emissão; Reforma: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs` — distinto de `IbsCbs` NF-e/NFC-e), `ConsultaNfse`, `ListaNfse`.
+Models: `Nfse`/`Servico` (emissão: `enviarPorEmail`, opcionais `numeroRps`/`serieRps`; Reforma: `codigoNBS`, `codigoTributacaoNacional`, `ServicoIbsCbs` — distinto de `IbsCbs` NF-e/NFC-e), `ConsultaNfse`, `ListaNfse`. Paths `porIdExterno` escapam `idExterno` na URI.
 
 --------------------------------------------------------------------------------------------------
 
