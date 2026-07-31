@@ -50,46 +50,79 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 - [x] Sem remoção/renomeação de propriedades públicas existentes
 - [x] README / versão NuGet atualizados quando a superfície pública crescer — Version **1.5.0** (minor: tipo público `IbsCbs` no lugar de `Imposto` em `Impostos.IbsCbs`)
 
+### Como agentes devem executar P1 / P2
+
+1. Escolher **um** item `P1-xx` / `P2-xx` / `INFRA-xx` com status **Aberto** e classificação **Agente-pronto**.
+2. Respeitar **Depends** (não pular pré-requisito aberto).
+3. Evidência obrigatória: Postman citado + KB quando o item mencionar KB.
+4. Implementar só o critério de aceite daquela linha; marcar `[x]` e status **Feito** ao concluir.
+5. Itens **Bloqueado** exigem aprovação humana explícita na conversa — não implementar.
+6. Publicação NuGet / bump major continua fora do escopo do agente (ver “Validação humana”).
+
+Ordem sugerida se o usuário disser “pegue o próximo”: `INFRA-01` → `INFRA-02` → menor ID aberto de **P2** (empresas, mesma base URL V2) → menor ID aberto de **P1** (NFS-e) → itens Bloqueado só se o humano pedir.
+
+### INFRA — Pré-requisitos de transporte (`RestService`)
+
+Hoje `RestService` só tem JSON `Post`/`Get`/`Put`/`Delete`. PDF (P1) e certificado/logo (P2) exigem extensão **interna** aditiva.
+
+| ID | Item | Depends | Classificação | Evidência | Critério de aceite | Status |
+|----|------|---------|---------------|-----------|--------------------|--------|
+| INFRA-01 | GET binário (bytes) | — | **Agente-pronto** | PDF NFS-e Postman V1 + [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Método interno em `RestService` que retorna `ApiResponse` com conteúdo binário (ex.: `byte[]` em `Object` tipado ou tipo dedicado); sem breaking na API pública; testes de smoke | Aberto |
+| INFRA-02 | POST multipart/form-data | — | **Agente-pronto** | Postman V2 certificado (`senha`+`arquivo`) e logo (`logotipo`) | Método interno `PostMultipart` (ou equivalente) em `RestService`; não expor `HttpClient`; testes com `HttpMessageHandler` fake | Aberto |
+
 ### P1 — NFS-e (API V1)
 
-**Fato:** coleção `docs/API - eNotas - V1 - NFS-e.postman_collection.json` cobre o ciclo NFS-e; o client C# **não** implementa paths `/v1/.../nfes` nem models de serviço.
+**Fato:** coleção `docs/API - eNotas - V1 - NFS-e.postman_collection.json`; base host **igual** ao client atual (`https://api.enotasgw.com.br`); paths `/v1/empresas/{empresaId}/nfes...`. Não confundir com V2 `nf-e`/`nfc-e`.
 
-#### Escopo previsto
+**Convenções de implementação:** `#region NFSe` em `eNotasClient`; models novos em `Models/` (não reutilizar `Nota` de mercadoria sem necessidade); nomes públicos no estilo existente (`EmitirNfse`, `ConsultaNfse`, …); `CancellationToken` opcional; README + Version ao fechar superfície pública.
 
-| Item | Detalhe |
-|------|---------|
-| Models | Payload com `servico.*` (ISS, código municipal, LC116, etc.); sem model `Servico` hoje |
-| Operações NFS-e | Emitir, listar, consultar (id / idExterno), cancelar (id / idExterno), download XML, download **PDF** |
-| PDF / XML (download) | **Fato ([KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal)):** base `https://api.enotasgw.com.br/v1`; paths `/v1/empresas/{empresaId}/nfes/{nfeId}/pdf\|xml` e `.../porIdExterno/{idExterno}/pdf\|xml` — alinhado ao Postman V1 (`nfes`). Escopo **NFS-e V1**, não path V2 `nf-e`/`nfc-e` |
-| Apoio municipal | Serviços municipais, dados obrigatórios, características da prefeitura (Postman V1 pasta empresas) |
-| Reforma / sandbox | Sample `Sandbox - Reforma` (IBS/CBS em serviço) — contrato a validar na KB |
+| ID | Item | Method + path | Depends | Classificação | Critério de aceite | Status |
+|----|------|---------------|---------|---------------|--------------------|--------|
+| P1-01 | Models emissão NFS-e | — (DTO) | — | **Agente-pronto** | Models tipados espelhando sample Postman **Emitir NFS-e**: raiz (`tipo`, `idExterno`, `ambienteEmissao`, email, `cliente`, `servico`, `valorTotal`) + `servico.*` (`descricao`, `aliquotaIss`, `issRetidoFonte`, `codigoServicoMunicipio`, `itemListaServicoLC116`, `cnae`, `municipioPrestacaoServico`); nullable + `JsonProperty` + `NullValueHandling.Ignore`; teste de serialização | Aberto |
+| P1-02 | Emitir NFS-e | `POST /v1/empresas/{empresaId}/nfes` | P1-01 | **Agente-pronto** | Método público async → `ApiResponse`; path exato Postman; smoke de path | Aberto |
+| P1-03 | Consultar por id GW | `GET /v1/empresas/{empresaId}/nfes/{nfeId}` | P1-01 | **Agente-pronto** | Método tipado (`ApiResponse<T>` com model de consulta NFS-e mínimo alinhado ao retorno conhecido / campos do sample); smoke | Aberto |
+| P1-04 | Consultar por idExterno | `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` | P1-03 | **Agente-pronto** | Paridade com P1-03 | Aberto |
+| P1-05 | Listar NFS-e | `GET /v1/empresas/{empresaId}/nfes?pageNumber&pageSize&sortBy&sortDirection&filter` | P1-03 | **Agente-pronto** | Método com parâmetros de paginação/filtro espelhando query Postman; model de lista tipado o suficiente para deserializar | Aberto |
+| P1-06 | Cancelar por id GW | `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}` | P1-02 | **Agente-pronto** | Método → `ApiResponse`; smoke | Aberto |
+| P1-07 | Cancelar por idExterno | `DELETE /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` | P1-06 | **Agente-pronto** | Paridade com P1-06 | Aberto |
+| P1-08 | Download XML (id + idExterno) | `GET .../nfes/{nfeId}/xml` e `.../porIdExterno/{idExterno}/xml` | P1-03 | **Agente-pronto** | Dois métodos (ou overload claro); retorno string/`ApiResponse` sem inventar schema XML se não houver model; [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Aberto |
+| P1-09 | Download PDF (id + idExterno) | `GET .../nfes/{nfeId}/pdf` e `.../porIdExterno/{idExterno}/pdf` | INFRA-01, P1-03 | **Agente-pronto** | Dois métodos retornando bytes via INFRA-01; [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Aberto |
+| P1-10 | Apoio municipal | `GET /v1/estados/{uf}/cidades/{nome}/servicos`, `GET /v1/servicos/cidades`, `GET /v1/estados/cidades/{codigoIBGECidade}/provedor`, `GET /v1/empresas/{empresaId}/criticardadosobrigatorios` | — | **Agente-pronto** | Métodos read-only tipados o suficiente; pode ser 1 commit por endpoint se preferir atomicidade | Aberto |
+| P1-11 | Campos Reforma em `servico` | — (DTO) | P1-01 | **Agente-pronto** (aditivo) | Adicionar ao model de serviço os campos do sample **Sandbox - Reforma**: `codigoNBS`, `codigoTributacaoNacional`, `ibsCbs` (shape do sample); nullable; sem apontar sandbox como base URL padrão | Aberto |
+| P1-12 | Docs NFS-e | — | P1-02..P1-09 (mínimo emitir+consulta+cancel+xml) | **Agente-pronto** | README: seção NFS-e ≠ NF-e/NFC-e; lista de métodos reais; sem API Key; `docs/` alinhados (`MODULES`/`ARCHITECTURE` se tocados) | Aberto |
 
-#### Critério de aceite
+**Critério de aceite do épico P1** (fechado quando todos Agente-pronto acima estiverem Feito):
 
-- [ ] Região ou métodos públicos NFS-e em `eNotasClient` (ou superfície explícita documentada)
-- [ ] Models de request/response tipados
-- [ ] Documentação clara: V1 NFS-e ≠ V2 NF-e/NFC-e
-- [ ] Exemplos sem API Key real
+- [ ] `#region NFSe` (ou superfície equivalente) em `eNotasClient`
+- [ ] Models request/response tipados
+- [ ] Documentação clara V1 ≠ V2
+- [ ] Exemplos/testes sem API Key real
 
-**Validação humana:** prioridade de negócio e estabilidade do contrato V1 antes de publicar no NuGet.
+### P2 — Empresas V2 + SAT + habilitação (+ manifestação)
 
-### P2 — Endpoints V2/V3 listados no README e ausentes no client
+**Fato:** pasta `empresas` do Postman V2; host padrão `api.enotasgw.com.br`. Habilitar/desabilitar usam path **v1** no Postman (mesmo host).
 
-| Item | Evidência | Status no client |
-|------|-----------|------------------|
-| Manifestação de Destinatário NF-e | **Consulta (Postman):** `GET https://api2.enotasgw.com.br/v3/empresas/{empresaid}/nf-e/manifestacao/{chaveacesso}`. **Envio ([KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas)):** body `{"tipo":"CienciaDaOperacao","justificativa":null}` — path/método HTTP **não** documentados no artigo; justificativa 15–255 só em “Operação não Realizada”; troca de status permitida conforme evento anterior; limite SEFAZ 20 req/h (`consChNFe`/`distNSU`). Docs V2 emissão: 0 endpoints | Ausente — produto Consulta/Manifestação ≠ API V2 emissão; **validação humana** do path de **POST/envio** (FAQ só traz body) |
-| Incluir/Alterar empresa | `POST /v2/empresas` | Ausente |
-| Consultar empresa / listar empresas | `GET /v2/empresas...` | Ausente |
-| Vincular certificado digital | `POST /v2/empresas/{id}/certificadoDigital` | Ausente |
-| Vincular logotipo | `POST /v2/empresas/{id}/logo` | Ausente |
-| SAT (setup / download EXE) | Postman V2 pasta empresas + README | Ausente |
-| Habilitar / desabilitar empresa | Paths v1 no Postman | Ausente |
+| ID | Item | Method + path | Depends | Classificação | Critério de aceite | Status |
+|----|------|---------------|---------|---------------|--------------------|--------|
+| P2-01 | Model empresa | — (DTO) | — | **Agente-pronto** | Model(s) alinhados ao body Postman **Incluir/Alterar empresa** (endereço, CNPJ, IE/IM, razões, flags, `ConfiguracoesNFSeHomologacao`/`Producao`, etc.); nullable + Ignore; teste serialização | Aberto |
+| P2-02 | Incluir/Alterar empresa | `POST /v2/empresas` | P2-01 | **Agente-pronto** | Método público → `ApiResponse`; smoke | Aberto |
+| P2-03 | Consultar empresa por id | `GET /v2/empresas/{empresaId}` | P2-01 | **Agente-pronto** | `ApiResponse<T>` com model de empresa | Aberto |
+| P2-04 | Listar empresas | `GET /v2/empresas?pageNumber&pageSize&searchBy&searchTerm&sortBy&sortDirection` | P2-03 | **Agente-pronto** | Query params como Postman; model de lista | Aberto |
+| P2-05 | Vincular certificado | `POST /v2/empresas/{empresaId}/certificadoDigital` multipart (`senha`, `arquivo`) | INFRA-02 | **Agente-pronto** | Método aceita stream/bytes + senha; usa INFRA-02; sem logar certificado/senha | Aberto |
+| P2-06 | Vincular logo | `POST /v2/empresas/{empresaId}/logo` multipart (`logotipo`) | INFRA-02 | **Agente-pronto** | Método aceita stream/bytes imagem; formatos JPG/PNG/GIF (doc Postman) | Aberto |
+| P2-07 | Desabilitar empresa | `POST /v1/empresas/{empresaId}/desabilitar` | — | **Agente-pronto** | Método → `ApiResponse`; path v1 conforme Postman | Aberto |
+| P2-08 | Habilitar empresa | `POST /v1/empresas/{empresaId}/habilitar` | — | **Agente-pronto** | Paridade com P2-07 | Aberto |
+| P2-09 | Setup SAT | `GET /v2/empresas/{empresaId}/sat/setup` | — | **Agente-pronto** | Método; retorno tipado ou `ApiResponse` com message se schema incerto — não inventar campos | Aberto |
+| P2-10 | Consultar SAT | `GET /v2/sat/{satId}/all` (Postman) | P2-09 | **Agente-pronto** | Path conforme Postman; documentar parâmetro `satId` | Aberto |
+| P2-11 | Consultar manifestação | `GET https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}` | — | **Agente-pronto** (cuidado host) | Requer chamada com **host `api2`** (não o BaseAddress atual). Preferir overload/path absoluto mínimo documentado; não alterar base URL padrão do client sem nota no README | Aberto |
+| P2-12 | Enviar manifestação | path/verbo **não** fechados | — | **Bloqueado** | Só após validação humana do POST oficial (FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) tem body, sem URL) | Bloqueado |
+| P2-13 | Docs empresas/SAT | — | P2-02..P2-08 (mínimo CRUD + cert/logo ou habilitar) | **Agente-pronto** | README: tirar “futuro” do que estiver implementado; sem secrets | Aberto |
 
-#### Critério de aceite
+**Critério de aceite do épico P2** (itens Agente-pronto Feito; P2-12 permanece Bloqueado até humano):
 
-- [ ] Métodos async retornando `ApiResponse` / `ApiResponse<T>`
-- [ ] Models de empresa/certificado/logo quando o endpoint exigir body multipart ou JSON
-- [ ] README atualizado (passar de “futuro” para “disponível”)
+- [ ] Métodos async `ApiResponse` / `ApiResponse<T>`
+- [ ] Models empresa + suporte multipart onde exigido
+- [ ] README atualizado para métodos disponíveis
 
 ### P3 — Qualidade e DX da library
 
@@ -123,9 +156,9 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
-| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Não implementado |
-| Postman V2/V3 — manifestação destinatário | Não implementado; **fora** da API V2 de emissão (busca “manifesta” em docs.notagateway.com.br/v2 = 0 resultados). Postman GET `api2`/`v3` + FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path) |
-| Postman V1 — NFS-e + apoio municipal + PDF | Não implementado; PDF/XML V1 evidenciados na [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) (`/v1/.../nfes/.../pdf`) |
+| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Não implementado — itens **P2-01..P2-10**, **P2-13**; pré-req **INFRA-02** (multipart) |
+| Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** (host `api2`/`v3`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
+| Postman V1 — NFS-e + apoio municipal + PDF | Não implementado — itens **P1-01..P1-12** + **INFRA-01** (PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 
 ## Fontes de verdade
 
@@ -138,9 +171,9 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 ## Itens que exigem validação humana
 
-- Manifestação de Destinatário — [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) fecha regras de negócio + shape do body de **envio** (`tipo`, `justificativa`), mas **não** publica URL/verbo. Postman só tem **GET** consulta em `api2`/`v3`. Falta path oficial do envio e lista completa de `tipo` (só `CienciaDaOperacao` aparece no exemplo). Fora da API V2 de emissão.
-- Prioridade real entre P1 (NFS-e) e P2 (empresas / manifestação / SAT).
-- Processo de publicação NuGet e política de bump de versão para mudanças aditivas grandes.
+- **P2-12** Envio de Manifestação de Destinatário — [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) fecha body (`tipo`, `justificativa`), mas **não** publica URL/verbo. Postman só tem **GET** (P2-11, Agente-pronto). Não implementar POST sem path oficial.
+- Publicação NuGet / política de bump para releases grandes (P1+P2 juntos) — implementação aditiva no código **não** espera essa validação; só o publish.
+- Ordem de negócio P1 vs P2: agentes seguem a ordem sugerida acima salvo pedido explícito do humano.
 
 ### Validações fechadas (evidência)
 

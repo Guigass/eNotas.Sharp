@@ -24,7 +24,7 @@ Referência: `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` e [
 
 1. Não alterar formato de autenticação sem validação humana e comunicação de breaking change.
 2. Não mudar base URL hardcoded sem mecanismo explícito e documentado.
-3. Paths novos devem seguir o padrão `/v2/empresas/{empresaId}/...`.
+3. Paths novos devem seguir a coleção Postman correta: V2 `nf-e`/`nfc-e`/`empresas` para o client atual de mercadorias/empresas; V1 `nfes` e apoio municipal só no escopo NFS-e (roadmap P1). Não misturar versões.
 4. Preservar comportamento de `ApiResponse` (IsSuccess, Status, Message, Exception, Object).
 5. Comparar com Postman V2 e, quando a regra não estiver clara no repo, com a KB NotaGateway.
 6. Nunca logar/commitar API Key.

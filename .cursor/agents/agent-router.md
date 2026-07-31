@@ -39,8 +39,8 @@ Escolher o melhor agent (ou combinação) para cada tarefa neste repositório.
 - Agents: `notagateway-docs-specialist`, `library-specialist`, `integration-specialist`, `qa-reviewer`, `documentation-maintainer`
 - Skills: `roadmap-implement` (orquestra `task-preflight`, evidência, `impact-analysis`, `feature-development` / `bugfix-safe-workflow`, gate `dotnet test` + `documentation-update`, depois `git-commit`)
 - Fonte: `docs/ROADMAP.md`
-- Risco: conforme prioridade do item (P0 campos aditivos = médio; P1/P2/validação humana = elevado)
-- Escalar: `production-safety-officer` se fiscal crítico, auth ou publish; parar se item exigir validação humana sem aprovação
+- Risco: conforme o **ID** (INFRA/P2 empresas = médio; P1 emissão/cancel NFS-e = elevado; item **Bloqueado** = parar)
+- Escalar: `production-safety-officer` se fiscal crítico, auth ou publish; parar só se o ID estiver **Bloqueado** / validação humana sem aprovação explícita
 
 ### Novo campo ou model
 

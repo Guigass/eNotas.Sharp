@@ -21,9 +21,9 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 
 ## Entradas esperadas
 
-- Pedido do usuário (item explícito **ou** “pegue uma parte”)
-- Prioridade opcional: P0 / P1 / P2 / P3
-- Aprovação humana se o item estiver marcado como **Validação humana**
+- Pedido do usuário (item explícito por ID **ou** “pegue uma parte / próximo do roadmap”)
+- Prioridade opcional: INFRA / P0 / P1 / P2 / P3
+- Aprovação humana **somente** se o item estiver **Bloqueado** ou listado em “Itens que exigem validação humana”
 
 ## Arquivos e áreas que devem ser analisados
 
@@ -41,17 +41,20 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 
 1. Executar `task-preflight`.
 2. Ler `docs/ROADMAP.md` completo (estado atual + backlog + “Itens que exigem validação humana”).
-3. Escolher **um** item atômico (uma linha da tabela, um critério de aceite, ou um gap concreto — não um P inteiro).
+3. Escolher **um** item atômico pelo **ID** (`INFRA-xx`, `P1-xx`, `P2-xx`, ou gap P0/P3) — nunca um P inteiro numa sessão.
 4. Preferência automática se o usuário não indicar item:
-   - P0 gaps concretos com evidência **Fato** e sem bloqueio de validação humana
+   - P0 gaps concretos ainda abertos (evidência **Fato**, sem bloqueio)
+   - Depois `INFRA-01` / `INFRA-02` se ainda abertos (desbloqueiam PDF e multipart)
+   - Depois menor ID **Aberto** + **Agente-pronto** em P2, depois P1 (ver ordem em `ROADMAP.md`)
    - Depois P3 correções pontuais (DX) sem breaking
-   - P1 / P2 / itens com **Validação humana** só com aprovação explícita do usuário
+   - Itens **Bloqueado** / “Validação humana” do ROADMAP **só** com aprovação explícita do usuário
 5. Anunciar ao usuário, antes de editar código:
-   - Item escolhido (citação do ROADMAP)
-   - Prioridade (P0–P3)
-   - Classificação (Fato / Inferência / Validação humana)
+   - Item escolhido (ID + citação do ROADMAP)
+   - Prioridade (INFRA / P0–P3)
+   - Classificação (**Agente-pronto** / Bloqueado / Fato / Inferência)
+   - Depends (e se algum pré-requisito ainda está Aberto)
    - Arquivos candidatos
-   - Se precisa de validação humana → **parar e perguntar**
+   - Se **Bloqueado** ou Depends aberto → **parar e perguntar** (ou implementar o Depends primeiro)
 
 ### 2. Evidência e impacto
 
@@ -122,13 +125,14 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 
 ## Sinais de alerta
 
-- Tentar fechar um P inteiro numa sessão
-- Item só com **Inferência** sem KB/Postman
-- Item em “Itens que exigem validação humana” sem aprovação
-- Usar Postman V1 como referência do client V2 atual
-- Inventar endpoint ou renomear propriedade pública existente
+- Tentar fechar um P inteiro (ou vários IDs) numa sessão
+- Ignorar coluna **Depends** / pular `INFRA-01`/`INFRA-02` quando o item exige
+- Item **Bloqueado** ou só com **Inferência** sem KB/Postman
+- Usar Postman V1 como referência de paths NF-e/NFC-e V2 (e o inverso)
+- Inventar endpoint, host ou renomear propriedade pública existente
 - Commitar sem `dotnet test` Release, com testes falhando, ou sem `documentation-update`
 - Afirmar que testes/docs estão OK sem ter executado o gate
+- Tratar P1/P2 Agente-pronto como se ainda precisassem de “aprovação de épico” — a aprovação já está no ROADMAP por ID
 
 ## Agents recomendados
 

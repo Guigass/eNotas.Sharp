@@ -31,15 +31,17 @@ Ao criar/mover classes, mudar visibilidade, ou redesenhar pastas.
 
 ## O que fazer
 
-- Seguir regiões `#region NFe` / `#region NFCe`.
+- Seguir regiões `#region NFe` / `#region NFCe`; ao implementar roadmap P1/P2, usar `#region NFSe` e `#region Empresas` (ou equivalente claro).
 - Reutilizar `ApiResponse` / `ApiResponse<T>`.
-- Alinhar paths a `/v2/empresas/{empresaId}/...`.
+- Paths: NF-e/NFC-e em `/v2/empresas/{empresaId}/nf-e|nfc-e/...`; NFS-e em `/v1/empresas/{empresaId}/nfes/...`; empresas V2 em `/v2/empresas...` (habilitar/desabilitar e apoio municipal conforme Postman, inclusive `/v1/...` quando a coleção assim definir).
+- Extensões de transporte (multipart, GET bytes) ficam **internas** em `RestService`, consumidas só pelo client.
 
 ## O que evitar
 
 - Duplicar client HTTP fora de `RestService`.
 - Tornar `RestService` público sem decisão explícita de versionamento.
 - Misturar parsing XML de um documento com models de emissão sem necessidade.
+- Usar path V2 `nf-e` para NFS-e (ou misturar models de mercadoria com payload de serviço sem evidência).
 
 ## Checklist antes de alterar
 

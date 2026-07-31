@@ -21,7 +21,7 @@ Superfície pública principal: `eNotasClient` + models + `ApiResponse`. Consumi
 ## Regras obrigatórias
 
 1. Novos métodos: async + `Task<ApiResponse>` ou `Task<ApiResponse<T>>`.
-2. Incluir método na região NFe ou NFCe apropriada.
+2. Incluir método na região NFe, NFCe, NFSe ou Empresas conforme o roadmap/item.
 3. Atualizar `README.md` (lista de métodos disponíveis).
 4. Avaliar bump de `Version` no `.csproj`.
 5. Preferir composição de models existentes a duplicar hierarquias.
