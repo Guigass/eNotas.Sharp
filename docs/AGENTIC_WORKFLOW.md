@@ -18,8 +18,9 @@ Este repositório é uma **biblioteca cliente NuGet** pequena. Agentes devem pri
 4. Postman V2 em `docs/` e/ou KB NotaGateway (se integração/contrato/regra fiscal)
 5. Agent Router → escolher agent/skill (`notagateway-docs-specialist` para consulta à KB)
 6. Implementar mudança mínima
-7. Build
-8. Skill `git-commit` (revisar diff; commit só se o humano pedir)
+7. `dotnet test eNotas.Sharp.sln -c Release` (se código)
+8. Skill `documentation-update` se superfície/docs mudarem
+9. Skill `git-commit` (revisar diff; commit só se o humano pedir)
 
 ## Como executar Task Preflight
 
@@ -52,6 +53,7 @@ Resumo rápido:
 | Qualquer tarefa | `task-preflight` |
 | Medir impacto | `impact-analysis` |
 | Novo endpoint/campo | `feature-development` |
+| Item do `docs/ROADMAP.md` | `roadmap-implement` |
 | Correção | `bugfix-safe-workflow` |
 | Mudança HTTP/contrato | `integration-change-review` |
 | Consultar KB NotaGateway | `notagateway-kb-lookup` |
@@ -74,7 +76,7 @@ Rules em `.cursor/rules/` — especialmente:
 ```powershell
 git status
 git diff
-dotnet build eNotas.Sharp.sln -c Release
+dotnet test eNotas.Sharp.sln -c Release
 ```
 
 Classificar mudanças: documentação · contrato público · transporte · versão NuGet.
@@ -109,7 +111,7 @@ Não misturar, sem intenção explícita:
 - [ ] Agent/skill corretos
 - [ ] Código lido antes de editar
 - [ ] Sem secrets
-- [ ] Build OK (se código)
+- [ ] `dotnet test` OK (se código)
 - [ ] Docs atualizados se necessário
 - [ ] Diff revisado
 - [ ] Commit apenas se solicitado

@@ -15,6 +15,7 @@ O build Release gera `.nupkg` em `eNotas.Sharp/bin/Release/` quando `GeneratePac
 ## Como configurar o ambiente
 
 - SDK .NET compatível com `netstandard2.0` (SDK moderno do .NET Core/.NET 5+ funciona).
+- Para `dotnet test`: SDK com target `net8.0` (projeto `eNotas.Sharp.Tests`).
 - Visual Studio 2022 ou `dotnet` CLI.
 - Para testar contra a API real: API Key e `empresaId` fornecidos pela eNotas (não versionar no Git).
 
@@ -31,7 +32,7 @@ Cenários típicos neste repo:
 4. Adicionar método async em `eNotasClient` na região NFe ou NFCe.
 5. Atualizar lista de métodos no `README.md`.
 6. Avaliar bump de `Version` no `.csproj`.
-7. Build local; validação manual contra homologação se possível.
+7. `dotnet test eNotas.Sharp.sln -c Release`; validação manual contra homologação se possível.
 
 ### Novo campo em model existente
 1. Confirmar nome JSON na API.
@@ -57,13 +58,13 @@ Cenários típicos neste repo:
 ## Como validar alterações
 
 ```powershell
-dotnet build eNotas.Sharp.sln -c Release
+dotnet test eNotas.Sharp.sln -c Release
 ```
 
-Não há suite de testes automatizados (**fato observado**). Validação adicional sugerida em `TESTING.md`.
+Há suite xUnit em `eNotas.Sharp.Tests` (serialização + smoke HTTP). Validação adicional / integração real: `TESTING.md`.
 
 Checklist rápido:
-- [ ] Build OK
+- [ ] `dotnet test` Release OK
 - [ ] Assinaturas públicas intencionais
 - [ ] JsonProperty conferido
 - [ ] README atualizado se método novo/removido
@@ -113,7 +114,7 @@ chore(nuget): bump package version to 1.4.5
 ## Cuidados antes de abrir PR ou finalizar tarefa
 
 1. Diff sem secrets.
-2. Build Release.
+2. `dotnet test` Release.
 3. Impacto em pacote NuGet comunicado.
 4. Docs/README alinhados.
 5. Se operação fiscal sensível: marcar para revisão humana.

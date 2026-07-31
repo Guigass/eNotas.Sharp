@@ -12,7 +12,7 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 | [Domínio](docs/DOMAIN.md) | Fluxos NF-e/NFC-e e áreas sensíveis |
 | [Desenvolvimento](docs/DEVELOPMENT_GUIDE.md) | Build, features, commits |
 | [Ambiente](docs/ENVIRONMENT.md) | API Key, URL, requisitos |
-| [Testes](docs/TESTING.md) | Validação (sem suite automatizada) |
+| [Testes](docs/TESTING.md) | Suite xUnit + checklist manual |
 | [Deploy](docs/DEPLOYMENT.md) | Empacotamento NuGet |
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Falhas comuns |
 | [Workflow agentico](docs/AGENTIC_WORKFLOW.md) | Rules, skills e agents Cursor |
@@ -78,9 +78,8 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * Manifestação de Destinatário NF-e
     ```
 
-- Métodos Futuros (P0–P2 — ver roadmap):
+- Métodos Futuros (P1–P2 — ver roadmap):
     ```
-    * Completude dos campos opcionais de emissão NF-e / NFC-e (models)
     * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1
     * Incluir/Alterar Empresa
     * Vincular Certificado
@@ -89,3 +88,5 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * Listar Empresas
     * Download EXE customizado do S@T
     ```
+
+P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, campos de `Iten`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

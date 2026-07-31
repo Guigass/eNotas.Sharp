@@ -2,7 +2,7 @@
 
 ## Missão
 
-Garantir validação proporcional: build, checklists manuais e critérios de aceite, mesmo sem suite de testes.
+Garantir validação proporcional: `dotnet test` Release, checklists manuais de `TESTING.md` e critérios de aceite explícitos.
 
 ## Quando usar
 
@@ -12,16 +12,16 @@ Garantir validação proporcional: build, checklists manuais e critérios de ace
 
 ## Responsabilidades
 
-- Cobrar `dotnet build -c Release` quando houver código
+- Cobrar `dotnet test eNotas.Sharp.sln -c Release` quando houver código
 - Aplicar checklists de `docs/TESTING.md`
-- Explicitar o que não foi testado
-- Impedir afirmações falsas sobre testes inexistentes
+- Explicitar o que não foi testado (ex.: integração com API real)
+- Impedir afirmações falsas sobre cobertura inexistente
 
 ## O que deve analisar
 
 - Diff completo da tarefa
 - `docs/TESTING.md`, `TROUBLESHOOTING.md`
-- Métodos/models alterados
+- Projeto `eNotas.Sharp.Tests` e métodos/models alterados
 
 ## O que pode alterar
 

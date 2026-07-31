@@ -31,6 +31,7 @@ Publicada como pacote NuGet (`Install-Package eNotas.Sharp`), versão atual do p
 - `eNotas.Sharp/Services/RestService.cs` — transporte HTTP (interno)
 - `eNotas.Sharp/Models/` — contratos de request/response e XML
 - `eNotas.Sharp/Helpers/CustomDateTimeConverter.cs` — serialização de datas
+- `eNotas.Sharp.Tests/` — suite xUnit (serialização + smoke HTTP)
 
 ## Fluxos mais importantes
 
@@ -51,10 +52,10 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - Operações fiscais podem ser irreversíveis (cancelamento, inutilização, emissão em produção).
 - API Key é credencial sensível; não deve ser commitada.
 - Contratos JSON devem permanecer alinhados à API oficial e às coleções Postman em `docs/`.
-- Não há testes automatizados no repositório (**fato observado**).
+- Há suite mínima xUnit em `eNotas.Sharp.Tests`; integração com API real permanece manual (`TESTING.md`).
 - Pasta `Exemplos/` existe, mas está vazia (**fato observado**).
 - README lista NFS-e e gestão de empresas como futuros; Postman V1 cobre NFS-e, mas o client C# atual não implementa esses métodos.
-- Lacunas e priorização do backlog estão em `ROADMAP.md` (completude de models NF-e/NFC-e, NFS-e, empresas/manifestação/SAT, qualidade).
+- Lacunas e priorização do backlog estão em `ROADMAP.md` (gaps restantes de models, NFS-e, empresas/manifestação/SAT, qualidade).
 
 ## Onde começar
 
@@ -71,7 +72,7 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - Pipeline de CI/CD
 - Processo formal de publicação no NuGet.org
 - Ambiente de sandbox/homologação documentado no código (além do campo `ambienteEmissao` nos modelos)
-- Testes unitários ou de integração
+- Testes de integração automatizados contra a API real (só suite offline + checklist manual)
 - Documentação oficial da eNotas versionada junto ao código
 
 ## Pontos que precisam de validação humana

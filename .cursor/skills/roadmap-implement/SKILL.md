@@ -2,8 +2,9 @@
 name: roadmap-implement
 description: >-
   Seleciona um item do docs/ROADMAP.md e implementa no eNotas.Sharp
-  (models, client, DX). Use when the user asks to pegar/implementar parte do
-  roadmap, avançar backlog P0/P1/P2/P3, ou fechar lacunas do ROADMAP.
+  (models, client, DX). Antes do commit: test Release, verificar estado do
+  projeto e documentation-update. Use when the user asks to pegar/implementar
+  parte do roadmap, avançar backlog P0/P1/P2/P3, ou fechar lacunas do ROADMAP.
 ---
 
 # Roadmap Implement
@@ -61,13 +62,29 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
    - Correção de bug/transporte/DX pontual → `bugfix-safe-workflow` e/ou `integration-change-review`
 9. Não inventar path, verbo HTTP ou `JsonProperty` sem evidência.
 
-### 3. Implementação e fechamento
+### 3. Implementação
 
 10. Implementar o mínimo necessário para o critério de aceite do item.
-11. `dotnet build -c Release`.
-12. Atualizar `docs/ROADMAP.md`: marcar checkbox do critério atendido e/ou ajustar status da linha (não apagar histórico útil).
-13. `documentation-update` (README / docs tocados pela mudança).
-14. Ao final, executar a skill `git-commit` e **criar o commit** com as mudanças do item (código + ROADMAP + docs relacionados). O uso desta skill implica pedido explícito de commit nesse fechamento.
+11. Atualizar `docs/ROADMAP.md`: marcar checkbox do critério atendido e/ou ajustar status da linha (não apagar histórico útil).
+
+### 4. Gate obrigatório antes do commit (nesta ordem)
+
+**Não executar `git-commit` até todos os passos abaixo passarem.**
+
+12. **Rodar os testes** (ver `docs/TESTING.md` e rule `80-testing-and-validation`):
+    - `dotnet test eNotas.Sharp.sln -c Release`
+    - Se falhar: corrigir e repetir até verde; não commitar com suite vermelha.
+    - Se a mudança exigir checklist manual (fluxo fiscal/integração), listar pendências no resultado — não inventar “passou” sem execução.
+13. **Verificar o estado do projeto**:
+    - `git status` e `git diff`: diff limitado ao item anunciado; sem secrets, `.env`, nupkgs ou arquivos fora do escopo.
+    - Confirmar que assinaturas/models públicos seguem o padrão e que não houve breaking acidental.
+    - Riscos residuais e validação humana explícitos no resultado.
+    - Se `dotnet test` não for aplicável (ex.: mudança só em skill/docs de governança sem código), justificar no resultado e ao menos `dotnet build eNotas.Sharp.sln -c Release` quando houver qualquer alteração em `.cs`/`.csproj`.
+14. **Atualizar as docs** — executar a skill `documentation-update`:
+    - `docs/ROADMAP.md` já refletindo o critério fechado.
+    - `README.md`, `docs/TESTING.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/ARCHITECTURE.md`, `docs/PROJECT_OVERVIEW.md` (e demais docs tocados) alinhados ao código real da mudança.
+    - Não documentar endpoint/campo não implementado; não deixar docs contradizendo o estado pós-item.
+15. Só então executar a skill `git-commit` e **criar o commit** com as mudanças do item (código + ROADMAP + docs relacionados + testes se houver). O uso desta skill implica pedido explícito de commit nesse fechamento.
 
 ## Checklist de segurança
 
@@ -76,9 +93,10 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 - [ ] Validação humana respeitada (não pular)
 - [ ] Sem breaking change acidental NuGet
 - [ ] Sem API Key / dados fiscais reais
-- [ ] Build Release OK
-- [ ] ROADMAP atualizado para refletir o que foi feito
-- [ ] Commit criado via skill `git-commit`
+- [ ] `dotnet test eNotas.Sharp.sln -c Release` OK
+- [ ] Estado do projeto verificado (`git status` / diff no escopo / sem artefatos indesejados)
+- [ ] Docs atualizados via `documentation-update` (ROADMAP + docs impactados)
+- [ ] Commit criado via skill `git-commit` **somente após** testes + estado + docs
 
 ## Resultado esperado
 
@@ -88,7 +106,8 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 ## Evidência (Postman / KB / código)
 ## Mudanças
 ## Critério de aceite (antes → depois)
-## Validação (build / riscos residuais)
+## Validação (testes / estado do projeto / riscos residuais)
+## Docs atualizados
 ## Commit (hash / mensagem)
 ## Próximo item sugerido (opcional)
 ```
@@ -98,6 +117,8 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 - Diff limitado ao item anunciado
 - Critério de aceite do ROADMAP refletido no código e no próprio ROADMAP
 - Assinaturas/models no padrão do projeto
+- Suite Release executada e verde antes do commit
+- Docs alinhados ao código (sem lacunas óbvias introduzidas pelo item)
 
 ## Sinais de alerta
 
@@ -106,6 +127,8 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 - Item em “Itens que exigem validação humana” sem aprovação
 - Usar Postman V1 como referência do client V2 atual
 - Inventar endpoint ou renomear propriedade pública existente
+- Commitar sem `dotnet test` Release, com testes falhando, ou sem `documentation-update`
+- Afirmar que testes/docs estão OK sem ter executado o gate
 
 ## Agents recomendados
 

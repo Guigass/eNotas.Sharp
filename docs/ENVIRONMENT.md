@@ -4,7 +4,7 @@
 
 | Requisito | Detalhe |
 |-----------|---------|
-| .NET SDK | Compatível com projetos `netstandard2.0` |
+| .NET SDK | Compatível com `netstandard2.0` (library) e `net8.0` (projeto de testes) |
 | IDE (opcional) | Visual Studio 2022 / VS Code / Rider |
 | Conta eNotas | API Key + Empresa ID para testes reais |
 | Rede | Acesso HTTPS a `api.enotasgw.com.br` |

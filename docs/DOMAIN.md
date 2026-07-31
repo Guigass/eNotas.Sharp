@@ -5,7 +5,7 @@
 | Conceito | Onde aparece | Notas |
 |----------|--------------|--------|
 | Empresa | Path `{empresaId}` | Identificador fornecido pela eNotas |
-| Nota (NF-e/NFC-e) | `Models/Nota.cs` | Payload de emissão compartilhado entre NF-e e NFC-e |
+| Nota (NF-e/NFC-e) | `Models/Nota.cs` | Payload de emissão compartilhado; opcionais: `tipo`, `forcarEmissaoContingencia`, `emitidaEmContingencia`, `enviarPorEmail` |
 | Item | `Models/Iten.cs` | CFOP, NCM, valores, impostos; opcionais Postman V2: `extipi`, `codigoBeneficioFiscal`, `quantidadeTributavel`, `unidadeMedidaTributavel`, `valorTotal` (item) |
 | Impostos | `Models/Impostos.cs` | ICMS, PIS, COFINS, IPI, II, IBS/CBS |
 | Cliente | `Models/Cliente.cs` | Destinatário |

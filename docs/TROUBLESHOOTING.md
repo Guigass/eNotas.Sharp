@@ -6,7 +6,7 @@ Documentados a partir do código e lacunas do repositório (não há issue track
 
 | Problema | Evidência |
 |----------|-----------|
-| Sem testes automatizados | Ausência de projeto de test |
+| Sem integração automatizada com API real | Suite offline em `eNotas.Sharp.Tests`; checklist em `TESTING.md` |
 | Pasta `Exemplos/` vazia | Diretório sem arquivos |
 | Docs Postman V1 vs client só V2 NF-e/NFC-e | Escopo divergente |
 | `Version` ≠ `AssemblyVersion` | `.csproj` |

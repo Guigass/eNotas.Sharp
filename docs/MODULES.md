@@ -18,7 +18,7 @@ Emissão, consulta, cancelamento, inutilização, carta de correção, download 
 ### Pontos de atenção
 - Base URL hardcoded: `https://api.enotasgw.com.br`
 - Implementa `IDisposable`
-- README menciona “Consultar XML de Cancelamento NF-e (Utilizar o metodo ConsultaNfce)” — possível inconsistência de documentação (**precisa de validação humana**)
+- Lista de métodos públicos deve permanecer alinhada ao `README.md`
 
 ### Como alterar com segurança
 1. Manter assinaturas públicas estáveis.

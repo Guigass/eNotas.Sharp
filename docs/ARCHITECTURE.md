@@ -33,6 +33,7 @@ eNotas.Sharp/
   Helpers/CustomDateTimeConverter.cs
   Models/                      # DTOs JSON + classes XML
   Exemplos/                    # vazio
+eNotas.Sharp.Tests/            # xUnit (serialização + smoke HTTP)
 Solution Items/enotas.png      # ícone do pacote NuGet
 .cursor/                       # rules, skills, agents
 ```
@@ -100,11 +101,11 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 - `Delete` concatena `_apiUrl` + `action` enquanto outros métodos usam path relativo ao `BaseAddress` — possível inconsistência de URL (**inferência; validar em runtime**).
 - `Dispose` do client chama `GC.Collect()` — padrão atípico e potencialmente custoso.
 - `Version` do pacote e `AssemblyVersion` divergem no `.csproj`.
-- Ausência de testes aumenta risco de regressão em breaking changes silenciosos.
+- Suite mínima cobre serialização e paths; não substitui teste de integração contra a API.
 
 ## Recomendações
 
 1. Ao adicionar endpoint: espelhar método no client + model + referência Postman + bump de versão NuGet.
 2. Preferir mudanças aditivas (novas propriedades opcionais) a renomeações.
 3. Documentar breaking changes no README/CHANGELOG quando houver.
-4. Considerar testes de serialização JSON dos models críticos (ver `TESTING.md`).
+4. Manter/estender testes de serialização e smoke de paths (ver `TESTING.md`).

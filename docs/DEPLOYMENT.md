@@ -41,7 +41,7 @@ Arquivo: `eNotas.Sharp/eNotas.Sharp.csproj`
 ## Checklist antes do deploy (publicação NuGet)
 
 - [ ] `Version` atualizada conforme semântica acordada
-- [ ] `dotnet build -c Release` OK
+- [ ] `dotnet test eNotas.Sharp.sln -c Release` OK
 - [ ] README reflete métodos públicos
 - [ ] Diff revisado (sem secrets)
 - [ ] Breaking changes comunicados
