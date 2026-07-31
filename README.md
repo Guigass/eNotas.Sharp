@@ -79,6 +79,7 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Listar Empresas (`ListarEmpresas`)
     * Vincular Certificado Digital (`VincularCertificadoDigital`)
     * Vincular Logotipo (`VincularLogotipo`) — JPG/PNG/GIF
+    * Desabilitar Empresa (`DesabilitarEmpresa`)
     ```
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
@@ -94,6 +95,6 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * Download EXE customizado do S@T
     ```
 
-Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**) e `VincularLogotipo` (**P2-06**); demais endpoints de empresas ainda no roadmap (P2-07+).
+Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**) e `DesabilitarEmpresa` (**P2-07**); demais endpoints de empresas ainda no roadmap (P2-08+).
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

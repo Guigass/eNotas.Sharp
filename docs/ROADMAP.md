@@ -2,7 +2,7 @@
 
 Backlog de lacunas da library cliente em relação à API eNotas Gateway e à qualidade do SDK.
 
-Este documento **não** descreve features já disponíveis como se estivessem prontas. NFS-e e o restante da gestão de empresas (SAT/habilitar) estão no Postman / README, mas **ainda não** no `eNotasClient` (consultar/incluir-alterar/listar/certificado/logo já estão).
+Este documento **não** descreve features já disponíveis como se estivessem prontas. NFS-e e o restante da gestão de empresas (SAT/habilitar) estão no Postman / README, mas **ainda não** no `eNotasClient` (consultar/incluir-alterar/listar/certificado/logo/desabilitar já estão).
 
 ## Como ler este documento
 
@@ -20,11 +20,11 @@ Este documento **não** descreve features já disponíveis como se estivessem pr
 |------|---------|
 | NF-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML), carta de correção (+ consulta/XML) |
 | NFC-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML) |
-| Empresas | Incluir/Alterar (`IncluirAlterarEmpresa` → `POST /v2/empresas`); Consultar por id (`ConsultaEmpresa` → `GET /v2/empresas/{empresaId}`); Listar (`ListarEmpresas` → `GET /v2/empresas?...`); Vincular certificado (`VincularCertificadoDigital` → `POST /v2/empresas/{empresaId}/certificadoDigital` multipart); Vincular logo (`VincularLogotipo` → `POST /v2/empresas/{empresaId}/logo` multipart `logotipo`) |
+| Empresas | Incluir/Alterar (`IncluirAlterarEmpresa` → `POST /v2/empresas`); Consultar por id (`ConsultaEmpresa` → `GET /v2/empresas/{empresaId}`); Listar (`ListarEmpresas` → `GET /v2/empresas?...`); Vincular certificado (`VincularCertificadoDigital` → `POST /v2/empresas/{empresaId}/certificadoDigital` multipart); Vincular logo (`VincularLogotipo` → `POST /v2/empresas/{empresaId}/logo` multipart `logotipo`); Desabilitar (`DesabilitarEmpresa` → `POST /v1/empresas/{empresaId}/desabilitar`) |
 
 Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impostos, pagamento, transporte, etc.), consultas, XML fiscal e empresa (`Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`).
 
-**Fato:** não há métodos de NFS-e, SAT, habilitar/desabilitar nem manifestação no client (P2-07+ / P1 abertos).
+**Fato:** não há métodos de NFS-e, SAT, habilitar nem manifestação no client (P2-08+ / P1 abertos).
 
 ## Backlog priorizado
 
@@ -111,7 +111,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete`, **`GetBytes`** (INFRA-0
 | P2-04 | Listar empresas | `GET /v2/empresas?pageNumber&pageSize&searchBy&searchTerm&sortBy&sortDirection` | P2-03 | **Agente-pronto** | Query params como Postman; model de lista | Feito |
 | P2-05 | Vincular certificado | `POST /v2/empresas/{empresaId}/certificadoDigital` multipart (`senha`, `arquivo`) | INFRA-02 | **Agente-pronto** | Método aceita stream/bytes + senha; usa INFRA-02; sem logar certificado/senha | Feito |
 | P2-06 | Vincular logo | `POST /v2/empresas/{empresaId}/logo` multipart (`logotipo`) | INFRA-02 | **Agente-pronto** | Método aceita stream/bytes imagem; formatos JPG/PNG/GIF (doc Postman) | Feito |
-| P2-07 | Desabilitar empresa | `POST /v1/empresas/{empresaId}/desabilitar` | — | **Agente-pronto** | Método → `ApiResponse`; path v1 conforme Postman | Aberto |
+| P2-07 | Desabilitar empresa | `POST /v1/empresas/{empresaId}/desabilitar` | — | **Agente-pronto** | Método → `ApiResponse`; path v1 conforme Postman | Feito |
 | P2-08 | Habilitar empresa | `POST /v1/empresas/{empresaId}/habilitar` | — | **Agente-pronto** | Paridade com P2-07 | Aberto |
 | P2-09 | Setup SAT | `GET /v2/empresas/{empresaId}/sat/setup` | — | **Agente-pronto** | Método; retorno tipado ou `ApiResponse` com message se schema incerto — não inventar campos | Aberto |
 | P2-10 | Consultar SAT | `GET /v2/sat/{satId}/all` (Postman) | P2-09 | **Agente-pronto** | Path conforme Postman; documentar parâmetro `satId` | Aberto |
@@ -157,7 +157,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete`, **`GetBytes`** (INFRA-0
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
-| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); métodos client **P2-07..P2-10**, **P2-13** abertos; pré-req **INFRA-02** Feito |
+| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); métodos client **P2-08..P2-10**, **P2-13** abertos; pré-req **INFRA-02** Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** (host `api2`/`v3`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
 | Postman V1 — NFS-e + apoio municipal + PDF | Não implementado — itens **P1-01..P1-12** + **INFRA-01** (PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 

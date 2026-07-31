@@ -182,6 +182,25 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task DesabilitarEmpresa_PostsToExpectedPathWithAuth()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{}"));
+        using (client)
+        {
+            var response = await client.DesabilitarEmpresa(ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/desabilitar",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");

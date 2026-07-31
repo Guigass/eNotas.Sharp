@@ -241,6 +241,13 @@ namespace eNotas.Sharp.Clients
             }
         }
 
+        public async Task<ApiResponse> DesabilitarEmpresa(string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/desabilitar";
+
+            return await _client.Post(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         public void Dispose()

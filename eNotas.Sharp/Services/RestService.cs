@@ -37,6 +37,32 @@ namespace eNotas.Sharp.Services
             client.DefaultRequestHeaders.Add("Authorization", $"Basic {_apiKey}");
         }
 
+        public async Task<ApiResponse> Post(string action, CancellationToken cancellationToken = default)
+        {
+            var apiResponse = new ApiResponse();
+            try
+            {
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, action))
+                {
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+                    apiResponse.Status = result.StatusCode.ToString();
+                    apiResponse.IsSuccess = result.IsSuccessStatusCode;
+
+                    var jsonResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    apiResponse.Message = jsonResult;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex) { apiResponse.Exception = ex; }
+
+            return apiResponse;
+        }
+
         public async Task<ApiResponse> Post(string action, object obj, CancellationToken cancellationToken = default)
         {
             var apiResponse = new ApiResponse();

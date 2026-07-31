@@ -51,6 +51,7 @@ Todas as chamadas de rede da biblioteca.
 - `CancellationToken` opcional propagado até `SendAsync` (Post/PostMultipart/Get/GetBytes/Put/Delete).
 - `Delete` usa path relativo ao `BaseAddress`, igual aos demais verbos.
 - `GetBytes` retorna `ApiResponse<byte[]>`: sucesso → `Object` com bytes; falha HTTP → `Message` com body UTF-8 (pré-req PDF NFS-e / P1-09).
+- `Post(string, CancellationToken)` envia POST sem body (usado por `DesabilitarEmpresa` / P2-07; Postman formdata vazio).
 - `PostMultipart` aceita `MultipartFormDataContent` montado pelo caller; Content-Type com boundary vem do conteúdo (não força `application/json`); retorno `ApiResponse` como `Post` (usado por `VincularCertificadoDigital` / P2-05 e `VincularLogotipo` / P2-06).
 - Header `Accept: application/json` e `Authorization: Basic {apiKey}`.
 
