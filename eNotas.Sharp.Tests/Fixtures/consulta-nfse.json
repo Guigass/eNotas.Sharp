@@ -1,0 +1,35 @@
+{
+  "id": "teste-unitario-nfse-001",
+  "tipo": "NFS-e",
+  "idExterno": "TESTE231024",
+  "status": "Autorizada",
+  "motivoStatus": null,
+  "ambienteEmissao": "Homologacao",
+  "enviadaPorEmail": false,
+  "numero": "100",
+  "codigoVerificacao": "ABC123",
+  "chaveAcesso": "00000000000000000000000000000000000000000000",
+  "linkDownloadPDF": "https://example.test/nfse.pdf",
+  "linkDownloadXML": "https://example.test/nfse.xml",
+  "cliente": {
+    "tipoPessoa": "F",
+    "nome": "Cliente teste",
+    "email": "teste@teste.com.br",
+    "cpfCnpj": "38618699772"
+  },
+  "servico": {
+    "descricao": "Teste webservice",
+    "aliquotaIss": 3.0,
+    "issRetidoFonte": false,
+    "codigoServicoMunicipio": "4.12",
+    "itemListaServicoLC116": "4.12",
+    "cnae": "8630504",
+    "municipioPrestacaoServico": "3300704"
+  },
+  "valorCofins": 0.0,
+  "valorCsll": 0.0,
+  "valorInss": 0.0,
+  "valorIr": 0.0,
+  "valorPis": 0.0,
+  "valorTotal": 1.0
+}

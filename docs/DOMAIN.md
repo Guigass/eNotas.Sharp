@@ -15,6 +15,7 @@
 | Carta de Correção | `CartaCorrecao.cs` | Evento CC-e (NF-e) |
 | Consulta | `Consulta.cs` | Status, chave, `linkDanfe` (URL do PDF/DANFE NF-e/NFC-e — não há `GET .../pdf` na API V2), `linkDownloadXml`, protocolo |
 | NFS-e | `Nfse.cs`, `Servico.cs`, `ConsultaNfse.cs`, `ListaNfse.cs` | Emissão/consulta/lista V1 (`/v1/.../nfes`); request `enviarPorEmail` (KB 170286); retorno `enviadaPorEmail` em `ConsultaNfse`; ≠ `Nota`/`Consulta` V2 |
+| ConsultaNfse | `ConsultaNfse.cs` | Response V1: `motivoStatus` é **string** (portal eNotas Resultado GET; ≠ `Consulta.MotivoStatus` `object` da V2). Campos evidenciados no Resultado oficial: `id`, `tipo`, `idExterno`, `status`, `motivoStatus`, `cliente`, `servico`, `valorTotal`, `enviadaPorEmail`, `numero`, `codigoVerificacao`, `chaveAcesso`, `linkDownloadPDF`/`XML`. Residual sem sample Postman de response: `naturezaOperacao`, `valorIss`, `deducoes`, `descontos`, `descontoCondicionado`, `observacoes`, `dataCompetenciaRps`, `rpsGerenciado`, datas auxiliares — permanecem nullable; não remover sem major |
 | Webhook | `NotaWebhook.cs` | Payload tipado para o consumidor |
 
 ## Fluxos de negócio

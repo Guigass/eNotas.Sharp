@@ -1,0 +1,14 @@
+{
+  "totalRecords": 1,
+  "data": [
+    {
+      "id": "teste-unitario-nfse-001",
+      "tipo": "NFS-e",
+      "idExterno": "TESTE231024",
+      "status": "Autorizada",
+      "motivoStatus": null,
+      "numero": "100",
+      "valorTotal": 1.0
+    }
+  ]
+}
