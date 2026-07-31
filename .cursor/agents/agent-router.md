@@ -37,7 +37,7 @@ Escolher o melhor agent (ou combinação) para cada tarefa neste repositório.
 ### Implementar item do ROADMAP
 
 - Agents: `notagateway-docs-specialist`, `library-specialist`, `integration-specialist`, `qa-reviewer`, `documentation-maintainer`
-- Skills: `roadmap-implement` (orquestra `task-preflight`, evidência, `impact-analysis`, `feature-development` / `bugfix-safe-workflow`, gate `dotnet test` + `documentation-update`, depois `git-commit`)
+- Skills: `roadmap-implement` (um ID); `roadmap-loop` (série plan→exec: planner `cursor-grok-4.5-high-fast` + executor Auto até esgotar Agente-pronto)
 - Fonte: `docs/ROADMAP.md`
 - Risco: conforme o **ID** (INFRA/P2 empresas = médio; P1 emissão/cancel NFS-e = elevado; item **Bloqueado** = parar)
 - Escalar: `production-safety-officer` se fiscal crítico, auth ou publish; parar só se o ID estiver **Bloqueado** / validação humana sem aprovação explícita

@@ -18,6 +18,7 @@ Pegar **uma** parte do `docs/ROADMAP.md` e implementá-la de ponta a ponta, com 
 - Usuário pede para implementar / avançar / pegar item do roadmap
 - Escolher próximo gap priorizado (P0 → P3) sem escopo definido
 - Fechar critério de aceite de uma linha/tabela do ROADMAP
+- Para fechar **vários** itens em série (plan Grok + exec Auto), usar a skill `roadmap-loop` (esta skill continua sendo o executor de **um** ID por ciclo)
 
 ## Entradas esperadas
 
