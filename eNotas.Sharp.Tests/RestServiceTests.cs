@@ -126,4 +126,67 @@ public class RestServiceTests
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
             service.Post("/v2/empresas/x/nf-e", new Nota { Id = "1" }, cts.Token));
     }
+
+    [Fact]
+    public async Task GetBytes_Success_ReturnsBytesInObject_AndLeavesMessageNull()
+    {
+        var pdfBytes = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D }; // %PDF-
+        var handler = new FakeHandler
+        {
+            Responder = _ =>
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new ByteArrayContent(pdfBytes)
+                };
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+                return response;
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+
+        var response = await service.GetBytes("/v1/empresas/x/nfes/y/pdf");
+
+        Assert.True(response.IsSuccess);
+        Assert.Equal("OK", response.Status);
+        Assert.Equal(pdfBytes, response.Object);
+        Assert.Null(response.Message);
+        Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+        Assert.EndsWith("/v1/empresas/x/nfes/y/pdf", handler.LastRequest.RequestUri!.AbsolutePath);
+    }
+
+    [Fact]
+    public async Task GetBytes_HttpError_LeavesObjectNull_AndSetsMessageFromBody()
+    {
+        const string errorJson = "{\"message\":\"nota nao encontrada\"}";
+        var handler = new FakeHandler
+        {
+            Responder = _ => new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(errorJson)
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+
+        var response = await service.GetBytes("/v1/empresas/x/nfes/y/pdf");
+
+        Assert.False(response.IsSuccess);
+        Assert.Equal("NotFound", response.Status);
+        Assert.Null(response.Object);
+        Assert.Equal(errorJson, response.Message);
+    }
+
+    [Fact]
+    public async Task GetBytes_WhenTokenAlreadyCanceled_ThrowsOperationCanceledException()
+    {
+        var handler = new FakeHandler();
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            service.GetBytes("/v1/empresas/x/nfes/y/pdf", cts.Token));
+    }
 }

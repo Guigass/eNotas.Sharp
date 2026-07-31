@@ -100,6 +100,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 - Falha de deserialização no `Get` (JSON/XML) preenche `ApiResponse.Exception` mantendo `Message` bruto e `Object` nulo (**fato**).
 - `CancellationToken` opcional nos métodos do client e do `RestService`; cancelamento relança `OperationCanceledException` e não preenche `ApiResponse` (**fato**).
 - `Delete` usa path relativo ao `BaseAddress` via `SendAsync` + `HttpMethod.Delete`, no mesmo padrão de Post/Get/Put (**fato**).
+- `GetBytes` (interno) retorna `ApiResponse<byte[]>` via `ReadAsByteArrayAsync`; sucesso preenche `Object`, falha HTTP preenche `Message` com o body em UTF-8 (**fato**).
 - `Dispose` do client chama `GC.Collect()` — padrão atípico e potencialmente custoso.
 - `Version` do pacote e `AssemblyVersion` divergem no `.csproj`.
 - Suite mínima cobre serialização e paths; não substitui teste de integração contra a API.

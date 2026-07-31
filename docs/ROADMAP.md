@@ -63,11 +63,11 @@ Ordem sugerida se o usuário disser “pegue o próximo”: `INFRA-01` → `INFR
 
 ### INFRA — Pré-requisitos de transporte (`RestService`)
 
-Hoje `RestService` só tem JSON `Post`/`Get`/`Put`/`Delete`. PDF (P1) e certificado/logo (P2) exigem extensão **interna** aditiva.
+Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete` e **`GetBytes`** (INFRA-01 Feito). Certificado/logo (P2) ainda exigem **INFRA-02** (multipart).
 
 | ID | Item | Depends | Classificação | Evidência | Critério de aceite | Status |
 |----|------|---------|---------------|-----------|--------------------|--------|
-| INFRA-01 | GET binário (bytes) | — | **Agente-pronto** | PDF NFS-e Postman V1 + [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Método interno em `RestService` que retorna `ApiResponse` com conteúdo binário (ex.: `byte[]` em `Object` tipado ou tipo dedicado); sem breaking na API pública; testes de smoke | Aberto |
+| INFRA-01 | GET binário (bytes) | — | **Agente-pronto** | PDF NFS-e Postman V1 + [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Método interno em `RestService` que retorna `ApiResponse` com conteúdo binário (ex.: `byte[]` em `Object` tipado ou tipo dedicado); sem breaking na API pública; testes de smoke | Feito |
 | INFRA-02 | POST multipart/form-data | — | **Agente-pronto** | Postman V2 certificado (`senha`+`arquivo`) e logo (`logotipo`) | Método interno `PostMultipart` (ou equivalente) em `RestService`; não expor `HttpClient`; testes com `HttpMessageHandler` fake | Aberto |
 
 ### P1 — NFS-e (API V1)

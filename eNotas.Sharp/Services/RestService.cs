@@ -138,6 +138,39 @@ namespace eNotas.Sharp.Services
             return apiResponse;
         }
 
+        public async Task<ApiResponse<byte[]>> GetBytes(string action, CancellationToken cancellationToken = default)
+        {
+            var apiResponse = new ApiResponse<byte[]>();
+            try
+            {
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, action))
+                {
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+                    apiResponse.Status = result.StatusCode.ToString();
+                    apiResponse.IsSuccess = result.IsSuccessStatusCode;
+
+                    var bytes = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        apiResponse.Object = bytes;
+                    }
+                    else
+                    {
+                        apiResponse.Message = Encoding.UTF8.GetString(bytes);
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex) { apiResponse.Exception = ex; }
+
+            return apiResponse;
+        }
+
         public async Task<ApiResponse> Delete(string action, CancellationToken cancellationToken = default)
         {
             var apiResponse = new ApiResponse();
