@@ -2,6 +2,7 @@
 using eNotas.Sharp.Services;
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -178,6 +179,32 @@ namespace eNotas.Sharp.Clients
             string path = $"/v2/empresas/{empresaId}";
 
             return await _client.Get<Empresa>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ApiResponse<ListaEmpresas>> ListarEmpresas(
+            int pageNumber,
+            int pageSize,
+            string searchBy = null,
+            string searchTerm = null,
+            string sortBy = null,
+            string sortDirection = null,
+            CancellationToken cancellationToken = default)
+        {
+            var path = new StringBuilder($"/v2/empresas?pageNumber={pageNumber}&pageSize={pageSize}");
+
+            if (!string.IsNullOrEmpty(searchBy))
+                path.Append("&searchBy=").Append(Uri.EscapeDataString(searchBy));
+
+            if (!string.IsNullOrEmpty(searchTerm))
+                path.Append("&searchTerm=").Append(Uri.EscapeDataString(searchTerm));
+
+            if (!string.IsNullOrEmpty(sortBy))
+                path.Append("&sortBy=").Append(Uri.EscapeDataString(sortBy));
+
+            if (!string.IsNullOrEmpty(sortDirection))
+                path.Append("&sortDirection=").Append(Uri.EscapeDataString(sortDirection));
+
+            return await _client.Get<ListaEmpresas>(path.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

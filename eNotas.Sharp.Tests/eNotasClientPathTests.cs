@@ -82,6 +82,54 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ListarEmpresas_GetsTypedListaWithQueryParams()
+    {
+        const string json = """
+            {
+              "totalRecords": 1,
+              "data": [
+                {
+                  "id": "empresa-lista",
+                  "cnpj": "99999999999999",
+                  "razaoSocial": "Cliente Teste"
+                }
+              ]
+            }
+            """;
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ListarEmpresas(
+                pageNumber: 0,
+                pageSize: 5,
+                searchBy: "cidade",
+                searchTerm: "São Paulo",
+                sortBy: "nome_fantasia",
+                sortDirection: "asc");
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith("/v2/empresas", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+
+            var query = handler.LastRequest.RequestUri.Query;
+            Assert.Contains("pageNumber=0", query);
+            Assert.Contains("pageSize=5", query);
+            Assert.Contains("searchBy=cidade", query);
+            Assert.Contains("searchTerm=S%C3%A3o%20Paulo", query);
+            Assert.Contains("sortBy=nome_fantasia", query);
+            Assert.Contains("sortDirection=asc", query);
+
+            Assert.Equal(1, response.Object!.TotalRecords);
+            Assert.NotNull(response.Object.Data);
+            Assert.Single(response.Object.Data!);
+            Assert.Equal("empresa-lista", response.Object.Data[0].Id);
+            Assert.Equal("99999999999999", response.Object.Data[0].Cnpj);
+            Assert.Equal("Cliente Teste", response.Object.Data[0].RazaoSocial);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");

@@ -4,7 +4,7 @@
 
 Há um projeto `eNotas.Sharp.Tests` (xUnit, `net8.0`) cobrindo:
 
-1. Serialização/deserialização JSON (`Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Impostos`/`IbsCbs` completo e simplificado, `Empresa`/`ConfiguracoesNfse`) e `CustomDateTimeConverter`
+1. Serialização/deserialização JSON (`Nota`, `Consulta`, `Inutilizacao`, `CartaCorrecao`, `Impostos`/`IbsCbs` completo e simplificado, `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas`) e `CustomDateTimeConverter`
 2. Deserialização XML (`NfeProc`, cancelamento, inutilização, CC-e)
 3. Smoke de paths/auth/`ApiResponse` de **todos** os métodos públicos do `eNotasClient` com `HttpMessageHandler` fake (inclui cancelamento)
 4. Edge cases do `RestService` (JSON inválido, exceção de rede, `Put`, `Delete` path relativo, `GetBytes` binário, `PostMultipart`, `CancellationToken`)

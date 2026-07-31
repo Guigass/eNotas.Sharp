@@ -76,6 +76,7 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Consultar XML da Carta de Correção NF-e
     * Incluir/Alterar Empresa (`IncluirAlterarEmpresa`)
     * Consultar Empresa (`ConsultaEmpresa`)
+    * Listar Empresas (`ListarEmpresas`)
     ```
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
@@ -90,10 +91,9 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1
     * Vincular Certificado
     * Vincular Logotipo
-    * Listar Empresas
     * Download EXE customizado do S@T
     ```
 
-Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**) e `ConsultaEmpresa` (**P2-03**); demais endpoints de empresas ainda no roadmap (P2-04+).
+Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**) e `ListarEmpresas` (**P2-04**); demais endpoints de empresas ainda no roadmap (P2-05+).
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

@@ -108,4 +108,27 @@ public class EmpresaSerializationTests
         Assert.Equal(2, empresa!.ConfiguracoesNfseHomologacao!.SequencialNFe);
         Assert.Equal(3, empresa.ConfiguracoesNfseProducao!.SequencialNFe);
     }
+
+    [Fact]
+    public void Deserialize_ListaEmpresas_PopulatesTotalRecordsAndData()
+    {
+        const string json = """
+            {
+              "totalRecords": 2,
+              "data": [
+                { "id": "emp-1", "cnpj": "11111111111111", "razaoSocial": "Empresa Um" },
+                { "id": "emp-2", "cnpj": "22222222222222", "razaoSocial": "Empresa Dois" }
+              ]
+            }
+            """;
+
+        var lista = JsonConvert.DeserializeObject<ListaEmpresas>(json);
+
+        Assert.NotNull(lista);
+        Assert.Equal(2, lista!.TotalRecords);
+        Assert.NotNull(lista.Data);
+        Assert.Equal(2, lista.Data!.Count);
+        Assert.Equal("emp-1", lista.Data[0].Id);
+        Assert.Equal("Empresa Dois", lista.Data[1].RazaoSocial);
+    }
 }
