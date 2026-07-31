@@ -189,6 +189,13 @@ namespace eNotas.Sharp.Clients
             return await _client.Get<ConsultaNfse>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse<ConsultaNfse>> ConsultaNfsePorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}";
+
+            return await _client.Get<ConsultaNfse>(path, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Empresas

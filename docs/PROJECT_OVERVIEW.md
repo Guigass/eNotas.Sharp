@@ -54,7 +54,7 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - Contratos JSON devem permanecer alinhados à API oficial e às coleções Postman em `docs/`.
 - Há suite mínima xUnit em `eNotas.Sharp.Tests`; integração com API real permanece manual (`TESTING.md`).
 - Sample compilável em `Exemplos/EmissaoNfeHomologacao` (credenciais via env; sem API Key no código).
-- Empresas/SAT/consulta de manifestação (**P2-01..P2-11**, **P2-13** docs) já estão no client e no README como disponíveis. DTO emissão NFS-e (**P1-01**: `Nfse`/`Servico`), `EmitirNfse` (**P1-02**) e `ConsultaNfse` (**P1-03**) já existem; demais métodos NFS-e (**P1-04+**) e envio de manifestação (**P2-12**, bloqueado) ainda fora do client.
+- Empresas/SAT/consulta de manifestação (**P2-01..P2-11**, **P2-13** docs) já estão no client e no README como disponíveis. DTO emissão NFS-e (**P1-01**: `Nfse`/`Servico`), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**) e `ConsultaNfsePorIdExterno` (**P1-04**) já existem; demais métodos NFS-e (**P1-05+**) e envio de manifestação (**P2-12**, bloqueado) ainda fora do client.
 - Lacunas e priorização do backlog estão em `ROADMAP.md` (gaps restantes de models P0, NFS-e P1-04+, envio de manifestação P2-12, qualidade P3).
 
 ## Onde começar

@@ -110,6 +110,56 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ConsultaNfsePorIdExterno_GetsTypedConsultaNfse()
+    {
+        const string idExterno = "TESTE231024";
+        const string json = """
+            {
+              "id": "nota-123",
+              "tipo": "NFS-e",
+              "idExterno": "TESTE231024",
+              "status": "Autorizada",
+              "ambienteEmissao": "Homologacao",
+              "enviadaPorEmail": true,
+              "numero": "100",
+              "codigoVerificacao": "ABC123",
+              "linkDownloadPDF": "https://example.test/nfse.pdf",
+              "linkDownloadXML": "https://example.test/nfse.xml",
+              "numeroRps": 1,
+              "serieRps": "1",
+              "servico": {
+                "descricao": "Servico teste",
+                "aliquotaIss": 2.5,
+                "issRetidoFonte": false
+              },
+              "valorTotal": 1.0
+            }
+            """;
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok(json));
+        using (client)
+        {
+            var response = await client.ConsultaNfsePorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/porIdExterno/{idExterno}",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Equal("nota-123", response.Object!.Id);
+            Assert.Equal("NFS-e", response.Object.Tipo);
+            Assert.Equal(idExterno, response.Object.IdExterno);
+            Assert.Equal("Autorizada", response.Object.Status);
+            Assert.Equal("100", response.Object.Numero);
+            Assert.Equal("https://example.test/nfse.pdf", response.Object.LinkDownloadPdf);
+            Assert.Equal("https://example.test/nfse.xml", response.Object.LinkDownloadXml);
+            Assert.Equal(1L, response.Object.NumeroRps);
+            Assert.Equal("Servico teste", response.Object.Servico!.Descricao);
+            Assert.Equal(1m, response.Object.ValorTotal);
+        }
+    }
+
+    [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));
