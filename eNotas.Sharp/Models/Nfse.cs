@@ -35,5 +35,11 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("valorTotal", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ValorTotal { get; set; }
+
+        [JsonProperty("numeroRps", NullValueHandling = NullValueHandling.Ignore)]
+        public long? NumeroRps { get; set; }
+
+        [JsonProperty("serieRps", NullValueHandling = NullValueHandling.Ignore)]
+        public string SerieRps { get; set; }
     }
 }

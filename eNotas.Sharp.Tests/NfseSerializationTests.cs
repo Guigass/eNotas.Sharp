@@ -231,4 +231,53 @@ public class NfseSerializationTests
         Assert.Equal(nfse.Servico.IbsCbs!.ClassificacaoTributaria, again.Servico.IbsCbs!.ClassificacaoTributaria);
         Assert.Equal(nfse.Servico.IbsCbs.CodigoIndicadorOperacao, again.Servico.IbsCbs.CodigoIndicadorOperacao);
     }
+
+    [Fact]
+    public void Serialize_RpsFields_UsesCamelCaseAndOmitsNulls()
+    {
+        var withRps = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "RPS-001",
+            NumeroRps = 123L,
+            SerieRps = "1"
+        };
+
+        var withRpsJson = JsonConvert.SerializeObject(withRps);
+        var withRpsObj = JObject.Parse(withRpsJson);
+
+        Assert.Equal(123L, withRpsObj["numeroRps"]?.Value<long>());
+        Assert.Equal("1", withRpsObj["serieRps"]?.Value<string>());
+
+        var withoutRps = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "RPS-002"
+        };
+
+        var withoutRpsJson = JsonConvert.SerializeObject(withoutRps);
+        var withoutRpsObj = JObject.Parse(withoutRpsJson);
+
+        Assert.Null(withoutRpsObj["numeroRps"]);
+        Assert.Null(withoutRpsObj["serieRps"]);
+    }
+
+    [Fact]
+    public void Deserialize_RpsFields_PopulatesNumeroAndSerie()
+    {
+        const string json = """
+            {
+              "tipo": "NFS-e",
+              "idExterno": "RPS-003",
+              "numeroRps": 99,
+              "serieRps": "A"
+            }
+            """;
+
+        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
+
+        Assert.NotNull(nfse);
+        Assert.Equal(99L, nfse!.NumeroRps);
+        Assert.Equal("A", nfse.SerieRps);
+    }
 }
