@@ -63,12 +63,12 @@ Ordem sugerida se o usuário disser “pegue o próximo”: `INFRA-01` → `INFR
 
 ### INFRA — Pré-requisitos de transporte (`RestService`)
 
-Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete` e **`GetBytes`** (INFRA-01 Feito). Certificado/logo (P2) ainda exigem **INFRA-02** (multipart).
+Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete`, **`GetBytes`** (INFRA-01 Feito) e **`PostMultipart`** (INFRA-02 Feito). Certificado/logo (P2-05/P2-06) passam a poder usar multipart.
 
 | ID | Item | Depends | Classificação | Evidência | Critério de aceite | Status |
 |----|------|---------|---------------|-----------|--------------------|--------|
 | INFRA-01 | GET binário (bytes) | — | **Agente-pronto** | PDF NFS-e Postman V1 + [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) | Método interno em `RestService` que retorna `ApiResponse` com conteúdo binário (ex.: `byte[]` em `Object` tipado ou tipo dedicado); sem breaking na API pública; testes de smoke | Feito |
-| INFRA-02 | POST multipart/form-data | — | **Agente-pronto** | Postman V2 certificado (`senha`+`arquivo`) e logo (`logotipo`) | Método interno `PostMultipart` (ou equivalente) em `RestService`; não expor `HttpClient`; testes com `HttpMessageHandler` fake | Aberto |
+| INFRA-02 | POST multipart/form-data | — | **Agente-pronto** | Postman V2 certificado (`senha`+`arquivo`) e logo (`logotipo`) | Método interno `PostMultipart` (ou equivalente) em `RestService`; não expor `HttpClient`; testes com `HttpMessageHandler` fake | Feito |
 
 ### P1 — NFS-e (API V1)
 
@@ -156,7 +156,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Put`/`Delete` e **`GetBytes`** (INFRA-
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
-| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Não implementado — itens **P2-01..P2-10**, **P2-13**; pré-req **INFRA-02** (multipart) |
+| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Não implementado — itens **P2-01..P2-10**, **P2-13**; pré-req **INFRA-02** (multipart) Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** (host `api2`/`v3`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
 | Postman V1 — NFS-e + apoio municipal + PDF | Não implementado — itens **P1-01..P1-12** + **INFRA-01** (PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 

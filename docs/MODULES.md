@@ -34,7 +34,7 @@ Escopo e prioridade de “Manifestação de Destinatário” e métodos futuros 
 ## Service — RestService
 
 ### Responsabilidade
-Transporte HTTP, headers, serialização JSON, deserialização JSON/XML e GET binário (`GetBytes`).
+Transporte HTTP, headers, serialização JSON, deserialização JSON/XML, GET binário (`GetBytes`) e POST multipart (`PostMultipart`).
 
 ### Caminhos principais
 - `eNotas.Sharp/Services/RestService.cs`
@@ -48,15 +48,16 @@ Todas as chamadas de rede da biblioteca.
 ### Pontos de atenção
 - Classe `internal` — não expor publicamente.
 - Exceções engolidas e expostas em `Exception` / `Message` (exceto `OperationCanceledException`, que é relançada).
-- `CancellationToken` opcional propagado até `SendAsync` (Post/Get/GetBytes/Put/Delete).
+- `CancellationToken` opcional propagado até `SendAsync` (Post/PostMultipart/Get/GetBytes/Put/Delete).
 - `Delete` usa path relativo ao `BaseAddress`, igual aos demais verbos.
 - `GetBytes` retorna `ApiResponse<byte[]>`: sucesso → `Object` com bytes; falha HTTP → `Message` com body UTF-8 (pré-req PDF NFS-e / P1-09).
+- `PostMultipart` aceita `MultipartFormDataContent` montado pelo caller; Content-Type com boundary vem do conteúdo (não força `application/json`); retorno `ApiResponse` como `Post` (pré-req certificado/logo / P2-05/P2-06).
 - Header `Accept: application/json` e `Authorization: Basic {apiKey}`.
 
 ### Como alterar com segurança
 1. Avaliar impacto em **todos** os métodos do client.
 2. Não quebrar formato de serialização sem versionamento.
-3. Validar Get JSON, Get XML e GetBytes após mudanças.
+3. Validar Get JSON, Get XML, GetBytes e PostMultipart após mudanças.
 4. Revisar com skill `integration-change-review`.
 
 ---

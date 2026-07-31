@@ -128,6 +128,70 @@ public class RestServiceTests
     }
 
     [Fact]
+    public async Task PostMultipart_Success_SendsMultipartAndReturnsMessage()
+    {
+        const string responseBody = "{}";
+        var handler = new FakeHandler
+        {
+            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(responseBody)
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+        using var content = new MultipartFormDataContent();
+        content.Add(new StringContent("senha-teste"), "senha");
+        content.Add(new ByteArrayContent(new byte[] { 0x01, 0x02 }), "arquivo", "cert.pfx");
+
+        var response = await service.PostMultipart("/v2/empresas/x/certificadoDigital", content);
+
+        Assert.True(response.IsSuccess);
+        Assert.Equal("OK", response.Status);
+        Assert.Equal(responseBody, response.Message);
+        Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+        Assert.EndsWith("/v2/empresas/x/certificadoDigital", handler.LastRequest.RequestUri!.AbsolutePath);
+        Assert.StartsWith("multipart/form-data", handler.LastRequest.Content!.Headers.ContentType!.MediaType);
+    }
+
+    [Fact]
+    public async Task PostMultipart_HttpError_SetsMessageFromBody()
+    {
+        const string errorJson = "{\"message\":\"arquivo invalido\"}";
+        var handler = new FakeHandler
+        {
+            Responder = _ => new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                Content = new StringContent(errorJson)
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+        using var content = new MultipartFormDataContent();
+        content.Add(new ByteArrayContent(new byte[] { 0xFF }), "logotipo", "logo.png");
+
+        var response = await service.PostMultipart("/v2/empresas/x/logo", content);
+
+        Assert.False(response.IsSuccess);
+        Assert.Equal("BadRequest", response.Status);
+        Assert.Equal(errorJson, response.Message);
+    }
+
+    [Fact]
+    public async Task PostMultipart_WhenTokenAlreadyCanceled_ThrowsOperationCanceledException()
+    {
+        var handler = new FakeHandler();
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+        using var content = new MultipartFormDataContent();
+        content.Add(new StringContent("x"), "senha");
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            service.PostMultipart("/v2/empresas/x/certificadoDigital", content, cts.Token));
+    }
+
+    [Fact]
     public async Task GetBytes_Success_ReturnsBytesInObject_AndLeavesMessageNull()
     {
         var pdfBytes = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D }; // %PDF-

@@ -69,6 +69,34 @@ namespace eNotas.Sharp.Services
             return apiResponse;
         }
 
+        public async Task<ApiResponse> PostMultipart(string action, MultipartFormDataContent content, CancellationToken cancellationToken = default)
+        {
+            var apiResponse = new ApiResponse();
+            try
+            {
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, action))
+                {
+                    requestMessage.Content = content;
+
+                    var result = await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+
+                    apiResponse.Status = result.StatusCode.ToString();
+                    apiResponse.IsSuccess = result.IsSuccessStatusCode;
+
+                    var jsonResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    apiResponse.Message = jsonResult;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex) { apiResponse.Exception = ex; }
+
+            return apiResponse;
+        }
+
         public async Task<ApiResponse> Put(string action, CancellationToken cancellationToken = default)
         {
             var apiResponse = new ApiResponse();
