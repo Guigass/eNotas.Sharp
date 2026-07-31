@@ -89,4 +89,4 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
     * Download EXE customizado do S@T
     ```
 
-P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, campos de `Iten`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).
+P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

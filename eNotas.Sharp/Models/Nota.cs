@@ -31,6 +31,9 @@ namespace eNotas.Sharp.Models
         [JsonProperty("consumidorFinal", NullValueHandling = NullValueHandling.Ignore)]
         public bool? ConsumidorFinal { get; set; }
 
+        [JsonProperty("indicadorPresencaConsumidor", NullValueHandling = NullValueHandling.Ignore)]
+        public string IndicadorPresencaConsumidor { get; set; }
+
         [JsonProperty("enviarPorEmail", NullValueHandling = NullValueHandling.Ignore)]
         public bool? EnviarPorEmail { get; set; }
 

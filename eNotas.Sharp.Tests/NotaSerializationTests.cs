@@ -68,6 +68,7 @@ public class NotaSerializationTests
         Assert.Null(obj["itens"]![0]!["sku"]);
         Assert.Null(obj["forcarEmissaoContingencia"]);
         Assert.Null(obj["emitidaEmContingencia"]);
+        Assert.Null(obj["indicadorPresencaConsumidor"]);
         Assert.Null(obj["itens"]![0]!["extipi"]);
         Assert.Null(obj["itens"]![0]!["codigoBeneficioFiscal"]);
         Assert.Null(obj["itens"]![0]!["quantidadeTributavel"]);
@@ -120,6 +121,21 @@ public class NotaSerializationTests
 
         Assert.False(obj["forcarEmissaoContingencia"]?.Value<bool>());
         Assert.True(obj["emitidaEmContingencia"]?.Value<bool>());
+    }
+
+    [Fact]
+    public void Serialize_IncludesIndicadorPresencaConsumidorWhenSet()
+    {
+        var nota = new Nota
+        {
+            Id = "abc",
+            IndicadorPresencaConsumidor = "NaoSeAplica"
+        };
+
+        var json = JsonConvert.SerializeObject(nota);
+        var obj = JObject.Parse(json);
+
+        Assert.Equal("NaoSeAplica", obj["indicadorPresencaConsumidor"]?.Value<string>());
     }
 
     [Fact]
