@@ -261,6 +261,47 @@ namespace eNotas.Sharp.Clients
             return await _client.GetBytes(path, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> ConsultaServicosMunicipais(
+            string uf,
+            string nomeCidade,
+            int pageNumber,
+            int pageSize,
+            string filter = null,
+            CancellationToken cancellationToken = default)
+        {
+            var path = new StringBuilder(
+                $"/v1/estados/{Uri.EscapeDataString(uf)}/cidades/{Uri.EscapeDataString(nomeCidade)}/servicos?pageNumber={pageNumber}&pageSize={pageSize}");
+
+            if (!string.IsNullOrEmpty(filter))
+                path.Append("&filter=").Append(Uri.EscapeDataString(filter));
+
+            return await _client.Get(path.ToString(), cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ApiResponse> ConsultaServicosMunicipaisUnificados(
+            int pageNumber,
+            int pageSize,
+            CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/servicos/cidades?pageNumber={pageNumber}&pageSize={pageSize}";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ApiResponse> ConsultaProvedorCidade(string codigoIBGECidade, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/estados/cidades/{Uri.EscapeDataString(codigoIBGECidade)}/provedor";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ApiResponse> CriticarDadosObrigatorios(string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/criticardadosobrigatorios";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Empresas

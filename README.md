@@ -17,7 +17,7 @@ Biblioteca em C# (.Net Standard) para uso dos Endpoints da eNotas.
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Falhas comuns |
 | [Workflow agentico](docs/AGENTIC_WORKFLOW.md) | Rules, skills e agents Cursor |
 
-Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (NF-e/NFC-e/empresas). NFS-e: coleção V1 `docs/API - eNotas - V1 - NFS-e.postman_collection.json` — no client C# há `EmitirNfse` (P1-02), `ConsultaNfse` (P1-03), `ConsultaNfsePorIdExterno` (P1-04), `ListarNfse` (P1-05), `CancelaNfse` (P1-06), `CancelaNfsePorIdExterno` (P1-07), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (P1-08), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (P1-09); demais métodos NFS-e ainda no roadmap.
+Referência de API (Postman): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json` (NF-e/NFC-e/empresas). NFS-e: coleção V1 `docs/API - eNotas - V1 - NFS-e.postman_collection.json` — no client C# há `EmitirNfse` (P1-02), `ConsultaNfse` (P1-03), `ConsultaNfsePorIdExterno` (P1-04), `ListarNfse` (P1-05), `CancelaNfse` (P1-06), `CancelaNfsePorIdExterno` (P1-07), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (P1-08), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (P1-09), apoio municipal (P1-10: `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios`); demais métodos NFS-e ainda no roadmap.
 
 Documentação oficial NotaGateway: [Central de ajuda](https://atendimento.notagateway.com.br/kb/pt-br) — consulta via agent `notagateway-docs-specialist` / skill `notagateway-kb-lookup`.
 
@@ -94,18 +94,22 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Download XML NFS-e por idExterno (`ConsultaNfseXMLPorIdExterno`) — `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/xml` (API V1; XML bruto em `ApiResponse.Message`)
     * Download PDF NFS-e por id GW (`ConsultaNfsePDF`) — `GET /v1/empresas/{empresaId}/nfes/{nfeId}/pdf` (API V1; bytes em `ApiResponse<byte[]>.Object`)
     * Download PDF NFS-e por idExterno (`ConsultaNfsePDFPorIdExterno`) — `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/pdf` (API V1; bytes em `ApiResponse<byte[]>.Object`)
+    * Serviços municipais da prefeitura (`ConsultaServicosMunicipais`) — `GET /v1/estados/{uf}/cidades/{nome}/servicos?...` (API V1; body em `ApiResponse.Message`, schema Postman vazio)
+    * Serviços municipais unificados (`ConsultaServicosMunicipaisUnificados`) — `GET /v1/servicos/cidades?...` (API V1; body em `ApiResponse.Message`)
+    * Características da prefeitura / provedor (`ConsultaProvedorCidade`) — `GET /v1/estados/cidades/{codigoIBGECidade}/provedor` (API V1; body em `ApiResponse.Message`)
+    * Criticar dados obrigatórios da empresa (`CriticarDadosObrigatorios`) — `GET /v1/empresas/{empresaId}/criticardadosobrigatorios` (API V1; body em `ApiResponse.Message`)
     ```
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
 
-Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat` e `ConsultaManifestacao` devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
+Empresas / SAT / consulta de manifestação estão na lista acima (models `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`; `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`). Certificado e logo usam multipart; `SetupSat`, `ConsultaSat`, `ConsultaManifestacao` e os GETs de apoio municipal NFS-e (**P1-10**) devolvem o body bruto em `ApiResponse.Message` quando o schema Postman é incerto.
 
-NFS-e: models `Nfse`/`Servico` (**P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**, path V1 `nfes/porIdExterno/{idExterno}` — distinto de V2 `nf-e`/`nfc-e` e do model `Consulta`), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`).
+NFS-e: models `Nfse`/`Servico` (**P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**, path V1 `nfes/porIdExterno/{idExterno}` — distinto de V2 `nf-e`/`nfc-e` e do model `Consulta`), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML` e `ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF` e `ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`), apoio municipal (**P1-10**: `ConsultaServicosMunicipais`, `ConsultaServicosMunicipaisUnificados`, `ConsultaProvedorCidade`, `CriticarDadosObrigatorios` — body em `Message`).
 
 - Ainda não no client (ver [roadmap](docs/ROADMAP.md)):
     ```
     * Enviar Manifestação de Destinatário NF-e (P2-12 — bloqueado até path/verbo oficiais)
-    * NFS-e demais métodos (apoio municipal, Reforma) — Postman V1 / itens P1-10+
+    * NFS-e campos Reforma em `servico` / docs P1-12 — Postman V1 / itens P1-11+
     ```
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

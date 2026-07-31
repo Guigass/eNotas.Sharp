@@ -517,6 +517,99 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ConsultaServicosMunicipais_GetsExpectedPathWithQueryAndMessage()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
+        {
+            var response = await client.ConsultaServicosMunicipais(
+                "rs",
+                "Viamão",
+                pageNumber: 0,
+                pageSize: 150,
+                filter: "contains(descricao, 'Consultoria')");
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"ok\":true}", response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                "/v1/estados/rs/cidades/Viam%C3%A3o/servicos",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+
+            var query = handler.LastRequest.RequestUri.Query;
+            Assert.Contains("pageNumber=0", query);
+            Assert.Contains("pageSize=150", query);
+            Assert.Contains("filter=contains%28descricao%2C%20%27Consultoria%27%29", query);
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaServicosMunicipaisUnificados_GetsExpectedPathWithQueryAndMessage()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
+        {
+            var response = await client.ConsultaServicosMunicipaisUnificados(pageNumber: 0, pageSize: 5);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"ok\":true}", response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith("/v1/servicos/cidades", handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+
+            var query = handler.LastRequest.RequestUri.Query;
+            Assert.Contains("pageNumber=0", query);
+            Assert.Contains("pageSize=5", query);
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaProvedorCidade_GetsExpectedPathWithAuth()
+    {
+        const string codigoIbge = "4314902";
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
+        {
+            var response = await client.ConsultaProvedorCidade(codigoIbge);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"ok\":true}", response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/estados/cidades/{codigoIbge}/provedor",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
+    public async Task CriticarDadosObrigatorios_GetsExpectedPathWithAuth()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
+        {
+            var response = await client.CriticarDadosObrigatorios(ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"ok\":true}", response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/criticardadosobrigatorios",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
     public async Task SetupSat_GetsExpectedPathWithAuth()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
