@@ -247,6 +247,20 @@ namespace eNotas.Sharp.Clients
             return await _client.Get(path, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse<byte[]>> ConsultaNfsePDF(string nfeId, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes/{nfeId}/pdf";
+
+            return await _client.GetBytes(path, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ApiResponse<byte[]>> ConsultaNfsePDFPorIdExterno(string idExterno, string empresaId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}/pdf";
+
+            return await _client.GetBytes(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Empresas

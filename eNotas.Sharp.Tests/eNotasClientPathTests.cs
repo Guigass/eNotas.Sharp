@@ -292,6 +292,51 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ConsultaNfsePDF_GetsExpectedPathWithBytesInObject()
+    {
+        var pdfBytes = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D }; // %PDF-
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.OkBytes(pdfBytes));
+        using (client)
+        {
+            var response = await client.ConsultaNfsePDF(ClientTestFactory.NotaId, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(pdfBytes, response.Object);
+            Assert.Null(response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/{ClientTestFactory.NotaId}/pdf",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
+    public async Task ConsultaNfsePDFPorIdExterno_GetsExpectedPathWithBytesInObject()
+    {
+        const string idExterno = "TESTE231024";
+        var pdfBytes = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D }; // %PDF-
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.OkBytes(pdfBytes));
+        using (client)
+        {
+            var response = await client.ConsultaNfsePDFPorIdExterno(idExterno, ClientTestFactory.EmpresaId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(pdfBytes, response.Object);
+            Assert.Null(response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v1/empresas/{ClientTestFactory.EmpresaId}/nfes/porIdExterno/{idExterno}/pdf",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").First());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
     public async Task IncluirAlterarEmpresa_PostsToExpectedPathWithAuthAndBody()
     {
         var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"empresaId\":\"emp-1\"}"));

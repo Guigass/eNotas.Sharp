@@ -27,7 +27,7 @@ Emissão NF-e/NFC-e/NFS-e, consulta/listagem NFS-e, cancelamento, inutilização
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito), `ConsultaNfse` (**P1-03** Feito), `ConsultaNfsePorIdExterno` (**P1-04** Feito), `ListarNfse` (**P1-05** Feito), `CancelaNfse` (**P1-06** Feito), `CancelaNfsePorIdExterno` (**P1-07** Feito), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08** Feito — XML em `Message`); demais métodos (**P1-09+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**/**P1-04**; lista `ListaNfse` — **P1-05**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito), `ConsultaNfse` (**P1-03** Feito), `ConsultaNfsePorIdExterno` (**P1-04** Feito), `ListarNfse` (**P1-05** Feito), `CancelaNfse` (**P1-06** Feito), `CancelaNfsePorIdExterno` (**P1-07** Feito), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08** Feito — XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09** Feito — bytes em `Object` via `GetBytes`); demais métodos (**P1-10+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**/**P1-04**; lista `ListaNfse` — **P1-05**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 
@@ -52,7 +52,7 @@ Todas as chamadas de rede da biblioteca.
 - `Delete` usa path relativo ao `BaseAddress`, igual aos demais verbos.
 - `Get` (não tipado) retorna `ApiResponse` com body em `Message` (usado por `SetupSat` / P2-09, `ConsultaSat` / P2-10 e `ConsultaManifestacao` / P2-11 quando schema de resposta é incerto).
 - `ConsultaManifestacao` chama URL absoluta em `api2.enotasgw.com.br` (v3); a base padrão do client permanece `api.enotasgw.com.br`.
-- `GetBytes` retorna `ApiResponse<byte[]>`: sucesso → `Object` com bytes; falha HTTP → `Message` com body UTF-8 (pré-req PDF NFS-e / P1-09).
+- `GetBytes` retorna `ApiResponse<byte[]>`: sucesso → `Object` com bytes; falha HTTP → `Message` com body UTF-8 (usado por PDF NFS-e / **P1-09**).
 - `Post(string, CancellationToken)` envia POST sem body (usado por `DesabilitarEmpresa` / P2-07 e `HabilitarEmpresa` / P2-08; Postman formdata vazio).
 - `PostMultipart` aceita `MultipartFormDataContent` montado pelo caller; Content-Type com boundary vem do conteúdo (não força `application/json`); retorno `ApiResponse` como `Post` (usado por `VincularCertificadoDigital` / P2-05 e `VincularLogotipo` / P2-06).
 - Header `Accept: application/json` e `Authorization: Basic {apiKey}`.
@@ -145,4 +145,4 @@ Coleções Postman como referência de contrato.
 - `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 
 ### Pontos de atenção
-V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`) no pacote; demais métodos P1-09+. V2 permanece referência primária para NF-e/NFC-e/empresas.
+V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**), `ConsultaNfse` (**P1-03**), `ConsultaNfsePorIdExterno` (**P1-04**), `ListarNfse` (**P1-05**, model `ListaNfse`), `CancelaNfse` (**P1-06**), `CancelaNfsePorIdExterno` (**P1-07**), `ConsultaNfseXML`/`ConsultaNfseXMLPorIdExterno` (**P1-08**, XML em `Message`), `ConsultaNfsePDF`/`ConsultaNfsePDFPorIdExterno` (**P1-09**, bytes em `Object`) no pacote; demais métodos P1-10+. V2 permanece referência primária para NF-e/NFC-e/empresas.

@@ -31,7 +31,7 @@
 - XML cancelamento: `ConsultaNfeXMLCancelamento` / `ConsultaNfceXMLCancelamento`
 
 ### Cancelamento
-`CancelaNfe` / `CancelaNfce` via HTTP DELETE (V2 `nf-e`/`nfc-e`). NFS-e: `CancelaNfse` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/{nfeId}` (**P1-06**); `CancelaNfsePorIdExterno` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` (**P1-07**). Download XML NFS-e: `ConsultaNfseXML` / `ConsultaNfseXMLPorIdExterno` via HTTP GET em `.../xml` (**P1-08**); conteúdo XML bruto em `ApiResponse.Message` (sem model tipado).
+`CancelaNfe` / `CancelaNfce` via HTTP DELETE (V2 `nf-e`/`nfc-e`). NFS-e: `CancelaNfse` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/{nfeId}` (**P1-06**); `CancelaNfsePorIdExterno` via HTTP DELETE em `/v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` (**P1-07**). Download XML NFS-e: `ConsultaNfseXML` / `ConsultaNfseXMLPorIdExterno` via HTTP GET em `.../xml` (**P1-08**); conteúdo XML bruto em `ApiResponse.Message` (sem model tipado). Download PDF NFS-e: `ConsultaNfsePDF` / `ConsultaNfsePDFPorIdExterno` via HTTP GET em `.../pdf` (**P1-09**); bytes em `ApiResponse<byte[]>.Object` via `GetBytes`.
 
 **Sensibilidade:** alta — efeito fiscal.
 

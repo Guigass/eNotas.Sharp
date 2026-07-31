@@ -25,4 +25,14 @@ internal static class ClientTestFactory
 
     public static HttpResponseMessage Ok(string content) =>
         new(HttpStatusCode.OK) { Content = new StringContent(content) };
+
+    public static HttpResponseMessage OkBytes(byte[] content, string mediaType = "application/pdf")
+    {
+        var response = new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new ByteArrayContent(content)
+        };
+        response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
+        return response;
+    }
 }
