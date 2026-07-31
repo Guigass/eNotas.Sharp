@@ -119,23 +119,7 @@ public class NfseSerializationTests
     [Fact]
     public void RoundTrip_Fixture_PreservesJsonShape()
     {
-        var json = FixtureLoader.Read("nfse-emissao.json");
-        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
-        Assert.NotNull(nfse);
-
-        var serialized = JsonConvert.SerializeObject(nfse);
-        var again = JsonConvert.DeserializeObject<Nfse>(serialized);
-
-        Assert.NotNull(again);
-        Assert.Equal(nfse!.Tipo, again!.Tipo);
-        Assert.Equal(nfse.IdExterno, again.IdExterno);
-        Assert.Equal(nfse.AmbienteEmissao, again.AmbienteEmissao);
-        Assert.Equal(nfse.EnviarPorEmail, again.EnviarPorEmail);
-        Assert.Equal(nfse.ValorTotal, again.ValorTotal);
-        Assert.Equal(nfse.Cliente!.Nome, again.Cliente!.Nome);
-        Assert.Equal(nfse.Cliente.Endereco!.Cidade, again.Cliente.Endereco!.Cidade);
-        Assert.Equal(nfse.Servico!.CodigoServicoMunicipio, again.Servico!.CodigoServicoMunicipio);
-        Assert.Equal(nfse.Servico.MunicipioPrestacaoServico, again.Servico.MunicipioPrestacaoServico);
+        AssertRoundTripPreservesJsonShape("nfse-emissao.json");
     }
 
 #pragma warning disable CS0618 // EnviadaPorEmail obsolete alias (compat NuGet)
@@ -218,18 +202,66 @@ public class NfseSerializationTests
     [Fact]
     public void RoundTrip_ReformaFixture_PreservesJsonShape()
     {
-        var json = FixtureLoader.Read("nfse-reforma.json");
+        AssertRoundTripPreservesJsonShape("nfse-reforma.json");
+    }
+
+    private static void AssertRoundTripPreservesJsonShape(string fixtureName)
+    {
+        var json = FixtureLoader.Read(fixtureName);
+        var expected = NormalizeForShapeComparison(JToken.Parse(json));
+
         var nfse = JsonConvert.DeserializeObject<Nfse>(json);
         Assert.NotNull(nfse);
 
-        var serialized = JsonConvert.SerializeObject(nfse);
-        var again = JsonConvert.DeserializeObject<Nfse>(serialized);
+        var actual = NormalizeForShapeComparison(JToken.Parse(JsonConvert.SerializeObject(nfse)));
+        Assert.True(
+            JToken.DeepEquals(expected, actual),
+            $"Round-trip alterou o shape JSON de {fixtureName}.{Environment.NewLine}Esperado:{Environment.NewLine}{expected}{Environment.NewLine}Atual:{Environment.NewLine}{actual}");
+    }
 
-        Assert.NotNull(again);
-        Assert.Equal(nfse!.Servico!.CodigoNBS, again!.Servico!.CodigoNBS);
-        Assert.Equal(nfse.Servico.CodigoTributacaoNacional, again.Servico.CodigoTributacaoNacional);
-        Assert.Equal(nfse.Servico.IbsCbs!.ClassificacaoTributaria, again.Servico.IbsCbs!.ClassificacaoTributaria);
-        Assert.Equal(nfse.Servico.IbsCbs.CodigoIndicadorOperacao, again.Servico.IbsCbs.CodigoIndicadorOperacao);
+    // NullValueHandling.Ignore omite nulls; 1 vs 1.0 não é diferença de shape.
+    private static JToken NormalizeForShapeComparison(JToken token)
+    {
+        StripNullProperties(token);
+        NormalizeNumbers(token);
+        return token;
+    }
+
+    private static void StripNullProperties(JToken token)
+    {
+        if (token is JObject obj)
+        {
+            foreach (var prop in obj.Properties().ToList())
+            {
+                if (prop.Value.Type == JTokenType.Null)
+                    prop.Remove();
+                else
+                    StripNullProperties(prop.Value);
+            }
+        }
+        else if (token is JArray arr)
+        {
+            foreach (var item in arr)
+                StripNullProperties(item);
+        }
+    }
+
+    private static void NormalizeNumbers(JToken token)
+    {
+        if (token is JObject obj)
+        {
+            foreach (var prop in obj.Properties())
+                NormalizeNumbers(prop.Value);
+        }
+        else if (token is JArray arr)
+        {
+            foreach (var item in arr)
+                NormalizeNumbers(item);
+        }
+        else if (token is JValue { Type: JTokenType.Integer or JTokenType.Float } value)
+        {
+            value.Replace(new JValue(Convert.ToDecimal(value.Value)));
+        }
     }
 
     [Fact]
