@@ -60,7 +60,7 @@ Usar agent `notagateway-docs-specialist` e skill `notagateway-kb-lookup` para co
 | 401/403 | API Key inválida ou header incorreto |
 | 404 | `empresaId` ou `notaId` incorretos; path errado |
 | Timeout / rede | Firewall, proxy, DNS para `api.enotasgw.com.br` |
-| XML null em `Object` | Resposta não-XML ou falha silenciosa no deserialize |
+| XML null em `Object` | Resposta não-XML ou falha de deserialize (`Exception` + `Message`) |
 | Falha de build | SDK ausente; restaurar pacotes (`dotnet restore`) |
 
 ## Itens não identificados

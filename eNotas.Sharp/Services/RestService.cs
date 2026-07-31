@@ -120,7 +120,7 @@ namespace eNotas.Sharp.Services
                         }
 
                     }
-                    catch (Exception ex){}
+                    catch (Exception ex) { apiResponse.Exception = ex; }
                 }
             }
             catch (Exception ex) { apiResponse.Exception = ex; }

@@ -1,5 +1,6 @@
 using System.Net;
 using eNotas.Sharp.Models;
+using eNotas.Sharp.Models.Xml;
 using eNotas.Sharp.Services;
 using eNotas.Sharp.Tests.Helpers;
 
@@ -11,7 +12,7 @@ public class RestServiceTests
     private const string ApiKey = "test-api-key";
 
     [Fact]
-    public async Task Get_InvalidJson_LeavesObjectNull()
+    public async Task Get_InvalidJson_LeavesObjectNull_AndSetsException()
     {
         var handler = new FakeHandler
         {
@@ -29,7 +30,29 @@ public class RestServiceTests
         Assert.Equal("OK", response.Status);
         Assert.Null(response.Object);
         Assert.Equal("{invalid-json", response.Message);
-        Assert.Null(response.Exception);
+        Assert.NotNull(response.Exception);
+    }
+
+    [Fact]
+    public async Task Get_InvalidXml_LeavesObjectNull_AndSetsException()
+    {
+        var handler = new FakeHandler
+        {
+            Responder = _ => new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("not-xml")
+            }
+        };
+
+        using var service = new RestService(BaseUrl, ApiKey, handler);
+
+        var response = await service.Get<NfeProc>("/v2/empresas/x/nf-e/y/xml", "xml");
+
+        Assert.True(response.IsSuccess);
+        Assert.Equal("OK", response.Status);
+        Assert.Null(response.Object);
+        Assert.Equal("not-xml", response.Message);
+        Assert.NotNull(response.Exception);
     }
 
     [Fact]

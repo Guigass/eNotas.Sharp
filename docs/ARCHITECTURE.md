@@ -97,7 +97,7 @@ Solution Items/enotas.png      # ícone do pacote NuGet
 
 ## Riscos arquiteturais
 
-- Catch vazio na deserialização do `Get` pode mascarar erros de contrato.
+- Falha de deserialização no `Get` (JSON/XML) preenche `ApiResponse.Exception` mantendo `Message` bruto e `Object` nulo (**fato**).
 - `Delete` concatena `_apiUrl` + `action` enquanto outros métodos usam path relativo ao `BaseAddress` — possível inconsistência de URL (**inferência; validar em runtime**).
 - `Dispose` do client chama `GC.Collect()` — padrão atípico e potencialmente custoso.
 - `Version` do pacote e `AssemblyVersion` divergem no `.csproj`.

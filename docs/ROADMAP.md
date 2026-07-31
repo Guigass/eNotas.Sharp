@@ -99,7 +99,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Sem `CancellationToken` | Fato | `eNotasClient` / `RestService` |
 | `RestService.Put` sem consumidor | Fato | Método interno não usado pelo client |
 | `Delete` com URL absoluta vs Post/Get relativos | Fato | `ARCHITECTURE.md` / `RestService` |
-| Catch vazio na deserialização do `Get` | Fato | Pode mascarar falha de parse |
+| Catch vazio na deserialização do `Get` | **Feito** | Falha de parse JSON/XML preenche `ApiResponse.Exception` |
 | `Version` ≠ `AssemblyVersion` no csproj | Fato | Empacotamento NuGet |
 | Base URL hardcoded | Fato | `eNotasClient` |
 | Timeout / retry / HttpClient factory | Não identificado / inferência | Sem API de configuração |
@@ -110,7 +110,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 
 - [x] Suite mínima (serialização de models + smoke de paths) — xUnit em `eNotas.Sharp.Tests`
 - [ ] Exemplos compiláveis sem secrets
-- [ ] Correções de transporte documentadas e sem breaking silencioso
+- [x] Correções de transporte documentadas e sem breaking silencioso — parcial: catch do `Get` preenche `Exception` em falha de parse; demais gaps de transporte abertos
 - [x] README alinhado aos métodos reais do client — lista de métodos e nota de P0; revisar a cada bump
 
 ## Matriz Postman × Client (resumo)

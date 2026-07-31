@@ -30,7 +30,7 @@ dotnet build eNotas.Sharp.sln -c Release
 | Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `InutilizacaoSerializationTests`, `CartaCorrecaoSerializationTests`, `ImpostosSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` |
 | XML | `NfeProcXmlTests`, `XmlDocumentTests` | Fixtures mínimas, não documento fiscal completo |
 | HTTP smoke | `eNotasClientPathTests` | Todos os métodos NF-e/NFC-e; auth Basic; sucesso e 4xx |
-| RestService | `RestServiceTests` | Parse JSON inválido deixa `Object` null; exceção não relança; `Put` |
+| RestService | `RestServiceTests` | Parse JSON/XML inválido deixa `Object` null e preenche `Exception`; exceção de rede não relança; `Put` |
 
 ## Lacunas de teste
 

@@ -18,10 +18,10 @@ Documentados a partir do código e lacunas do repositório (não há issue track
 Ler `ApiResponse.Message` (corpo retornado pela eNotas). Conferir empresaId, payload e ambiente.
 
 ### `Object` nulo em GET tipado com `IsSuccess = true`
-Deserialização pode ter falhado silenciosamente (catch vazio no `Get`). Inspecionar `Message` (string bruta) e o tipo esperado (JSON vs XML).
+Se `Exception` estiver preenchido, a deserialização JSON/XML falhou: inspecionar `Message` (string bruta) e o tipo esperado. Se `Exception` for nulo, o HTTP OK pode ter retornado payload incompleto ou incompatível com o model.
 
 ### Exceção em `ApiResponse.Exception`
-Falha de rede/HTTP antes de resposta útil. Verificar conectividade e BaseAddress.
+Rede/HTTP, ou falha de parse no `Get`. Verificar conectividade, BaseAddress e, em consultas tipadas, o corpo em `Message`.
 
 ### Nota rejeitada / status de erro na consulta
 Problema geralmente de regra fiscal/payload, não da lib. Validar itens, impostos, CFOP, CST com a documentação eNotas e o Postman V2.
