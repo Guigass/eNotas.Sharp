@@ -2,7 +2,7 @@
 
 Backlog de lacunas da library cliente em relação à API eNotas Gateway e à qualidade do SDK.
 
-Este documento **não** descreve features já disponíveis como se estivessem prontas. O envio de manifestação (P2-12) e a maior parte dos métodos NFS-e (P1-03+) ainda não estão no `eNotasClient`. Já disponíveis: CRUD empresas/certificado/logo/desabilitar/habilitar/setup SAT/consultar SAT/consultar manifestação e emitir NFS-e (**P1-02**).
+Este documento **não** descreve features já disponíveis como se estivessem prontas. O envio de manifestação (P2-12) e a maior parte dos métodos NFS-e (P1-04+) ainda não estão no `eNotasClient`. Já disponíveis: CRUD empresas/certificado/logo/desabilitar/habilitar/setup SAT/consultar SAT/consultar manifestação, emitir NFS-e (**P1-02**) e consultar NFS-e por id GW (**P1-03**).
 
 ## Como ler este documento
 
@@ -20,12 +20,12 @@ Este documento **não** descreve features já disponíveis como se estivessem pr
 |------|---------|
 | NF-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML), carta de correção (+ consulta/XML); Consultar manifestação (`ConsultaManifestacao` → `GET` absoluto `https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}`, body em `ApiResponse.Message`) |
 | NFC-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML) |
-| NFS-e | Emitir (`EmitirNfse` → `POST /v1/empresas/{empresaId}/nfes`); demais métodos P1-03+ ainda abertos |
+| NFS-e | Emitir (`EmitirNfse` → `POST /v1/empresas/{empresaId}/nfes`); Consultar por id GW (`ConsultaNfse` → `GET /v1/empresas/{empresaId}/nfes/{nfeId}`); demais métodos P1-04+ ainda abertos |
 | Empresas | Incluir/Alterar (`IncluirAlterarEmpresa` → `POST /v2/empresas`); Consultar por id (`ConsultaEmpresa` → `GET /v2/empresas/{empresaId}`); Listar (`ListarEmpresas` → `GET /v2/empresas?...`); Vincular certificado (`VincularCertificadoDigital` → `POST /v2/empresas/{empresaId}/certificadoDigital` multipart); Vincular logo (`VincularLogotipo` → `POST /v2/empresas/{empresaId}/logo` multipart `logotipo`); Desabilitar (`DesabilitarEmpresa` → `POST /v1/empresas/{empresaId}/desabilitar`); Habilitar (`HabilitarEmpresa` → `POST /v1/empresas/{empresaId}/habilitar`); Setup SAT (`SetupSat` → `GET /v2/empresas/{empresaId}/sat/setup`, body em `ApiResponse.Message`); Consultar SAT (`ConsultaSat` → `GET /v2/sat/{satId}/all`, parâmetro `satId`, body em `ApiResponse.Message`) |
 
-Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impostos, pagamento, transporte, etc.), emissão NFS-e DTO (`Nfse`, `Servico` — **P1-01**), consultas, XML fiscal e empresa (`Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`).
+Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impostos, pagamento, transporte, etc.), emissão NFS-e DTO (`Nfse`, `Servico` — **P1-01**), consulta NFS-e (`ConsultaNfse` — **P1-03**), consultas NF-e/NFC-e, XML fiscal e empresa (`Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`).
 
-**Fato:** `EmitirNfse` (**P1-02**) está no client; demais métodos NFS-e (P1-03+) e envio de manifestação (P2-12) ainda abertos/bloqueados. Models de emissão NFS-e (**P1-01**) já existem. `SetupSat` (**P2-09**), `ConsultaSat` (**P2-10**) e `ConsultaManifestacao` (**P2-11**, host `api2`) já estão no client.
+**Fato:** `EmitirNfse` (**P1-02**) e `ConsultaNfse` (**P1-03**) estão no client; demais métodos NFS-e (P1-04+) e envio de manifestação (P2-12) ainda abertos/bloqueados. Models de emissão NFS-e (**P1-01**) já existem. `SetupSat` (**P2-09**), `ConsultaSat` (**P2-10**) e `ConsultaManifestacao` (**P2-11**, host `api2`) já estão no client.
 
 ## Backlog priorizado
 
@@ -82,7 +82,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 |----|------|---------------|---------|---------------|--------------------|--------|
 | P1-01 | Models emissão NFS-e | — (DTO) | — | **Agente-pronto** | Models tipados espelhando sample Postman **Emitir NFS-e**: raiz (`tipo`, `idExterno`, `ambienteEmissao`, email, `cliente`, `servico`, `valorTotal`) + `servico.*` (`descricao`, `aliquotaIss`, `issRetidoFonte`, `codigoServicoMunicipio`, `itemListaServicoLC116`, `cnae`, `municipioPrestacaoServico`); nullable + `JsonProperty` + `NullValueHandling.Ignore`; teste de serialização | Feito |
 | P1-02 | Emitir NFS-e | `POST /v1/empresas/{empresaId}/nfes` | P1-01 | **Agente-pronto** | Método público async → `ApiResponse`; path exato Postman; smoke de path | Feito |
-| P1-03 | Consultar por id GW | `GET /v1/empresas/{empresaId}/nfes/{nfeId}` | P1-01 | **Agente-pronto** | Método tipado (`ApiResponse<T>` com model de consulta NFS-e mínimo alinhado ao retorno conhecido / campos do sample); smoke | Aberto |
+| P1-03 | Consultar por id GW | `GET /v1/empresas/{empresaId}/nfes/{nfeId}` | P1-01 | **Agente-pronto** | Método tipado (`ApiResponse<T>` com model de consulta NFS-e mínimo alinhado ao retorno conhecido / campos do sample); smoke | Feito |
 | P1-04 | Consultar por idExterno | `GET /v1/empresas/{empresaId}/nfes/porIdExterno/{idExterno}` | P1-03 | **Agente-pronto** | Paridade com P1-03 | Aberto |
 | P1-05 | Listar NFS-e | `GET /v1/empresas/{empresaId}/nfes?pageNumber&pageSize&sortBy&sortDirection&filter` | P1-03 | **Agente-pronto** | Método com parâmetros de paginação/filtro espelhando query Postman; model de lista tipado o suficiente para deserializar | Aberto |
 | P1-06 | Cancelar por id GW | `DELETE /v1/empresas/{empresaId}/nfes/{nfeId}` | P1-02 | **Agente-pronto** | Método → `ApiResponse`; smoke | Aberto |
@@ -95,10 +95,10 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 
 **Critério de aceite do épico P1** (fechado quando todos Agente-pronto acima estiverem Feito):
 
-- [x] `#region NFSe` (ou superfície equivalente) em `eNotasClient` — parcial: região + `EmitirNfse` (**P1-02**); demais métodos P1-03+
-- [x] Models request/response tipados — parcial: emissão (`Nfse`/`Servico`, **P1-01**); consulta/lista ainda em P1-03+
+- [x] `#region NFSe` (ou superfície equivalente) em `eNotasClient` — parcial: região + `EmitirNfse` (**P1-02**) + `ConsultaNfse` (**P1-03**); demais métodos P1-04+
+- [x] Models request/response tipados — parcial: emissão (`Nfse`/`Servico`, **P1-01**) + consulta (`ConsultaNfse`, **P1-03**); lista ainda em P1-05
 - [ ] Documentação clara V1 ≠ V2
-- [x] Exemplos/testes sem API Key real — parcial: `NfseSerializationTests` + fixture Postman + smoke `EmitirNfse` (sem API Key); exemplos de uso NFS-e ainda em P1-12
+- [x] Exemplos/testes sem API Key real — parcial: `NfseSerializationTests` + fixture Postman + smoke `EmitirNfse`/`ConsultaNfse` (sem API Key); exemplos de uso NFS-e ainda em P1-12
 
 ### P2 — Empresas V2 + SAT + habilitação (+ manifestação)
 
@@ -160,13 +160,13 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
 | Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); `HabilitarEmpresa` (**P2-08** Feito); `SetupSat` (**P2-09** Feito — body em `Message`, schema Postman vazio); `ConsultaSat` (**P2-10** Feito — `GET /v2/sat/{satId}/all`, body em `Message`, schema Postman vazio); **P2-13** Feito (README/docs sem “futuro” no que já está no client); pré-req **INFRA-02** Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** Feito (`ConsultaManifestacao`, host `api2`/`v3`, body em `Message`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
-| Postman V1 — NFS-e + apoio municipal + PDF | Models emissão (**P1-01** Feito: `Nfse`/`Servico`); `EmitirNfse` (**P1-02** Feito); demais itens **P1-03..P1-12** abertos; **INFRA-01** Feito (pré-req PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
+| Postman V1 — NFS-e + apoio municipal + PDF | Models emissão (**P1-01** Feito: `Nfse`/`Servico`); `EmitirNfse` (**P1-02** Feito); `ConsultaNfse` (**P1-03** Feito: model `ConsultaNfse`); demais itens **P1-04..P1-12** abertos; **INFRA-01** Feito (pré-req PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 
 ## Fontes de verdade
 
 1. Código: `eNotas.Sharp/Clients/eNotasClient.cs`, `eNotas.Sharp/Models/`
 2. Postman V2 (client atual): `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
-3. Postman V1 (NFS-e; `EmitirNfse` no client; demais P1-03+): `docs/API - eNotas - V1 - NFS-e.postman_collection.json`
+3. Postman V1 (NFS-e; `EmitirNfse`/`ConsultaNfse` no client; demais P1-04+): `docs/API - eNotas - V1 - NFS-e.postman_collection.json`
 4. KB oficial: [Central de ajuda NotaGateway](https://atendimento.notagateway.com.br/kb/pt-br) (skill `notagateway-kb-lookup` / agent `notagateway-docs-specialist`)
 5. Docs oficiais ReadMe: [API V2](https://docs.notagateway.com.br/v2/docs/sobre-a-api) (NF-e/NFC-e/DC-e) e [API V1](https://docs.notagateway.com.br/docs) (NFS-e)
 6. Docs internos: `ARCHITECTURE.md`, `DOMAIN.md`, `MODULES.md`, `TESTING.md`
@@ -185,6 +185,6 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 ## Fora de escopo deste roadmap
 
 - Implementar a feature em si (este arquivo só rastreia o backlog).
-- Tratar o ciclo NFS-e completo como disponível na lib (só emitir está no client).
+- Tratar o ciclo NFS-e completo como disponível na lib (só emitir + consultar por id GW estão no client).
 - Inventar endpoints ou campos sem evidência em Postman, KB ou código.
 - Assumir CI/CD, Docker ou stacks que não existem no repositório.

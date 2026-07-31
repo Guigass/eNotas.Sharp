@@ -3,7 +3,7 @@
 ## Client — eNotasClient
 
 ### Responsabilidade
-Fachada pública da biblioteca: métodos async para NF-e, NFC-e, NFS-e (emitir), empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
+Fachada pública da biblioteca: métodos async para NF-e, NFC-e, NFS-e (emitir/consultar por id GW), empresas (CRUD, certificado, logo, habilitar/desabilitar), SAT e consulta de manifestação.
 
 ### Caminhos principais
 - `eNotas.Sharp/Clients/eNotasClient.cs`
@@ -27,7 +27,7 @@ Emissão NF-e/NFC-e/NFS-e, consulta, cancelamento, inutilização, carta de corr
 4. Atualizar README (lista de métodos) e, se aplicável, versão do pacote.
 
 ### Informações incertas
-Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito); demais métodos (**P1-03+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
+Envio de Manifestação de Destinatário (**P2-12**, bloqueado — path/verbo não oficiais). NFS-e: `EmitirNfse` (**P1-02** Feito) e `ConsultaNfse` (**P1-03** Feito); demais métodos (**P1-04+**) ainda abertos. DTO emissão `Nfse`/`Servico` — **P1-01** Feito; consulta `ConsultaNfse` — **P1-03**. Consulta de manifestação (**P2-11** / `ConsultaManifestacao`) já está.
 
 ---
 
@@ -68,11 +68,12 @@ Todas as chamadas de rede da biblioteca.
 ## Models — DTOs de emissão e consulta
 
 ### Responsabilidade
-Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS-e V1 em `Nfse`/`Servico`).
+Representar payloads de request/response da API (V2 NF-e/NFC-e; DTO emissão NFS-e V1 em `Nfse`/`Servico`; consulta NFS-e em `ConsultaNfse`).
 
 ### Caminhos principais
 - `eNotas.Sharp/Models/Nota.cs` (agregado raiz de emissão NF-e/NFC-e)
 - `Nfse.cs`, `Servico.cs` (emissão NFS-e V1 — **P1-01**; reutiliza `Cliente`/`Endereco`; consumidos por `EmitirNfse` / **P1-02**)
+- `ConsultaNfse.cs` (consulta NFS-e V1 — **P1-03**; reutiliza `Cliente`/`Servico`; distinto de `Consulta` NF-e/NFC-e)
 - `Iten.cs`, `Impostos.cs`, `Icms.cs`, `Cofins.cs` (`class Imposto` para PIS/COFINS/IPI), `IbsCbs.cs` (IBS/CBS NF-e/NFC-e), `Cliente.cs`, `Pedido.cs`, `Pagamento.cs`, `Transporte.cs`, …
 - `Consulta.cs`, `ConsultaInutilizacao.cs`, `Inutilizacao.cs`, `CartaCorrecao.cs`, `CorrecaoResponse.cs`
 - `ApiResponse.cs`, `NotaWebhook.cs`
@@ -143,4 +144,4 @@ Coleções Postman como referência de contrato.
 - `docs/API - eNotas - V2 - NF-e - NFC-e.postman_collection.json`
 
 ### Pontos de atenção
-V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**) e `EmitirNfse` (**P1-02**) no pacote; demais métodos P1-03+. V2 permanece referência primária para NF-e/NFC-e/empresas.
+V1 NFS-e: DTO emissão (`Nfse`/`Servico`, **P1-01**), `EmitirNfse` (**P1-02**) e `ConsultaNfse` (**P1-03**) no pacote; demais métodos P1-04+. V2 permanece referência primária para NF-e/NFC-e/empresas.
