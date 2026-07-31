@@ -50,7 +50,7 @@ Todas as chamadas de rede da biblioteca.
 - Exceções engolidas e expostas em `Exception` / `Message` (exceto `OperationCanceledException`, que é relançada).
 - `CancellationToken` opcional propagado até `SendAsync` (Post/PostMultipart/Get tipado e não tipado/GetBytes/Put/Delete).
 - `Delete` usa path relativo ao `BaseAddress`, igual aos demais verbos.
-- `Get` (não tipado) retorna `ApiResponse` com body em `Message` (usado por `SetupSat` / P2-09 quando schema de resposta é incerto).
+- `Get` (não tipado) retorna `ApiResponse` com body em `Message` (usado por `SetupSat` / P2-09 e `ConsultaSat` / P2-10 quando schema de resposta é incerto).
 - `GetBytes` retorna `ApiResponse<byte[]>`: sucesso → `Object` com bytes; falha HTTP → `Message` com body UTF-8 (pré-req PDF NFS-e / P1-09).
 - `Post(string, CancellationToken)` envia POST sem body (usado por `DesabilitarEmpresa` / P2-07 e `HabilitarEmpresa` / P2-08; Postman formdata vazio).
 - `PostMultipart` aceita `MultipartFormDataContent` montado pelo caller; Content-Type com boundary vem do conteúdo (não força `application/json`); retorno `ApiResponse` como `Post` (usado por `VincularCertificadoDigital` / P2-05 e `VincularLogotipo` / P2-06).

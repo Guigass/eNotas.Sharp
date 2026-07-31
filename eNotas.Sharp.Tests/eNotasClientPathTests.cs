@@ -240,6 +240,26 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task ConsultaSat_GetsExpectedPathWithAuth()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{\"ok\":true}"));
+        using (client)
+        {
+            var response = await client.ConsultaSat(ClientTestFactory.SatId);
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal("{\"ok\":true}", response.Message);
+            Assert.Equal(HttpMethod.Get, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v2/sat/{ClientTestFactory.SatId}/all",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.Null(handler.LastRequest.Content);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");

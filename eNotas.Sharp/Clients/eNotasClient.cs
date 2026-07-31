@@ -262,6 +262,13 @@ namespace eNotas.Sharp.Clients
             return await _client.Get(path, cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> ConsultaSat(string satId, CancellationToken cancellationToken = default)
+        {
+            string path = $"/v2/sat/{satId}/all";
+
+            return await _client.Get(path, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         public void Dispose()

@@ -82,6 +82,7 @@ Métodos públicos aceitam `CancellationToken cancellationToken = default` (opci
     * Desabilitar Empresa (`DesabilitarEmpresa`)
     * Habilitar Empresa (`HabilitarEmpresa`)
     * Setup SAT (`SetupSat`) — body bruto em `ApiResponse.Message` (schema Postman incerto)
+    * Consultar SAT (`ConsultaSat`) — parâmetro `satId` no path `GET /v2/sat/{satId}/all`; body bruto em `ApiResponse.Message` (schema Postman incerto)
     ```
 
 Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMAP.md](docs/ROADMAP.md).
@@ -94,9 +95,8 @@ Backlog detalhado (prioridades, campos omitidos, NFS-e, qualidade): [docs/ROADMA
 - Métodos Futuros (P1–P2 — ver roadmap):
     ```
     * NFS-e (emitir, consultar, cancelar, XML, PDF) — Postman V1
-    * Consultar SAT
     ```
 
-Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**), `DesabilitarEmpresa` (**P2-07**), `HabilitarEmpresa` (**P2-08**) e `SetupSat` (**P2-09**); demais endpoints de empresas ainda no roadmap (P2-10+).
+Models de empresa (P2-01): `Empresa`, `ConfiguracoesNfse`, `ListaEmpresas` e `Endereco` com `codigoIbgeUf`/`codigoIbgeCidade`. Métodos `IncluirAlterarEmpresa` (**P2-02**), `ConsultaEmpresa` (**P2-03**), `ListarEmpresas` (**P2-04**), `VincularCertificadoDigital` (**P2-05**), `VincularLogotipo` (**P2-06**), `DesabilitarEmpresa` (**P2-07**), `HabilitarEmpresa` (**P2-08**), `SetupSat` (**P2-09**) e `ConsultaSat` (**P2-10**, parâmetro `satId`); demais endpoints de empresas ainda no roadmap (P2-11+).
 
 P0 (campos opcionais de emissão): parcialmente feito (`tipo`, contingência, `indicadorPresencaConsumidor`, campos de `Iten`, `enviarPorEmail`, model `IbsCbs`); gaps restantes em [docs/ROADMAP.md](docs/ROADMAP.md).

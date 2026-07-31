@@ -7,6 +7,7 @@ internal static class ClientTestFactory
 {
     public const string ApiKey = "test-api-key";
     public const string EmpresaId = "empresa-teste";
+    public const string SatId = "sat-teste";
     public const string NotaId = "nota-123";
     public const string InutilizacaoId = "inut-123";
     public const string CartaId = "cce-123";

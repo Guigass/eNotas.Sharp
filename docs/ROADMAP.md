@@ -2,7 +2,7 @@
 
 Backlog de lacunas da library cliente em relação à API eNotas Gateway e à qualidade do SDK.
 
-Este documento **não** descreve features já disponíveis como se estivessem prontas. NFS-e e o restante da gestão de empresas (consultar SAT, manifestação) estão no Postman / README, mas **ainda não** no `eNotasClient` (CRUD empresas/certificado/logo/desabilitar/habilitar/setup SAT já estão).
+Este documento **não** descreve features já disponíveis como se estivessem prontas. NFS-e e o restante da gestão de empresas (manifestação) estão no Postman / README, mas **ainda não** no `eNotasClient` (CRUD empresas/certificado/logo/desabilitar/habilitar/setup SAT/consultar SAT já estão).
 
 ## Como ler este documento
 
@@ -20,11 +20,11 @@ Este documento **não** descreve features já disponíveis como se estivessem pr
 |------|---------|
 | NF-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML), carta de correção (+ consulta/XML) |
 | NFC-e | Emitir, consultar, XML, cancelar, XML cancelamento, inutilização (+ consulta/XML) |
-| Empresas | Incluir/Alterar (`IncluirAlterarEmpresa` → `POST /v2/empresas`); Consultar por id (`ConsultaEmpresa` → `GET /v2/empresas/{empresaId}`); Listar (`ListarEmpresas` → `GET /v2/empresas?...`); Vincular certificado (`VincularCertificadoDigital` → `POST /v2/empresas/{empresaId}/certificadoDigital` multipart); Vincular logo (`VincularLogotipo` → `POST /v2/empresas/{empresaId}/logo` multipart `logotipo`); Desabilitar (`DesabilitarEmpresa` → `POST /v1/empresas/{empresaId}/desabilitar`); Habilitar (`HabilitarEmpresa` → `POST /v1/empresas/{empresaId}/habilitar`); Setup SAT (`SetupSat` → `GET /v2/empresas/{empresaId}/sat/setup`, body em `ApiResponse.Message`) |
+| Empresas | Incluir/Alterar (`IncluirAlterarEmpresa` → `POST /v2/empresas`); Consultar por id (`ConsultaEmpresa` → `GET /v2/empresas/{empresaId}`); Listar (`ListarEmpresas` → `GET /v2/empresas?...`); Vincular certificado (`VincularCertificadoDigital` → `POST /v2/empresas/{empresaId}/certificadoDigital` multipart); Vincular logo (`VincularLogotipo` → `POST /v2/empresas/{empresaId}/logo` multipart `logotipo`); Desabilitar (`DesabilitarEmpresa` → `POST /v1/empresas/{empresaId}/desabilitar`); Habilitar (`HabilitarEmpresa` → `POST /v1/empresas/{empresaId}/habilitar`); Setup SAT (`SetupSat` → `GET /v2/empresas/{empresaId}/sat/setup`, body em `ApiResponse.Message`); Consultar SAT (`ConsultaSat` → `GET /v2/sat/{satId}/all`, parâmetro `satId`, body em `ApiResponse.Message`) |
 
 Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impostos, pagamento, transporte, etc.), consultas, XML fiscal e empresa (`Empresa`, `ConfiguracoesNfse`, `ListaEmpresas`).
 
-**Fato:** não há métodos de NFS-e, consultar SAT (`P2-10`) nem manifestação no client (P2-10+ / P1 abertos). `SetupSat` (**P2-09**) já está no client.
+**Fato:** não há métodos de NFS-e nem manifestação no client (P2-11+ / P1 abertos). `SetupSat` (**P2-09**) e `ConsultaSat` (**P2-10**) já estão no client.
 
 ## Backlog priorizado
 
@@ -64,7 +64,7 @@ Ordem sugerida se o usuário disser “pegue o próximo”: `INFRA-01` → `INFR
 
 ### INFRA — Pré-requisitos de transporte (`RestService`)
 
-Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`** (INFRA-01 Feito) e **`PostMultipart`** (INFRA-02 Feito). Certificado/logo (**P2-05**/**P2-06** Feito) usam multipart; `SetupSat` (**P2-09**) usa `Get` não tipado (body em `Message`).
+Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`** (INFRA-01 Feito) e **`PostMultipart`** (INFRA-02 Feito). Certificado/logo (**P2-05**/**P2-06** Feito) usam multipart; `SetupSat` (**P2-09**) e `ConsultaSat` (**P2-10**) usam `Get` não tipado (body em `Message`).
 
 | ID | Item | Depends | Classificação | Evidência | Critério de aceite | Status |
 |----|------|---------|---------------|-----------|--------------------|--------|
@@ -114,7 +114,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | P2-07 | Desabilitar empresa | `POST /v1/empresas/{empresaId}/desabilitar` | — | **Agente-pronto** | Método → `ApiResponse`; path v1 conforme Postman | Feito |
 | P2-08 | Habilitar empresa | `POST /v1/empresas/{empresaId}/habilitar` | — | **Agente-pronto** | Paridade com P2-07 | Feito |
 | P2-09 | Setup SAT | `GET /v2/empresas/{empresaId}/sat/setup` | — | **Agente-pronto** | Método; retorno tipado ou `ApiResponse` com message se schema incerto — não inventar campos | Feito |
-| P2-10 | Consultar SAT | `GET /v2/sat/{satId}/all` (Postman) | P2-09 | **Agente-pronto** | Path conforme Postman; documentar parâmetro `satId` | Aberto |
+| P2-10 | Consultar SAT | `GET /v2/sat/{satId}/all` (Postman) | P2-09 | **Agente-pronto** | Path conforme Postman; documentar parâmetro `satId` | Feito |
 | P2-11 | Consultar manifestação | `GET https://api2.enotasgw.com.br/v3/empresas/{empresaId}/nf-e/manifestacao/{chaveAcesso}` | — | **Agente-pronto** (cuidado host) | Requer chamada com **host `api2`** (não o BaseAddress atual). Preferir overload/path absoluto mínimo documentado; não alterar base URL padrão do client sem nota no README | Aberto |
 | P2-12 | Enviar manifestação | path/verbo **não** fechados | — | **Bloqueado** | Só após validação humana do POST oficial (FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) tem body, sem URL) | Bloqueado |
 | P2-13 | Docs empresas/SAT | — | P2-02..P2-08 (mínimo CRUD + cert/logo ou habilitar) | **Agente-pronto** | README: tirar “futuro” do que estiver implementado; sem secrets | Aberto |
@@ -157,7 +157,7 @@ Hoje `RestService` tem JSON `Post`/`Get`/`Get<T>`/`Put`/`Delete`, **`GetBytes`**
 | Postman V2 — pasta NFC-e (ciclo equivalente sem CC-e) | Implementado |
 | Postman V2 — XML da nota (`.../xml`) | Implementado no client (`ConsultaNfeXML` / `ConsultaNfceXML`); nem sempre listado na collection |
 | PDF NF-e/NFC-e (V2) | **Sem** endpoint `/pdf` na referência oficial V2; PDF via `linkDanfe` (consulta) e `nfeLinkDanfe` (webhook) — já tipados em `Consulta` / `NotaWebhook`. Docs: [Consultar Nota Fiscal](https://docs.notagateway.com.br/v2/reference/consultar-nota-fiscal-1), [Webhook](https://docs.notagateway.com.br/v2/docs/webhook), [Status](https://docs.notagateway.com.br/v2/docs/status-da-nota-fiscal) (`Autorizada` = PDF pronto) |
-| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); `HabilitarEmpresa` (**P2-08** Feito); `SetupSat` (**P2-09** Feito — body em `Message`, schema Postman vazio); métodos client **P2-10**, **P2-13** abertos; pré-req **INFRA-02** Feito |
+| Postman V2 — pasta empresas (CRUD, certificado, logo, SAT) | Models `Empresa`/`ConfiguracoesNfse`/`ListaEmpresas` (**P2-01** Feito); `IncluirAlterarEmpresa` (**P2-02** Feito); `ConsultaEmpresa` (**P2-03** Feito); `ListarEmpresas` (**P2-04** Feito); `VincularCertificadoDigital` (**P2-05** Feito); `VincularLogotipo` (**P2-06** Feito); `DesabilitarEmpresa` (**P2-07** Feito); `HabilitarEmpresa` (**P2-08** Feito); `SetupSat` (**P2-09** Feito — body em `Message`, schema Postman vazio); `ConsultaSat` (**P2-10** Feito — `GET /v2/sat/{satId}/all`, body em `Message`, schema Postman vazio); **P2-13** aberto; pré-req **INFRA-02** Feito |
 | Postman V2/V3 — manifestação destinatário | Consulta: **P2-11** (host `api2`/`v3`); Envio: **P2-12 Bloqueado**. FAQ [KB 409178](https://atendimento.notagateway.com.br/kb/pt-br/article/409178/duvidas-frequentes-sobre-a-manifestacao-do-destinatario-de-notas) (body sem path de POST) |
 | Postman V1 — NFS-e + apoio municipal + PDF | Não implementado — itens **P1-01..P1-12** + **INFRA-01** (PDF); evidência [KB 173803](https://atendimento.notagateway.com.br/kb/pt-br/article/173803/baixar-o-pdf-ou-xml-de-uma-nota-fiscal) |
 
