@@ -29,7 +29,7 @@ dotnet build eNotas.Sharp.sln -c Release
 |------|-------|------------|
 | Serialização JSON | `NotaSerializationTests`, `ConsultaSerializationTests`, `InutilizacaoSerializationTests`, `CartaCorrecaoSerializationTests`, `ImpostosSerializationTests`, `EmpresaSerializationTests`, `CustomDateTimeConverterTests` | Fixtures em `eNotas.Sharp.Tests/Fixtures/` (incl. `empresa-incluir-alterar.json`) |
 | XML | `NfeProcXmlTests`, `XmlDocumentTests` | Fixtures mínimas, não documento fiscal completo |
-| HTTP smoke | `eNotasClientPathTests` | Métodos NF-e/NFC-e + `IncluirAlterarEmpresa` + `ConsultaEmpresa`; auth Basic; sucesso e 4xx; `CancellationToken` cancelado |
+| HTTP smoke | `eNotasClientPathTests` | Métodos NF-e/NFC-e + `IncluirAlterarEmpresa` + `ConsultaEmpresa` + `ListarEmpresas` + `VincularCertificadoDigital` (multipart); auth Basic; sucesso e 4xx; `CancellationToken` cancelado |
 | RestService | `RestServiceTests` | Parse JSON/XML inválido deixa `Object` null e preenche `Exception`; exceção de rede não relança; `Put`; `Delete` path relativo; `GetBytes` (sucesso → bytes em `Object`, 4xx → `Message`); `PostMultipart` (sucesso → multipart/form-data, 4xx → `Message`); cancelamento relança `OperationCanceledException` |
 
 ## Lacunas de teste

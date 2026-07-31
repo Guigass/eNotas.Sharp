@@ -207,6 +207,24 @@ namespace eNotas.Sharp.Clients
             return await _client.Get<ListaEmpresas>(path.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        public async Task<ApiResponse> VincularCertificadoDigital(
+            string empresaId,
+            byte[] arquivo,
+            string senha,
+            string nomeArquivo = "certificado.pfx",
+            CancellationToken cancellationToken = default)
+        {
+            string path = $"/v2/empresas/{empresaId}/certificadoDigital";
+
+            using (var content = new MultipartFormDataContent())
+            {
+                content.Add(new StringContent(senha), "senha");
+                content.Add(new ByteArrayContent(arquivo), "arquivo", nomeArquivo);
+
+                return await _client.PostMultipart(path, content, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
         #endregion
 
         public void Dispose()

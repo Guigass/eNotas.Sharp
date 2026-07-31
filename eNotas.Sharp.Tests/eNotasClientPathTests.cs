@@ -130,6 +130,33 @@ public class eNotasClientPathTests
     }
 
     [Fact]
+    public async Task VincularCertificadoDigital_PostsMultipartToExpectedPathWithAuth()
+    {
+        var (client, handler) = ClientTestFactory.Create(_ => ClientTestFactory.Ok("{}"));
+        using (client)
+        {
+            var arquivo = new byte[] { 0x01, 0x02, 0x03 };
+            var response = await client.VincularCertificadoDigital(
+                ClientTestFactory.EmpresaId,
+                arquivo,
+                "senha-teste",
+                "cert.pfx");
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("OK", response.Status);
+            Assert.Equal(HttpMethod.Post, handler.LastRequest!.Method);
+            Assert.EndsWith(
+                $"/v2/empresas/{ClientTestFactory.EmpresaId}/certificadoDigital",
+                handler.LastRequest.RequestUri!.AbsolutePath);
+            Assert.Equal($"Basic {ClientTestFactory.ApiKey}", handler.LastRequest.Headers.GetValues("Authorization").Single());
+            Assert.StartsWith("multipart/form-data", handler.LastRequest.Content!.Headers.ContentType!.MediaType);
+            Assert.Contains("senha", handler.LastContent);
+            Assert.Contains("arquivo", handler.LastContent);
+            Assert.Contains("cert.pfx", handler.LastContent);
+        }
+    }
+
+    [Fact]
     public async Task ConsultaNfe_GetsTypedConsulta()
     {
         var json = FixtureLoader.Read("consulta-nfe.json");
