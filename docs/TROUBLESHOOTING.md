@@ -7,7 +7,7 @@ Documentados a partir do código e lacunas do repositório (não há issue track
 | Problema | Evidência |
 |----------|-----------|
 | Sem integração automatizada com API real | Suite offline em `eNotas.Sharp.Tests`; checklist em `TESTING.md` |
-| Pasta `Exemplos/` vazia | Diretório sem arquivos |
+| Sample exige env vars | `Exemplos/EmissaoNfeHomologacao` usa `ENOTAS_API_KEY` / `ENOTAS_EMPRESA_ID` |
 | Docs Postman V1 vs client só V2 NF-e/NFC-e | Escopo divergente |
 | `Version` ≠ `AssemblyVersion` | `.csproj` |
 
@@ -67,5 +67,5 @@ Evidências úteis no consumidor:
 ## Pontos que precisam ser completados futuramente
 
 - Catálogo de códigos de erro retornados pela API
-- Exemplos oficiais versionados em `Exemplos/`
+- Mais samples (ex.: NFC-e) além de `Exemplos/EmissaoNfeHomologacao`
 - Correlação README vs métodos reais (nota sobre ConsultaNfce para XML de cancelamento NF-e)

@@ -53,7 +53,7 @@ Ver `DOMAIN.md` e `ARCHITECTURE.md`.
 - API Key é credencial sensível; não deve ser commitada.
 - Contratos JSON devem permanecer alinhados à API oficial e às coleções Postman em `docs/`.
 - Há suite mínima xUnit em `eNotas.Sharp.Tests`; integração com API real permanece manual (`TESTING.md`).
-- Pasta `Exemplos/` existe, mas está vazia (**fato observado**).
+- Sample compilável em `Exemplos/EmissaoNfeHomologacao` (credenciais via env; sem API Key no código).
 - README lista NFS-e e gestão de empresas como futuros; Postman V1 cobre NFS-e, mas o client C# atual não implementa esses métodos.
 - Lacunas e priorização do backlog estão em `ROADMAP.md` (gaps restantes de models, NFS-e, empresas/manifestação/SAT, qualidade).
 

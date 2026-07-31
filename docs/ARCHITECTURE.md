@@ -32,7 +32,7 @@ eNotas.Sharp/
   Services/RestService.cs
   Helpers/CustomDateTimeConverter.cs
   Models/                      # DTOs JSON + classes XML
-  Exemplos/                    # vazio
+  Exemplos/EmissaoNfeHomologacao/  # console NF-e homologação (env vars)
 eNotas.Sharp.Tests/            # xUnit (serialização + smoke HTTP)
 Solution Items/enotas.png      # ícone do pacote NuGet
 .cursor/                       # rules, skills, agents

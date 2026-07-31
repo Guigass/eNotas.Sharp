@@ -96,7 +96,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 | Lacuna | Classificação | Evidência |
 |--------|---------------|-----------|
 | Suite mínima (gaps de cobertura) | Fato (parcialmente resolvido) | xUnit em `eNotas.Sharp.Tests`; lacunas em `TESTING.md` (ex.: integração API real) |
-| Pasta `Exemplos/` vazia | Fato | Diretório existe sem samples |
+| Pasta `Exemplos/` | **Feito** | Console `Exemplos/EmissaoNfeHomologacao` (net8.0); credenciais via `ENOTAS_API_KEY` / `ENOTAS_EMPRESA_ID` |
 | Sem `CancellationToken` | **Feito** | Parâmetro opcional em todos os métodos públicos + `RestService`; cancelamento relança `OperationCanceledException` |
 | `RestService.Put` sem consumidor | Fato | Método interno não usado pelo client |
 | `Delete` com URL absoluta vs Post/Get relativos | **Feito** | Path relativo via `SendAsync` + `HttpMethod.Delete`, igual a Post/Get/Put |
@@ -110,7 +110,7 @@ Models públicos em `eNotas.Sharp/Models/` cobrem emissão (`Nota`, `Iten`, impo
 #### Critério de aceite (incremental)
 
 - [x] Suite mínima (serialização de models + smoke de paths) — xUnit em `eNotas.Sharp.Tests`
-- [ ] Exemplos compiláveis sem secrets
+- [x] Exemplos compiláveis sem secrets — `Exemplos/EmissaoNfeHomologacao` (env vars; sem API Key no código)
 - [x] Correções de transporte documentadas e sem breaking silencioso — parcial: catch do `Get` preenche `Exception` em falha de parse; `CancellationToken` aditivo feito; `Delete` alinhado a path relativo; demais gaps abertos (`Put` sem uso, base URL hardcoded)
 - [x] README alinhado aos métodos reais do client — lista de métodos e nota de P0; revisar a cada bump
 - [x] `CancellationToken` opcional (`= default`) em `eNotasClient` / `RestService` — source-compatible; cancelamento não é engolido em `ApiResponse`

@@ -43,6 +43,8 @@ Governança Cursor: `.cursor/rules`, `.cursor/skills`, `.cursor/agents` (comece 
     }
     ```
 
+Sample compilável (homologação, sem API Key no código): [`Exemplos/EmissaoNfeHomologacao`](Exemplos/EmissaoNfeHomologacao) — define `ENOTAS_API_KEY` e `ENOTAS_EMPRESA_ID` antes de `dotnet run`.
+
 Métodos públicos aceitam `CancellationToken cancellationToken = default` (opcional; source-compatible).
 --------------------------------------------------------------------------------------------------
 - Instalação no Nuget PM
