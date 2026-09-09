@@ -312,4 +312,154 @@ public class NfseSerializationTests
         Assert.Equal(99L, nfse!.NumeroRps);
         Assert.Equal("A", nfse.SerieRps);
     }
+
+    [Fact]
+    public void Serialize_NfseNewFields_UsesCamelCaseAndOmitsNulls()
+    {
+        var nfse = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "NFSE-CAMPOS-SER-001",
+            AmbienteEmissao = "Producao",
+            EnviarPorEmail = true,
+            DataCompetencia = DateTimeOffset.Parse("2024-10-23T12:00:00Z"),
+            NaturezaOperacao = "Tributacao no municipio",
+            Observacoes = "Observacao de teste",
+            DadosAdicionaisEmail = new DadosAdicionaisEmail
+            {
+                OutrosDestinatarios = "outro1@teste.com.br;outro2@teste.com.br"
+            },
+            Deducoes = 10.50m,
+            Descontos = 5.25m,
+            DescontoCondicionado = 2.00m,
+            ValorTotal = 1000.00m
+        };
+
+        var json = JsonConvert.SerializeObject(nfse);
+        var obj = JObject.Parse(json);
+
+        Assert.Contains("\"dataCompetencia\":\"2024-10-23T12:00:00.0000000Z\"", json);
+        Assert.Equal("Tributacao no municipio", obj["naturezaOperacao"]?.Value<string>());
+        Assert.Equal("Observacao de teste", obj["observacoes"]?.Value<string>());
+        Assert.Equal("outro1@teste.com.br;outro2@teste.com.br", obj["dadosAdicionaisEmail"]?["outrosDestinatarios"]?.Value<string>());
+        Assert.Equal(10.50m, obj["deducoes"]?.Value<decimal>());
+        Assert.Equal(5.25m, obj["descontos"]?.Value<decimal>());
+        Assert.Equal(2.00m, obj["descontoCondicionado"]?.Value<decimal>());
+        Assert.Null(obj["cliente"]);
+        Assert.Null(obj["servico"]);
+    }
+
+    [Fact]
+    public void Deserialize_CamposEnotasFixture_PopulatesNewNfseAndServicoFields()
+    {
+        var json = FixtureLoader.Read("nfse-emissao-campos-enotas.json");
+
+        var nfse = JsonConvert.DeserializeObject<Nfse>(json);
+
+        Assert.NotNull(nfse);
+        Assert.Equal("NFSE-CAMPOS-001", nfse!.IdExterno);
+        Assert.Equal(DateTimeOffset.Parse("2024-10-23T12:00:00Z"), nfse.DataCompetencia);
+        Assert.Equal("Tributacao no municipio", nfse.NaturezaOperacao);
+        Assert.Equal("Nota de teste com campos adicionais", nfse.Observacoes);
+        Assert.NotNull(nfse.DadosAdicionaisEmail);
+        Assert.Equal("outro1@teste.com.br;outro2@teste.com.br", nfse.DadosAdicionaisEmail!.OutrosDestinatarios);
+        Assert.Equal(10.50m, nfse.Deducoes);
+        Assert.Equal(5.25m, nfse.Descontos);
+        Assert.Equal(2.00m, nfse.DescontoCondicionado);
+
+        Assert.NotNull(nfse.Servico);
+        Assert.False(nfse.Servico!.Exportacao);
+        Assert.Equal("Nenhum", nfse.Servico.RegimeEspecialTributacao);
+        Assert.Equal("Nenhuma", nfse.Servico.TipoImunidadeIss);
+        Assert.Equal("Brasil", nfse.Servico.PaisPrestacaoServico);
+        Assert.Equal("MG", nfse.Servico.UfPrestacaoServico);
+
+        Assert.NotNull(nfse.Servico.ExigibilidadeSuspensa);
+        Assert.Equal("Decisao judicial", nfse.Servico.ExigibilidadeSuspensa!.Tipo);
+        Assert.Equal("123456789", nfse.Servico.ExigibilidadeSuspensa.NumeroProcesso);
+
+        Assert.NotNull(nfse.Servico.PisCofinsApuracaoPropria);
+        Assert.Equal(1000.00m, nfse.Servico.PisCofinsApuracaoPropria!.BaseCalculo);
+        Assert.Equal(0.65m, nfse.Servico.PisCofinsApuracaoPropria.AliquotaPis);
+        Assert.Equal(6.50m, nfse.Servico.PisCofinsApuracaoPropria.ValorPis);
+        Assert.Equal(3.00m, nfse.Servico.PisCofinsApuracaoPropria.AliquotaCofins);
+        Assert.Equal(30.00m, nfse.Servico.PisCofinsApuracaoPropria.ValorCofins);
+
+        Assert.Equal("01", nfse.Servico.SituacaoTributariaPisCofins);
+        Assert.Equal("NaoRetido", nfse.Servico.TipoRetencaoPisCofins);
+        Assert.Equal(6.50m, nfse.Servico.ValorPis);
+        Assert.Equal(30.00m, nfse.Servico.ValorCofins);
+        Assert.Equal(10.00m, nfse.Servico.ValorCsll);
+        Assert.Equal(20.00m, nfse.Servico.ValorInss);
+        Assert.Equal(15.00m, nfse.Servico.ValorIr);
+    }
+
+    [Fact]
+    public void Serialize_ServicoNewFields_UsesCamelCaseAndOmitsNulls()
+    {
+        var nfse = new Nfse
+        {
+            Tipo = "NFS-e",
+            IdExterno = "NFSE-SERVICO-SER-001",
+            Servico = new Servico
+            {
+                Descricao = "Servico",
+                Exportacao = true,
+                RegimeEspecialTributacao = "Nenhum",
+                TipoImunidadeIss = "Nenhuma",
+                PaisPrestacaoServico = "Brasil",
+                UfPrestacaoServico = "SP",
+                ExigibilidadeSuspensa = new ExigibilidadeSuspensa
+                {
+                    Tipo = "Decisao judicial",
+                    NumeroProcesso = "123"
+                },
+                PisCofinsApuracaoPropria = new PisCofinsApuracaoPropria
+                {
+                    BaseCalculo = 100.00m,
+                    AliquotaPis = 0.65m,
+                    ValorPis = 0.65m,
+                    AliquotaCofins = 3.00m,
+                    ValorCofins = 3.00m
+                },
+                SituacaoTributariaPisCofins = "01",
+                TipoRetencaoPisCofins = "NaoRetido",
+                ValorPis = 0.65m,
+                ValorCofins = 3.00m,
+                ValorCsll = 1.00m,
+                ValorInss = 2.00m,
+                ValorIr = 1.50m
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(nfse);
+        var obj = JObject.Parse(json);
+        var servico = obj["servico"];
+
+        Assert.True(servico?["exportacao"]?.Value<bool>());
+        Assert.Equal("Nenhum", servico?["regimeEspecialTributacao"]?.Value<string>());
+        Assert.Equal("Nenhuma", servico?["tipoImunidadeIss"]?.Value<string>());
+        Assert.Equal("Brasil", servico?["paisPrestacaoServico"]?.Value<string>());
+        Assert.Equal("SP", servico?["ufPrestacaoServico"]?.Value<string>());
+        Assert.Equal("Decisao judicial", servico?["exigibilidadeSuspensa"]?["tipo"]?.Value<string>());
+        Assert.Equal("123", servico?["exigibilidadeSuspensa"]?["numeroProcesso"]?.Value<string>());
+        Assert.Equal(100.00m, servico?["pisCofinsApuracaoPropria"]?["baseCalculo"]?.Value<decimal>());
+        Assert.Equal(0.65m, servico?["pisCofinsApuracaoPropria"]?["aliquotaPis"]?.Value<decimal>());
+        Assert.Equal(0.65m, servico?["pisCofinsApuracaoPropria"]?["valorPis"]?.Value<decimal>());
+        Assert.Equal(3.00m, servico?["pisCofinsApuracaoPropria"]?["aliquotaCofins"]?.Value<decimal>());
+        Assert.Equal(3.00m, servico?["pisCofinsApuracaoPropria"]?["valorCofins"]?.Value<decimal>());
+        Assert.Equal("01", servico?["situacaoTributariaPisCofins"]?.Value<string>());
+        Assert.Equal("NaoRetido", servico?["tipoRetencaoPisCofins"]?.Value<string>());
+        Assert.Equal(0.65m, servico?["valorPis"]?.Value<decimal>());
+        Assert.Equal(3.00m, servico?["valorCofins"]?.Value<decimal>());
+        Assert.Equal(1.00m, servico?["valorCsll"]?.Value<decimal>());
+        Assert.Equal(2.00m, servico?["valorInss"]?.Value<decimal>());
+        Assert.Equal(1.50m, servico?["valorIr"]?.Value<decimal>());
+    }
+
+    [Fact]
+    public void RoundTrip_CamposEnotasFixture_PreservesJsonShape()
+    {
+        AssertRoundTripPreservesJsonShape("nfse-emissao-campos-enotas.json");
+    }
 }

@@ -1,0 +1,67 @@
+{
+  "tipo": "NFS-e",
+  "idExterno": "NFSE-CAMPOS-001",
+  "ambienteEmissao": "Producao",
+  "enviarPorEmail": true,
+  "dataCompetencia": "2024-10-23T12:00:00Z",
+  "naturezaOperacao": "Tributacao no municipio",
+  "observacoes": "Nota de teste com campos adicionais",
+  "dadosAdicionaisEmail": {
+    "outrosDestinatarios": "outro1@teste.com.br;outro2@teste.com.br"
+  },
+  "deducoes": 10.50,
+  "descontos": 5.25,
+  "descontoCondicionado": 2.00,
+  "cliente": {
+    "tipoPessoa": "J",
+    "nome": "Cliente Completo",
+    "email": "teste@teste.com.br",
+    "cpfCnpj": "57743975000127",
+    "inscricaoMunicipal": null,
+    "inscricaoEstadual": null,
+    "telefone": "3132223333",
+    "endereco": {
+      "pais": "Brasil",
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "logradouro": "Rua Sergipe",
+      "numero": "1014",
+      "complemento": "7o Andar",
+      "bairro": "Savassi",
+      "cep": "30130174"
+    }
+  },
+  "servico": {
+    "descricao": "Servico completo",
+    "aliquotaIss": 3.0,
+    "issRetidoFonte": false,
+    "codigoServicoMunicipio": "4.12",
+    "itemListaServicoLC116": "4.12",
+    "cnae": "8630504",
+    "municipioPrestacaoServico": "3300704",
+    "exportacao": false,
+    "regimeEspecialTributacao": "Nenhum",
+    "tipoImunidadeIss": "Nenhuma",
+    "paisPrestacaoServico": "Brasil",
+    "ufPrestacaoServico": "MG",
+    "exigibilidadeSuspensa": {
+      "tipo": "Decisao judicial",
+      "numeroProcesso": "123456789"
+    },
+    "pisCofinsApuracaoPropria": {
+      "baseCalculo": 1000.00,
+      "aliquotaPis": 0.65,
+      "valorPis": 6.50,
+      "aliquotaCofins": 3.00,
+      "valorCofins": 30.00
+    },
+    "situacaoTributariaPisCofins": "01",
+    "tipoRetencaoPisCofins": "NaoRetido",
+    "valorPis": 6.50,
+    "valorCofins": 30.00,
+    "valorCsll": 10.00,
+    "valorInss": 20.00,
+    "valorIr": 15.00
+  },
+  "valorTotal": 1000.00
+}

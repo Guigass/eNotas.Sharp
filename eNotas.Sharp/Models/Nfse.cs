@@ -41,5 +41,27 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("serieRps", NullValueHandling = NullValueHandling.Ignore)]
         public string SerieRps { get; set; }
+
+        [JsonProperty("dataCompetencia", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
+        public DateTimeOffset? DataCompetencia { get; set; }
+
+        [JsonProperty("naturezaOperacao", NullValueHandling = NullValueHandling.Ignore)]
+        public string NaturezaOperacao { get; set; }
+
+        [JsonProperty("observacoes", NullValueHandling = NullValueHandling.Ignore)]
+        public string Observacoes { get; set; }
+
+        [JsonProperty("dadosAdicionaisEmail", NullValueHandling = NullValueHandling.Ignore)]
+        public DadosAdicionaisEmail DadosAdicionaisEmail { get; set; }
+
+        [JsonProperty("deducoes", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Deducoes { get; set; }
+
+        [JsonProperty("descontos", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Descontos { get; set; }
+
+        [JsonProperty("descontoCondicionado", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? DescontoCondicionado { get; set; }
     }
 }
