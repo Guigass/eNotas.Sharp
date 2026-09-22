@@ -104,6 +104,35 @@ public class NotaSerializationTests
         Assert.Equal(2.5m, item["quantidadeTributavel"]?.Value<decimal>());
         Assert.Equal("kg", item["unidadeMedidaTributavel"]?.Value<string>());
         Assert.Equal(10.0m, item["valorTotal"]?.Value<decimal>());
+        Assert.Null(item["nfeReferenciada"]);
+    }
+
+    [Fact]
+    public void Serialize_ItemNfeReferenciada_QuandoPreenchida()
+    {
+        var chave = new string('3', 44);
+        var nota = new Nota
+        {
+            Id = "abc",
+            Itens = new List<Iten>
+            {
+                new Iten
+                {
+                    Cfop = "1202",
+                    NfeReferenciada = new List<NfeReferenciada>
+                    {
+                        new() { ChaveAcesso = chave, NumeroItem = "1" }
+                    }
+                }
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(nota);
+        var item = JObject.Parse(json)["itens"]![0]!;
+        var referencia = Assert.Single(item["nfeReferenciada"]!.Children<JObject>());
+
+        Assert.Equal(chave, referencia["chaveAcesso"]?.Value<string>());
+        Assert.Equal("1", referencia["numeroItem"]?.Value<string>());
     }
 
     [Fact]

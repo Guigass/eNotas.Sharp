@@ -3,6 +3,10 @@
 Notas por versão do pacote NuGet (`Version` em `eNotas.Sharp/eNotas.Sharp.csproj`).  
 `AssemblyVersion` pode divergir — ver `docs/ARCHITECTURE.md` / `docs/DEPLOYMENT.md`.
 
+## 1.31.0
+
+`Iten` ganha `nfeReferenciada` (`chaveAcesso` + `numeroItem`), o mesmo contrato da raiz. Campo opcional, omitido quando nulo. O gateway ainda não gera `DFeReferenciado` a partir dele.
+
 ## 1.30.0
 
 Estende os modelos de request NFS-e (G7 da onda NFS-e no repositório `exclusiva-monorepo`) para cobrir os campos que faltavam contra a API oficial, igualando o request ao response já tipado em `ConsultaNfse`.

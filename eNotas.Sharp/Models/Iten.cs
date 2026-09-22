@@ -66,5 +66,10 @@ namespace eNotas.Sharp.Models
 
         [JsonProperty("informacoesAdicionais", NullValueHandling = NullValueHandling.Ignore)]
         public string InformacoesAdicionais { get; set; }
+
+        // Mesmo contrato da raiz (chaveAcesso + numeroItem). O gateway ainda não
+        // monta DFeReferenciado a partir disto; o conversor não preenche até lá.
+        [JsonProperty("nfeReferenciada", NullValueHandling = NullValueHandling.Ignore)]
+        public List<NfeReferenciada> NfeReferenciada { get; set; }
     }
 }
