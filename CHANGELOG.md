@@ -3,6 +3,14 @@
 Notas por versão do pacote NuGet (`Version` em `eNotas.Sharp/eNotas.Sharp.csproj`).  
 `AssemblyVersion` pode divergir — ver `docs/ARCHITECTURE.md` / `docs/DEPLOYMENT.md`.
 
+## 1.32.0
+
+`Iten` ganha `itemReferenciado` (`chaveAcesso` string + `numeroItem` inteiro), a referência por item exigida na NF-e de devolução a partir de 03/11/2026 (rejeição 321, [KB 605961](https://atendimento.notagateway.com.br/kb/pt-br/article/605961)). Campo opcional, omitido quando nulo.
+
+`Iten.NfeReferenciada` fica `[Obsolete("Use ItemReferenciado")]` (mantido por compatibilidade). `Nota.NfeReferenciada` (raiz) não muda.
+
+`AssemblyVersion` segue `1.1.9.0`.
+
 ## 1.31.0
 
 `Iten` ganha `nfeReferenciada` (`chaveAcesso` + `numeroItem`), o mesmo contrato da raiz. Campo opcional, omitido quando nulo. O gateway ainda não gera `DFeReferenciado` a partir dele.
