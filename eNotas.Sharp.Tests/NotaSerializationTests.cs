@@ -105,8 +105,64 @@ public class NotaSerializationTests
         Assert.Equal("kg", item["unidadeMedidaTributavel"]?.Value<string>());
         Assert.Equal(10.0m, item["valorTotal"]?.Value<decimal>());
         Assert.Null(item["nfeReferenciada"]);
+        Assert.Null(item["itemReferenciado"]);
     }
 
+    [Fact]
+    public void Serialize_ItemReferenciado_NumeroItemInteiro()
+    {
+        var chave = new string('3', 44);
+        var nota = new Nota
+        {
+            Id = "abc",
+            Itens = new List<Iten>
+            {
+                new Iten
+                {
+                    Cfop = "1202",
+                    ItemReferenciado = new List<ItemReferenciado>
+                    {
+                        new() { ChaveAcesso = chave, NumeroItem = 2 }
+                    }
+                }
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(nota);
+        var item = JObject.Parse(json)["itens"]![0]!;
+        var referencia = Assert.Single(item["itemReferenciado"]!.Children<JObject>());
+
+        Assert.Contains($"\"itemReferenciado\":[{{\"chaveAcesso\":\"{chave}\",\"numeroItem\":2}}]", json);
+        Assert.Equal(JTokenType.Integer, referencia["numeroItem"]!.Type);
+        Assert.Equal(2, referencia["numeroItem"]!.Value<int>());
+        Assert.Null(item["nfeReferenciada"]);
+    }
+
+    [Fact]
+    public void Serialize_NotaNfeReferenciadaRaiz_MantemContrato()
+    {
+        var chave = new string('3', 44);
+        var nota = new Nota
+        {
+            Id = "abc",
+            NfeReferenciada = new List<NfeReferenciada>
+            {
+                new() { ChaveAcesso = chave, NumeroItem = "1" }
+            },
+            Itens = new List<Iten> { new Iten { Cfop = "1202" } }
+        };
+
+        var json = JsonConvert.SerializeObject(nota);
+        var obj = JObject.Parse(json);
+        var referencia = Assert.Single(obj["nfeReferenciada"]!.Children<JObject>());
+
+        Assert.Equal(chave, referencia["chaveAcesso"]?.Value<string>());
+        Assert.Equal(JTokenType.String, referencia["numeroItem"]!.Type);
+        Assert.Equal("1", referencia["numeroItem"]!.Value<string>());
+        Assert.Null(obj["itens"]![0]!["itemReferenciado"]);
+    }
+
+#pragma warning disable CS0618 // Iten.NfeReferenciada obsolete (compat NuGet)
     [Fact]
     public void Serialize_ItemNfeReferenciada_QuandoPreenchida()
     {
@@ -134,6 +190,7 @@ public class NotaSerializationTests
         Assert.Equal(chave, referencia["chaveAcesso"]?.Value<string>());
         Assert.Equal("1", referencia["numeroItem"]?.Value<string>());
     }
+#pragma warning restore CS0618
 
     [Fact]
     public void Serialize_IncludesContingenciaWhenSet()
